@@ -12,6 +12,12 @@
 
 target/
 
+# eclipse #
+.metadata
+.classpath
+.project
+org.eclipse.jdt.core.prefs
+
 # Package Files #
 *.jar
 *.war
