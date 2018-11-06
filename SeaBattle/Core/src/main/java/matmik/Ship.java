@@ -5,7 +5,8 @@ public class Ship {
 	private int hits = 0;
 	private boolean isRotated = false;
 	private boolean isDestroyed = false;
-	
+	private ShipContainer shipContainer;
+	private Point top;//bridge or whatever
 	
 	public Ship()
 	{
@@ -34,6 +35,16 @@ public class Ship {
 	
 	public boolean destroyed() {
 		return isDestroyed;
+	}
+
+
+	public ShipContainer getShipContainer() {
+		return shipContainer;
+	}
+
+
+	public void setShipContainer(ShipContainer shipContainer) {
+		this.shipContainer = shipContainer;
 	}
 
 }
