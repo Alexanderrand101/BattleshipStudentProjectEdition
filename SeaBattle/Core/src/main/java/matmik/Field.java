@@ -21,6 +21,18 @@ public class Field implements ShipContainer{
     private Cell[][] grid = new Cell[GRID_HEIGHT][GRID_WIDTH];
     private boolean initializedForGame = false;
 
+    public int getGRID_WIDTH() {
+        return GRID_WIDTH;
+    }
+
+    public int getGRID_HEIGHT() {
+        return GRID_HEIGHT;
+    }
+    
+    public Field(){
+        gridClear();
+    }
+    
     private void gridClear(){
         for(Cell[] row: grid)
             for(Cell cell: row)
@@ -34,17 +46,20 @@ public class Field implements ShipContainer{
 
     public void add(Ship toAdd) {
         ships.add(toAdd); 
+        toAdd.setShipContainer(this);
     }
 
-    public Collection<Ship> removeAll() {
+    public List<Ship> removeAll() {
         List<Ship> temp = new LinkedList<Ship>();
         temp.addAll(ships);
         ships.clear();
         return temp;
     }
 
-    public void addRange(Collection<Ship> ships){
+    public void addRange(List<Ship> ships){
         ships.addAll(ships);
+        for(Ship ship: ships)
+            ship.setShipContainer(this);
     }
 
     public List<Ship> getShips() {
@@ -55,6 +70,33 @@ public class Field implements ShipContainer{
         for(int i = topLeft.getY(); i <= bottomRight.getY(); i++)
             for(int j = topLeft.getX(); j <= bottomRight.getY(); j++)
                 grid[i][j].setState(state);
+    }
+    
+    public boolean nonPaintingValidate(Ship shipToPlace)
+    {
+         if ((shipToPlace.getStern().getX() > GRID_WIDTH - 1) ||
+                (shipToPlace.getStern().getY() > GRID_WIDTH - 1))
+            return false;
+        //scan area around ship to determine whenever it touches others or not.
+        boolean doesNotIntersect = true;
+
+        int startX = (shipToPlace.getBow().getX() - 1 < 0) ? 0 : shipToPlace.getBow().getX() - 1;
+        int startY = (shipToPlace.getBow().getY() - 1 < 0) ? 0 : shipToPlace.getBow().getY() - 1;
+
+        int endX = (shipToPlace.getStern().getX() + 1 > GRID_WIDTH - 1) 
+                ? 0 : shipToPlace.getStern().getX() + 1;
+        int endY = (shipToPlace.getStern().getY() + 1 > GRID_WIDTH - 1) 
+                ? 0 : shipToPlace.getStern().getY() + 1;
+
+        for(int  i = startY; i <= endY; i++)
+            for(int j = startX; j <= endX; j++){
+                if(grid[i][j].getState() == CellState.BUSY)
+                {
+                    doesNotIntersect = false;
+                    break;
+                }
+            }
+        return doesNotIntersect;
     }
 
     public boolean validate(Ship shipToPlace)
@@ -110,6 +152,22 @@ public class Field implements ShipContainer{
             embedShip(ship);
         }
         initializedForGame = true;
+    }
+    
+    public int freeCellCount(){
+        int freeCellCount = 0;
+        for(Cell[] row: grid)
+            for(Cell cell: row)
+                if(cell.isFree()) freeCellCount++;
+        return freeCellCount;
+    }
+    
+    public boolean isHittable(Coordinates cellToHit){
+        return grid[cellToHit.getX()][cellToHit.getY()].isFree();
+    }
+    
+    public CellState hit(Coordinates cellToHit){
+        return grid[cellToHit.getX()][cellToHit.getY()].hit();
     }
     
 }

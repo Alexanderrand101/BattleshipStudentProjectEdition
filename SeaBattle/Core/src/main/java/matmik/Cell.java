@@ -30,19 +30,20 @@ public class Cell {
         this.ship = ship;
     }
     
-    public boolean hit(){
-        switch(state)
-        {
-            case BUSY: 
-                ship.hit();
-                state = ship.destroyed()? CellState.DESTROYED : CellState.HIT_DAMAGED;
-                return true;
-            case FREE:
-                state = CellState.HIT_MISSED;
-                return true;
-            default:
-                return false;
+    public boolean isFree()
+    {
+        return state == CellState.FREE;
+    }
+    
+    public CellState hit(){
+        if(state == CellState.BUSY){
+            ship.hit();
+            state = ship.destroyed()? CellState.DESTROYED : CellState.HIT_DAMAGED;
         }
+        else{
+            state = CellState.HIT_MISSED;
+        }
+        return state;
     }
     
     public Cell(){}

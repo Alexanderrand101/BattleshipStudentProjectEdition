@@ -1,11 +1,11 @@
 package matmik;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface ShipContainer {
 	
     void remove(Ship toRemove);
     void add(Ship toAdd);
-    Collection<Ship> removeAll();
-    void addRange(Collection<Ship> ships);
+    List<Ship> removeAll();
+    void addRange(List<Ship> ships);
 }

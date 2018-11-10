@@ -18,17 +18,20 @@ public class ShipBank implements ShipContainer{
 
     public void add(Ship toAdd) {
         ships.add(toAdd);
+        toAdd.setShipContainer(this);
     }
 
-    public Collection<Ship> removeAll() {
+    public List<Ship> removeAll() {
         List<Ship> temp = new LinkedList<Ship>();
         temp.addAll(ships);
         ships.clear();
         return temp;
     }
 
-    public void addRange(Collection<Ship> ships){
+    public void addRange(List<Ship> ships){
         ships.addAll(ships);
+        for(Ship ship: ships)
+            ship.setShipContainer(this);
     }
 
     public List<Ship> getShips() {

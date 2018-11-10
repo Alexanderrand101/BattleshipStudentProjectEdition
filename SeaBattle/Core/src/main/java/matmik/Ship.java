@@ -20,21 +20,23 @@ public class Ship {
                                     (isRotated() ? getShipLength() - 1 : 0));
     }
 
-    public void setBow(Coordinates Bow) {
+    public final void setBow(Coordinates Bow) {
         this.Bow = Bow;
     }
 
-    public Ship()
-    {
-    }
+    public Ship(){}
 
+    public Ship(int length){
+        setShipLength(length);
+        setBow(new Coordinates(-1,-1));
+    }
 
     public int getShipLength() {
         return shipLength;
     }
 
 
-    public void setShipLength(int shipLength) {
+    public final void setShipLength(int shipLength) {
         this.shipLength = shipLength;
     }
 

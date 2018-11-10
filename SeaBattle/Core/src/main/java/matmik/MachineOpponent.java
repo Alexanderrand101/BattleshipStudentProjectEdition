@@ -1,0 +1,39 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package matmik;
+
+/**
+ *
+ * @author Алескандр
+ */
+public abstract class MachineOpponent implements Opponent{
+
+    protected Field myField; 
+    protected Field fleshbagsField; 
+    
+    public Field getMyField() {
+        return myField;
+    }
+
+    public void setMyField(Field myField) {
+        this.myField = myField;
+    }
+
+    public Field getFleshbagsField() {
+        return fleshbagsField;
+    }
+
+    public void setFleshbagsField(Field fleshbagsField) {
+        this.fleshbagsField = fleshbagsField;
+    }
+
+    public abstract Coordinates makeMove();
+
+    public CellState checkMove(Coordinates move) {
+        return myField.hit(move);
+    }
+    
+}
