@@ -1,25 +1,45 @@
 package matmik;
 
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
-public class ShipBank implements ShipContainer{
+public class ShipBank implements ShipContainer{	
+    
+    private List<Ship> ships = new LinkedList<Ship>();
 
-	private List
-	
-	
-	public void remove(Ship toRemove) {
-		// TODO Auto-generated method stub
-		
-	}
+    private boolean rotated = false;
 
-	public void add(Ship toAdd) {
-		// TODO Auto-generated method stub
-		
-	}
+    public ShipBank(){};
 
-	public Collection<Ship> removeAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public void remove(Ship toRemove) {
+        ships.remove(toRemove);
+    }
 
+    public void add(Ship toAdd) {
+        ships.add(toAdd);
+    }
+
+    public Collection<Ship> removeAll() {
+        List<Ship> temp = new LinkedList<Ship>();
+        temp.addAll(ships);
+        ships.clear();
+        return temp;
+    }
+
+    public void addRange(Collection<Ship> ships){
+        ships.addAll(ships);
+    }
+
+    public List<Ship> getShips() {
+        return ships;
+    }
+
+    public boolean isRotated() {
+        return rotated;
+    }
+
+    public void rotate(){
+        rotated = !rotated;
+    }
 }
