@@ -21,10 +21,11 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import matmik.GlobalDisplayConstants;
 
 /**
  *
- * @author Алескандр
+ * @author Ð�Ð»ÐµÑ�ÐºÐ°Ð½Ð´Ñ€
  */
 public class PCFXMLController implements Initializable {
     
@@ -42,6 +43,8 @@ public class PCFXMLController implements Initializable {
     private Tab placementTab;
     
     private ShipControl selectedShip;
+    
+    private GlobalDisplayConstants globalDisplayConstants;
     @FXML
     private Label stateLabel;
     
@@ -57,7 +60,7 @@ public class PCFXMLController implements Initializable {
     
     private void drawPlacementBoard(){
         Image cell = new Image("cell.png", 25, 25, false, true);
-        Image ship1 = new Image("shipCell.png", 50, 25, false, true);
+        Image shipCell = new Image("shipCell.png", 50, 25, false, true);
         WritableImage placementField = new WritableImage(600, 300);
         int baseOffsetX = 50;
         int baseOffsetY = 50;
@@ -65,7 +68,7 @@ public class PCFXMLController implements Initializable {
             for(int j = 0; j < 10; j++){
                 transferImage(cell, placementField, baseOffsetX + j * 25, baseOffsetY + i * 25);
             }
-        transferImage(ship1, placementField, 100, 400);
+        transferImage(shipCell, placementField, 100, 400);
         if (selectedShip != null)
         {
             stateLabel.setText("drawing selected ship");
@@ -90,7 +93,9 @@ public class PCFXMLController implements Initializable {
 
     @FXML
     private void pickDifficultyEasy(MouseEvent event) {
-        tabPane.getSelectionModel().select(placementTab); 
+        tabPane.getSelectionModel().select(placementTab);
+        globalDisplayConstants = GlobalDisplayConstants.getInstanceAndUpdate();
+        globalDisplayConstants.CalcConstants(600, 300);
         drawPlacementBoard();
     }
 
