@@ -10,5 +10,28 @@ package matmik;
  * @author Алескандр
  */
 public class GlobalDisplayConstants {
+    private GlobalDisplayConstants instance;
+    private int offsetFieldPlayerRight;
+    private int offsetFieldPlayerLeft;
+    private int offsetFieldPlayerBottom;
+    private int offsetFieldPlayerTop;
+    private int offsetShipBankRight;
+    private int offsetShipBankLeft;
+    private int offsetShipBankBottom;
+    private int offsetShipBankTop;
     
+    public GlobalDisplayConstants getInstanceAndUpdate(){//todo a better Singleton
+        if (instance == null){
+            instance = new GlobalDisplayConstants();
+        }
+        return instance;
+    }
+    
+    private GlobalDisplayConstants(){
+        
+    }
+    
+    public void CalcConstants(int sizex, int sizey){
+        
+    }
 }

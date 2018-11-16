@@ -14,16 +14,16 @@ public class PlacementController {
     private Field field;
     
     public PlacementController(int sizex, int sizey){
-        int leftFieldBound = sizex / 10;
-        int rightFieldBound = sizex / 2;
-        int topFieldBound = sizey / 10;
-        int botFieldBound = topFieldBound + rightFieldBound;
-        field = new Field(leftFieldBound, rightFieldBound, topFieldBound, botFieldBound);
-        int rightBankBound = sizex - (sizex / 10);
-        int leftBankBound = sizex - (sizex / 4);
-        int topBankBound = sizey / 10;
-        int botBankBound = topFieldBound + rightFieldBound;
-        shipBank = new ShipBank(leftBankBound, rightBankBound, topBankBound, botBankBound);
+        leftFieldBound = sizex / 10;
+        rightFieldBound = sizex / 2;
+        topFieldBound = sizey / 10;
+        botFieldBound = topFieldBound + rightFieldBound;
+        field = new Field();
+        rightBankBound = sizex - (sizex / 10);
+        leftBankBound = sizex - (sizex / 4);
+        topBankBound = sizey / 10;
+        botBankBound = topFieldBound + rightFieldBound;
+        shipBank = new ShipBank();
         shipBank.addRange(ShipUtils.defaultShipList());
     }
     
