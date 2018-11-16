@@ -1,33 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.layout.StackPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="matmik.pcvisualinterface.PCFXMLController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="matmik.pcvisualinterface.PCFXMLController">
     <children>
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
       <TabPane fx:id="tabPane" layoutX="48.0" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
-          <Tab text="Untitled Tab 1">
+          <Tab id="titleTab" fx:id="titleTab" text="TitleTab">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="136.0" prefWidth="200.0">
                      <children>
-                        <Button layoutX="67.0" layoutY="73.0" mnemonicParsing="false" onMouseClicked="#doAThing" text="Click here to achive enlightment" />
+                        <Button layoutX="228.0" layoutY="186.0" mnemonicParsing="false" onMouseClicked="#initForPC" text="играть  с не человеком" />
+                        <Button layoutX="227.0" layoutY="144.0" mnemonicParsing="false" onMouseClicked="#initForHuman" prefHeight="25.0" prefWidth="146.0" text="играть с человеком" />
                      </children></AnchorPane>
             </content>
           </Tab>
-          <Tab text="Untitled Tab 2">
+          <Tab id="selectDifficultyTab" fx:id="setDifficultyTab" text="SelectDifficultyTab">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Text layoutX="98.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You know now not to waste time on clicking stupid buttons" textAlignment="CENTER" wrappingWidth="123.37890625" />
+                        <Button layoutX="233.0" layoutY="96.0" mnemonicParsing="false" onMouseClicked="#pickDifficultyEasy" prefHeight="25.0" prefWidth="101.0" text="Совсем тупой" />
+                        <Button layoutX="233.0" layoutY="134.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Тупой" />
+                        <Button layoutX="233.0" layoutY="173.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Почти тупой" />
                      </children></AnchorPane>
             </content>
           </Tab>
+            <Tab id="placementTab" fx:id="placementTab" text="PlacementTab">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <StackPane layoutX="184.0" layoutY="131.0" prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <ImageView fx:id="placementImage" fitHeight="300.0" fitWidth="600.0" onMouseDragged="#moveShip" onMousePressed="#pickShip" onMouseReleased="#dropShip" pickOnBounds="true" preserveRatio="true" />
+                              <Button layoutX="200.0" layoutY="300.0" mnemonicParsing="false" onMouseClicked="#clearBoard" text="Очистить">
+                                 <StackPane.margin>
+                                    <Insets left="300.0" top="200.0" />
+                                 </StackPane.margin>
+                              </Button>
+                              <Label fx:id="stateLabel" text="Label">
+                                 <StackPane.margin>
+                                    <Insets top="350.0" />
+                                 </StackPane.margin>
+                              </Label>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
         </tabs>
       </TabPane>
     </children>

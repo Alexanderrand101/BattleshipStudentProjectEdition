@@ -7,8 +7,50 @@ import java.util.List;
 public class ShipBank implements ShipContainer{	
     
     private List<Ship> ships = new LinkedList<Ship>();
-
+    private int boundTop;
+    private int boundBottom;
+    private int boundLeft;
+    private int boundRight;
     private boolean rotated = false;
+
+    public int getBoundTop() {
+        return boundTop;
+    }
+
+    public void setBoundTop(int boundTop) {
+        this.boundTop = boundTop;
+    }
+
+    public int getBoundBottom() {
+        return boundBottom;
+    }
+
+    public void setBoundBottom(int boundBottom) {
+        this.boundBottom = boundBottom;
+    }
+
+    public int getBoundLeft() {
+        return boundLeft;
+    }
+
+    public void setBoundLeft(int boundLeft) {
+        this.boundLeft = boundLeft;
+    }
+
+    public int getBoundRight() {
+        return boundRight;
+    }
+
+    public void setBoundRight(int boundRight) {
+        this.boundRight = boundRight;
+    }
+
+    public ShipBank(int boundTop, int boundBottom, int boundLeft, int boundRight) {
+        this.boundTop = boundTop;
+        this.boundBottom = boundBottom;
+        this.boundLeft = boundLeft;
+        this.boundRight = boundRight;
+    }
 
     public ShipBank(){};
 
@@ -45,4 +87,5 @@ public class ShipBank implements ShipContainer{
     public void rotate(){
         rotated = !rotated;
     }
+
 }

@@ -20,6 +20,50 @@ public class Field implements ShipContainer{
     private List<Ship> ships = new LinkedList<Ship>();
     private Cell[][] grid = new Cell[GRID_HEIGHT][GRID_WIDTH];
     private boolean initializedForGame = false;
+    private int boundTop;
+    private int boundBottom;
+    private int boundLeft;
+    private int boundRight;
+
+    public Field(int boundTop, int boundBottom, int boundLeft, int boundRight) {
+        this.boundTop = boundTop;
+        this.boundBottom = boundBottom;
+        this.boundLeft = boundLeft;
+        this.boundRight = boundRight;
+    }
+ 
+    public int getBoundTop() {
+        return boundTop;
+    }
+
+    public void setBoundTop(int boundTop) {
+        this.boundTop = boundTop;
+    }
+
+    public int getBoundBottom() {
+        return boundBottom;
+    }
+
+    public void setBoundBottom(int boundBottom) {
+        this.boundBottom = boundBottom;
+    }
+
+    public int getBoundLeft() {
+        return boundLeft;
+    }
+
+    public void setBoundLeft(int boundLeft) {
+        this.boundLeft = boundLeft;
+    }
+
+    public int getBoundRight() {
+        return boundRight;
+    }
+
+    public void setBoundRight(int boundRight) {
+        this.boundRight = boundRight;
+    }
+    
 
     public int getGRID_WIDTH() {
         return GRID_WIDTH;
@@ -104,7 +148,7 @@ public class Field implements ShipContainer{
         //check if it is in bounds. If it is, highlight its potential placement.
         //as only top left is tracked, we don't need to check left oob, or top oob
         if ((shipToPlace.getStern().getX() > GRID_WIDTH - 1) ||
-                (shipToPlace.getStern().getY() > GRID_WIDTH - 1))
+                (shipToPlace.getStern().getY() > GRID_HEIGHT - 1))
             return false;
         //draw potential placement
         gridPaint(shipToPlace.getBow(), shipToPlace.getStern(), CellState.CANDIDATE);
@@ -116,7 +160,7 @@ public class Field implements ShipContainer{
 
         int endX = (shipToPlace.getStern().getX() + 1 > GRID_WIDTH - 1) 
                 ? 0 : shipToPlace.getStern().getX() + 1;
-        int endY = (shipToPlace.getStern().getY() + 1 > GRID_WIDTH - 1) 
+        int endY = (shipToPlace.getStern().getY() + 1 > GRID_HEIGHT - 1) 
                 ? 0 : shipToPlace.getStern().getY() + 1;
 
         for(int  i = startY; i <= endY; i++)
@@ -169,5 +213,4 @@ public class Field implements ShipContainer{
     public CellState hit(Coordinates cellToHit){
         return grid[cellToHit.getX()][cellToHit.getY()].hit();
     }
-    
 }

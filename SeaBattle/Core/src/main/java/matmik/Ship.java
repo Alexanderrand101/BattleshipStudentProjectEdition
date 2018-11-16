@@ -1,16 +1,15 @@
 package matmik;
 
 public class Ship {
-    
     private int shipLength;
     private int hits = 0;
     private boolean isRotated = false;
     private boolean isDestroyed = false;
     private ShipContainer shipContainer;
-    private Coordinates Bow;
+    private Coordinates bow;
 
     public Coordinates getBow() {
-        return Bow;
+        return bow;
     }
 
     public Coordinates getStern(){
@@ -20,15 +19,14 @@ public class Ship {
                                     (isRotated() ? getShipLength() - 1 : 0));
     }
 
-    public final void setBow(Coordinates Bow) {
-        this.Bow = Bow;
+    public final void setBow(Coordinates bow) {
+        this.bow = bow;
     }
 
     public Ship(){}
 
     public Ship(int length){
         setShipLength(length);
-        setBow(new Coordinates(-1,-1));
     }
 
     public int getShipLength() {
@@ -69,4 +67,9 @@ public class Ship {
         this.shipContainer = shipContainer;
     }
 
+    public boolean inBounds(Coordinates coords){
+        if (bow == null) return false;
+        return (coords.getX() >= bow.getX()) && (coords.getX() <= getStern().getX()) 
+                && (coords.getY() >= bow.getY()) && (coords.getY() <= getStern().getY());
+    } 
 }
