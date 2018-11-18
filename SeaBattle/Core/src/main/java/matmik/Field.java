@@ -20,48 +20,11 @@ public class Field implements ShipContainer{
     private List<Ship> ships = new LinkedList<Ship>();
     private Cell[][] grid = new Cell[GRID_HEIGHT][GRID_WIDTH];
     private boolean initializedForGame = false;
-    private int boundTop;
-    private int boundBottom;
-    private int boundLeft;
-    private int boundRight;
 
-    public Field(int boundTop, int boundBottom, int boundLeft, int boundRight) {
-        this.boundTop = boundTop;
-        this.boundBottom = boundBottom;
-        this.boundLeft = boundLeft;
-        this.boundRight = boundRight;
-    }
- 
-    public int getBoundTop() {
-        return boundTop;
-    }
-
-    public void setBoundTop(int boundTop) {
-        this.boundTop = boundTop;
-    }
-
-    public int getBoundBottom() {
-        return boundBottom;
-    }
-
-    public void setBoundBottom(int boundBottom) {
-        this.boundBottom = boundBottom;
-    }
-
-    public int getBoundLeft() {
-        return boundLeft;
-    }
-
-    public void setBoundLeft(int boundLeft) {
-        this.boundLeft = boundLeft;
-    }
-
-    public int getBoundRight() {
-        return boundRight;
-    }
-
-    public void setBoundRight(int boundRight) {
-        this.boundRight = boundRight;
+    private void gridInit(){
+        for(int i = 0; i < GRID_HEIGHT; i++)
+            for(int j = 0; j < GRID_WIDTH; j++)
+                grid[i][j] = new Cell();
     }
     
 
@@ -74,6 +37,7 @@ public class Field implements ShipContainer{
     }
     
     public Field(){
+        gridInit();
         gridClear();
     }
     
@@ -90,7 +54,6 @@ public class Field implements ShipContainer{
 
     public void add(Ship toAdd) {
         ships.add(toAdd); 
-        toAdd.setShipContainer(this);
     }
 
     public List<Ship> removeAll() {
@@ -101,9 +64,7 @@ public class Field implements ShipContainer{
     }
 
     public void addRange(List<Ship> ships){
-        ships.addAll(ships);
-        for(Ship ship: ships)
-            ship.setShipContainer(this);
+        this.ships.addAll(ships);
     }
 
     public List<Ship> getShips() {
@@ -111,60 +72,62 @@ public class Field implements ShipContainer{
     }
 
     private void gridPaint(Coordinates topLeft, Coordinates bottomRight, CellState state){
-        for(int i = topLeft.getY(); i <= bottomRight.getY(); i++)
-            for(int j = topLeft.getX(); j <= bottomRight.getY(); j++)
+        for(int i = topLeft.getI(); i <= bottomRight.getI(); i++)
+            for(int j = topLeft.getJ(); j <= bottomRight.getJ(); j++)
                 grid[i][j].setState(state);
     }
     
     public boolean nonPaintingValidate(Ship shipToPlace)
     {
-         if ((shipToPlace.getStern().getX() > GRID_WIDTH - 1) ||
-                (shipToPlace.getStern().getY() > GRID_WIDTH - 1))
+        //check if it is in bounds. If it is, highlight its potential placement.
+        //as only top left is tracked, we don't need to check left oob, or top oob
+        if ((shipToPlace.getStern().getI() > GRID_WIDTH - 1) ||
+                (shipToPlace.getStern().getJ() > GRID_HEIGHT - 1))
             return false;
+        //draw potential placement
+        
         //scan area around ship to determine whenever it touches others or not.
-        boolean doesNotIntersect = true;
 
-        int startX = (shipToPlace.getBow().getX() - 1 < 0) ? 0 : shipToPlace.getBow().getX() - 1;
-        int startY = (shipToPlace.getBow().getY() - 1 < 0) ? 0 : shipToPlace.getBow().getY() - 1;
+        int startI = (shipToPlace.getBow().getI() - 1 < 0) ? 0 : shipToPlace.getBow().getI() - 1;
+        int startJ = (shipToPlace.getBow().getJ() - 1 < 0) ? 0 : shipToPlace.getBow().getJ() - 1;
 
-        int endX = (shipToPlace.getStern().getX() + 1 > GRID_WIDTH - 1) 
-                ? 0 : shipToPlace.getStern().getX() + 1;
-        int endY = (shipToPlace.getStern().getY() + 1 > GRID_WIDTH - 1) 
-                ? 0 : shipToPlace.getStern().getY() + 1;
+        int endI = (shipToPlace.getStern().getI() + 1 > GRID_WIDTH - 1) 
+                ? shipToPlace.getStern().getI() : shipToPlace.getStern().getI() + 1;
+        int endJ = (shipToPlace.getStern().getJ() + 1 > GRID_HEIGHT - 1) 
+                ? shipToPlace.getStern().getJ() : shipToPlace.getStern().getJ() + 1;
 
-        for(int  i = startY; i <= endY; i++)
-            for(int j = startX; j <= endX; j++){
+        for(int  i = startI; i <= endI; i++)
+            for(int j = startJ; j <= endJ; j++){
                 if(grid[i][j].getState() == CellState.BUSY)
                 {
-                    doesNotIntersect = false;
-                    break;
+                    return false;
                 }
             }
-        return doesNotIntersect;
+        return true;
     }
 
     public boolean validate(Ship shipToPlace)
     {
         //check if it is in bounds. If it is, highlight its potential placement.
         //as only top left is tracked, we don't need to check left oob, or top oob
-        if ((shipToPlace.getStern().getX() > GRID_WIDTH - 1) ||
-                (shipToPlace.getStern().getY() > GRID_HEIGHT - 1))
+        if ((shipToPlace.getStern().getI() > GRID_WIDTH - 1) ||
+                (shipToPlace.getStern().getJ() > GRID_HEIGHT - 1))
             return false;
         //draw potential placement
-        gridPaint(shipToPlace.getBow(), shipToPlace.getStern(), CellState.CANDIDATE);
+        
         //scan area around ship to determine whenever it touches others or not.
         boolean doesNotIntersect = true;
 
-        int startX = (shipToPlace.getBow().getX() - 1 < 0) ? 0 : shipToPlace.getBow().getX() - 1;
-        int startY = (shipToPlace.getBow().getY() - 1 < 0) ? 0 : shipToPlace.getBow().getY() - 1;
+        int startI = (shipToPlace.getBow().getI() - 1 < 0) ? 0 : shipToPlace.getBow().getI() - 1;
+        int startJ = (shipToPlace.getBow().getJ() - 1 < 0) ? 0 : shipToPlace.getBow().getJ() - 1;
 
-        int endX = (shipToPlace.getStern().getX() + 1 > GRID_WIDTH - 1) 
-                ? 0 : shipToPlace.getStern().getX() + 1;
-        int endY = (shipToPlace.getStern().getY() + 1 > GRID_HEIGHT - 1) 
-                ? 0 : shipToPlace.getStern().getY() + 1;
+        int endI = (shipToPlace.getStern().getI() + 1 > GRID_WIDTH - 1) 
+                ? shipToPlace.getStern().getI() : shipToPlace.getStern().getI() + 1;
+        int endJ = (shipToPlace.getStern().getJ() + 1 > GRID_HEIGHT - 1) 
+                ? shipToPlace.getStern().getJ() : shipToPlace.getStern().getJ() + 1;
 
-        for(int  i = startY; i <= endY; i++)
-            for(int j = startX; j <= endX; j++){
+        for(int  i = startI; i <= endI; i++)
+            for(int j = startJ; j <= endJ; j++){
                 if(grid[i][j].getState() == CellState.BUSY)
                 {
                     doesNotIntersect = false;
@@ -173,6 +136,7 @@ public class Field implements ShipContainer{
                 else 
                     grid[i][j].setState(CellState.NEAR_SHIP_AREA);
             }
+        gridPaint(shipToPlace.getBow(), shipToPlace.getStern(), CellState.CANDIDATE);
         return doesNotIntersect;
     }
 
@@ -183,8 +147,8 @@ public class Field implements ShipContainer{
     }
     
     private void embedShip(Ship ship){
-        for(int i = ship.getBow().getY(); i <= ship.getStern().getY(); i++)
-            for(int j = ship.getBow().getX(); j <= ship.getStern().getX(); j++)
+        for(int i = ship.getBow().getJ(); i <= ship.getStern().getJ(); i++)
+            for(int j = ship.getBow().getI(); j <= ship.getStern().getI(); j++)
                 grid[i][j].setShip(ship);
     }
     //todo validation for file loading for game and for placement
@@ -207,10 +171,21 @@ public class Field implements ShipContainer{
     }
     
     public boolean isHittable(Coordinates cellToHit){
-        return grid[cellToHit.getX()][cellToHit.getY()].isFree();
+        return grid[cellToHit.getI()][cellToHit.getJ()].isFree();
     }
     
     public CellState hit(Coordinates cellToHit){
-        return grid[cellToHit.getX()][cellToHit.getY()].hit();
+        return grid[cellToHit.getI()][cellToHit.getJ()].hit();
+    }
+    
+    public Ship shipAt(Coordinates shipLoc){
+        for(Ship ship:ships){
+            if(ship.inBounds(shipLoc)) return ship;
+        }
+        return null;
+    }
+
+    public Cell[][] getGrid() {
+        return grid;
     }
 }

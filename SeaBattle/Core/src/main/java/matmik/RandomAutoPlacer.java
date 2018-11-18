@@ -17,6 +17,7 @@ public class RandomAutoPlacer{
     
     public static boolean placeShips(Field field, List<Ship> ships) {
         //sort List here
+        if(ships.isEmpty()) return true;
         return placeShipsAfterSorting(field, ships, 0);
     }   
     
@@ -24,6 +25,8 @@ public class RandomAutoPlacer{
         //obtain all possible values
         Ship currentShip = ships.get(depth);
         Coordinates originalCoordinates = currentShip.getBow();
+        boolean originalRotation = currentShip.isRotated();
+        field.gridRefresh();
         List<PossiblePlacement> placements = new LinkedList<PossiblePlacement>(); 
         for(int i = 0; i < field.getGRID_HEIGHT(); i++)
             for(int j = 0; j < field.getGRID_WIDTH(); j++)
@@ -49,14 +52,16 @@ public class RandomAutoPlacer{
         {
             PossiblePlacement placementChoice = placements.get(r.nextInt(placements.size()));
             currentShip.setBow(placementChoice.getBowCoordinate());
+            currentShip.setIsRotated(placementChoice.isRotated());
             field.add(currentShip);
             if(depth == ships.size() - 1) return true;
-            if(placeShipsAfterSorting(field, ships, depth))return true;
+            if(placeShipsAfterSorting(field, ships, depth + 1))return true;
             field.remove(currentShip);
+            field.gridRefresh();
             placements.remove(placementChoice);
         }
         //no possible placements found; rollback and return
-        currentShip.rotate();//cause it was rotated once
+        currentShip.setIsRotated(originalRotation);//cause it was rotated once
         currentShip.setBow(originalCoordinates);
         return false;
     }

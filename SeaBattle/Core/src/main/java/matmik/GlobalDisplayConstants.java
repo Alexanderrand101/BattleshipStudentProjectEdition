@@ -13,6 +13,38 @@ import java.util.List;
  * @author Ð�Ð»ÐµÑ�ÐºÐ°Ð½Ð´Ñ€
  */
 public class GlobalDisplayConstants {
+
+    public static GlobalDisplayConstants getInstance() {
+        return instance;
+    }
+
+    public int getShipCellSize() {
+        return shipCellSize;
+    }
+
+    public List<Bounds> getShipsInBank() {
+        return shipsInBank;
+    }
+
+    public List<Bounds> getShipsInBankRotated() {
+        return shipsInBankRotated;
+    }
+
+    public Bounds getShipBankBounds() {
+        return shipBankBounds;
+    }
+
+    public Bounds getShipBankBoundsRotated() {
+        return shipBankBoundsRotated;
+    }
+
+    public Bounds getPlayerFieldBounds() {
+        return playerFieldBounds;
+    }
+
+    public Bounds getOpponentFieldBounds() {
+        return opponentFieldBounds;
+    }
     private static GlobalDisplayConstants instance;
     private int shipCellSize;
     private List<Bounds> shipsInBank;
@@ -33,6 +65,30 @@ public class GlobalDisplayConstants {
         
     }
     
+    public Coordinates cellAtPlayerField(int x, int y){
+        return new Coordinates((y - playerFieldBounds.getTopBound()) * 10 /
+                (playerFieldBounds.getBottomBound() - playerFieldBounds.getTopBound()),
+                (x - playerFieldBounds.getLeftBound()) * 10 /
+                (playerFieldBounds.getRightBound() - playerFieldBounds.getLeftBound())  
+                );
+    }
+    
+    public int lengthOfShipInBank(int x, int y)
+    {
+        for(int i = 0; i < 4; i++){
+            if (shipsInBank.get(i).inBounds(x, y)) return i + 1;
+        }
+        return -1;
+    }
+    
+    public int lengthOfShipInBankRotated(int x, int y)
+    {
+        for(int i = 0; i < 4; i++){
+            if (shipsInBankRotated.get(i).inBounds(x, y)) return i + 1;
+        }
+        return -1;
+    }
+    
     public void CalcConstants(int sizex, int sizey){
         playerFieldBounds = new Bounds();
         opponentFieldBounds = new Bounds();
@@ -44,7 +100,7 @@ public class GlobalDisplayConstants {
         	shipsInBankRotated.add(new Bounds());
         	shipsInBank.add(new Bounds());
         }
-        int shipCellSize = sizey / 9 * 15 / 20;
+        shipCellSize = sizey / 9 * 15 / 20;
         playerFieldBounds.setTopBound(sizey / 9);
         playerFieldBounds.setBottomBound(playerFieldBounds.getTopBound() + shipCellSize * 10);
         playerFieldBounds.setLeftBound(sizex / 16);
@@ -59,8 +115,8 @@ public class GlobalDisplayConstants {
         shipBankBounds.setRightBound(shipBankBounds.getLeftBound() + shipCellSize * 5);
         shipBankBoundsRotated.setTopBound(sizey / 9);
         shipBankBoundsRotated.setBottomBound(shipBankBounds.getTopBound() + shipCellSize * 7);
-        shipBankBounds.setLeftBound(sizex / 16 + playerFieldBounds.getRightBound());
-        shipBankBounds.setRightBound(shipBankBounds.getLeftBound() + shipCellSize * 6);
+        shipBankBoundsRotated.setLeftBound(sizex / 16 + playerFieldBounds.getRightBound());
+        shipBankBoundsRotated.setRightBound(shipBankBounds.getLeftBound() + shipCellSize * 7);
         for(int i = 0; i < 4; i++) {
         	Bounds shipInBank = shipsInBank.get(i);
         	shipInBank.setTopBound(shipBankBounds.getTopBound() + shipCellSize / 2 * (i + 1) + shipCellSize * i);
@@ -69,9 +125,9 @@ public class GlobalDisplayConstants {
         	shipInBank.setRightBound(shipInBank.getLeftBound() + shipCellSize * (i + 1));
         	Bounds shipInBankRotated = shipsInBankRotated.get(i);
         	shipInBankRotated.setTopBound(shipBankBoundsRotated.getTopBound() + shipCellSize / 2);
-        	shipInBankRotated.setBottomBound(shipInBank.getTopBound() + shipCellSize * (i + 1));
+        	shipInBankRotated.setBottomBound(shipInBankRotated.getTopBound() + shipCellSize * (i + 1));
         	shipInBankRotated.setLeftBound(shipCellSize / 2 * (i + 1) + shipCellSize * i + shipBankBoundsRotated.getLeftBound());
-        	shipInBankRotated.setRightBound(shipInBank.getLeftBound() + shipCellSize);
+        	shipInBankRotated.setRightBound(shipInBankRotated.getLeftBound() + shipCellSize);
         }
     }
 }

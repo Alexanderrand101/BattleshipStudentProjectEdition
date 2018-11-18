@@ -59,8 +59,8 @@ public class ShipBank implements ShipContainer{
     }
 
     public void add(Ship toAdd) {
+        toAdd.setIsRotated(rotated);
         ships.add(toAdd);
-        toAdd.setShipContainer(this);
     }
 
     public List<Ship> removeAll() {
@@ -71,9 +71,10 @@ public class ShipBank implements ShipContainer{
     }
 
     public void addRange(List<Ship> ships){
-        ships.addAll(ships);
-        for(Ship ship: ships)
-            ship.setShipContainer(this);
+        for(Ship ship : ships)
+            ship.setIsRotated(rotated);
+        this.ships.addAll(ships);
+        
     }
 
     public List<Ship> getShips() {
@@ -86,6 +87,14 @@ public class ShipBank implements ShipContainer{
 
     public void rotate(){
         rotated = !rotated;
+        for(Ship ship : ships)
+            ship.setIsRotated(rotated);
     }
 
+    public Ship getShipOfLength(int length){
+        for(Ship ship: ships){
+            if(ship.getShipLength() == length) return ship;
+        }
+        return null;
+    }
 }

@@ -6,6 +6,7 @@
 package matmik.pcvisualinterface;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,7 +22,11 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import matmik.Bounds;
+import matmik.CellState;
 import matmik.GlobalDisplayConstants;
+import matmik.PlacementController;
+import matmik.Ship;
 
 /**
  *
@@ -43,6 +48,7 @@ public class PCFXMLController implements Initializable {
     private Tab placementTab;
     
     private ShipControl selectedShip;
+    private PlacementController placementController;
     
     private GlobalDisplayConstants globalDisplayConstants;
     @FXML
@@ -59,25 +65,60 @@ public class PCFXMLController implements Initializable {
     }
     
     private void drawPlacementBoard(){
-        Image cell = new Image("cell.png", 25, 25, false, true);
-        Image shipCell = new Image("shipCell.png", 50, 25, false, true);
+        int cellSize = globalDisplayConstants.getShipCellSize();
+        Image cell = new Image("cell.png", cellSize, cellSize, true, true);
+        Image shipCell = new Image("shipCell.png", cellSize, cellSize, true, true);
+        Image candidate = new Image("candidate.png", cellSize, cellSize, true, true);
+        Image intersect = new Image("intersect.png", cellSize, cellSize, true, true);
+        Image nearshiparea = new Image("nearshiparea.png", cellSize, cellSize, true, true);
         WritableImage placementField = new WritableImage(600, 300);
-        int baseOffsetX = 50;
-        int baseOffsetY = 50;
+        int baseOffsetX = globalDisplayConstants.getPlayerFieldBounds().getLeftBound();
+        int baseOffsetY = globalDisplayConstants.getPlayerFieldBounds().getTopBound();
+        //поле для расстановки
         for(int i = 0; i < 10; i++)
             for(int j = 0; j < 10; j++){
-                transferImage(cell, placementField, baseOffsetX + j * 25, baseOffsetY + i * 25);
+                transferImage(cell, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
+                if(placementController.getGrid()[i][j].getState() == CellState.BUSY)
+                   transferImage(shipCell, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
+                if(placementController.getGrid()[i][j].getState() == CellState.CANDIDATE)
+                   transferImage(candidate, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
+                if(placementController.getGrid()[i][j].getState() == CellState.INTERSECTION)
+                   transferImage(intersect, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
+                if(placementController.getGrid()[i][j].getState() == CellState.NEAR_SHIP_AREA)
+                   transferImage(nearshiparea, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
             }
-        transferImage(shipCell, placementField, 100, 400);
+        //банк икорабли в нем
+        Bounds bankBounds;
+        List<Bounds> shipBounds;
+        if (!placementController.bankRotated()){
+            bankBounds = globalDisplayConstants.getShipBankBounds();
+            shipBounds = globalDisplayConstants.getShipsInBank();
+        }
+        else{
+            bankBounds = globalDisplayConstants.getShipBankBoundsRotated();
+            shipBounds = globalDisplayConstants.getShipsInBankRotated();
+        }
+        int bankHeight = bankBounds.getBottomBound() - bankBounds.getTopBound();
+        int bankWidth = bankBounds.getRightBound() - bankBounds.getLeftBound();
+        Image bank = new Image("cell.png", bankWidth, bankHeight, false, true);
+        transferImage(bank, placementField, bankBounds.getLeftBound(),
+                bankBounds.getTopBound());
+        for(int i = 0; i < 4; i++){
+            int shipHeight = shipBounds.get(i).getBottomBound() - shipBounds.get(i).getTopBound();
+            int shipWidth = shipBounds.get(i).getRightBound() - shipBounds.get(i).getLeftBound();
+            Image shipImage = new Image("shipCell.png", shipWidth, shipHeight, false, true);
+            transferImage(shipImage, placementField, shipBounds.get(i).getLeftBound(),
+                    shipBounds.get(i).getTopBound());
+        }
         if (selectedShip != null)
         {
             stateLabel.setText("drawing selected ship");
-            transferImage(selectedShip.getShipImage(), placementField, selectedShip.getY(), selectedShip.getX());
+            transferImage(selectedShip.getShipImage(), placementField, selectedShip.getX(), selectedShip.getY());
         }
         placementImage.setImage(placementField);
     }
     
-    private void transferImage(Image source, WritableImage scene, int yoffset, int xoffset){
+    private void transferImage(Image source, WritableImage scene, int xoffset, int yoffset){
         PixelReader sourceReader = source.getPixelReader();
         PixelWriter sceneWriter = scene.getPixelWriter();
         for(int y = 0; y < Math.round(source.getHeight()); y++)
@@ -94,18 +135,25 @@ public class PCFXMLController implements Initializable {
     @FXML
     private void pickDifficultyEasy(MouseEvent event) {
         tabPane.getSelectionModel().select(placementTab);
-        globalDisplayConstants = GlobalDisplayConstants.getInstanceAndUpdate();
-        globalDisplayConstants.CalcConstants(600, 300);
+        placementController = new PlacementController(
+                (int)placementImage.fitWidthProperty().get(),
+                (int)placementImage.fitHeightProperty().get());
+        globalDisplayConstants = placementController.getDisplayConstants();
         drawPlacementBoard();
     }
 
     @FXML
     private void clearBoard(MouseEvent event) {
+        placementController.clearField();
+        drawPlacementBoard();
     }
 
     @FXML
     private void dropShip(MouseEvent event) {
+        if(selectedShip != null)
+            placementController.dropShip((int)event.getX(), (int)event.getY());
         selectedShip = null;
+        drawPlacementBoard();
     }
 
     @FXML
@@ -113,21 +161,40 @@ public class PCFXMLController implements Initializable {
         if(selectedShip != null){
             selectedShip.setX((int)event.getX());
             selectedShip.setY((int)event.getY());
+            placementController.highlight((int)event.getX(), (int)event.getY());
             drawPlacementBoard();
         }
     }
 
     @FXML
     private void pickShip(MouseEvent event) {
-        if (checkBounds((int)event.getX(), (int)event.getY(), 400, 100, 50, 25))
-        {
-            Image image = new Image("shipCell.png", 50, 25, false, true);
-            selectedShip = new ShipControl(400, 100, image);
+        Ship pickedShip = placementController.pickShip((int)event.getX(), (int)event.getY());
+        if(pickedShip != null){
+            Image image;
+            if(!pickedShip.isRotated()) image = new Image("shipCell.png", 
+                    globalDisplayConstants.getShipCellSize() * pickedShip.getShipLength(), 
+                    globalDisplayConstants.getShipCellSize(), false, true); // todo Scale this
+            else image = new Image("shipCell.png", 
+                    globalDisplayConstants.getShipCellSize() , 
+                    globalDisplayConstants.getShipCellSize()* pickedShip.getShipLength(), false, true);
+            selectedShip = new ShipControl((int)event.getX(), (int)event.getY(), image);
         }
     }
     
     private boolean checkBounds(int x, int y, int ox, int oy, int width, int height)
     {
         return (ox <= x) && (ox + width >= x) && (oy <= y) && (oy + height >= y);
+    }
+
+    @FXML
+    private void placeShips(MouseEvent event) {
+        placementController.autoPlaceShips();
+        drawPlacementBoard();
+    }
+
+    @FXML
+    private void rotateBank(MouseEvent event) {
+        placementController.rotateBank();
+        drawPlacementBoard();
     }
 }

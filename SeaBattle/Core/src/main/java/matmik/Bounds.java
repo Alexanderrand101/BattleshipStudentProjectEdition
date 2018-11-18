@@ -33,4 +33,7 @@ public class Bounds {
 		this.leftBound = leftBound;
 	}
 
+        public boolean inBounds(int x, int y){
+            return (x >= leftBound) && (x < rightBound) && (y >= topBound) && (y < bottomBound);
+        }
 }

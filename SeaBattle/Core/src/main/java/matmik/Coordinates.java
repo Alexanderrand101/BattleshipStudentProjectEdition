@@ -5,34 +5,49 @@
  */
 package matmik;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Алескандр
  */
-public class Coordinates {
-    private int x;
-    private int y;
+public class Coordinates implements Cloneable{
+    private int i;
+    private int j;
 
-    public int getX() {
-        return x;
+    public int getI() {
+        return i;
     }
 
-    public final void setX(int x) {
-        this.x = x;
+    public final void setI(int i) {
+        this.i = i;
     }
 
-    public int getY() {
-        return y;
+    public int getJ() {
+        return j;
     }
 
-    public final void setY(int y) {
-        this.y = y;
+    public final void setJ(int j) {
+        this.j = j;
     }
     
     public Coordinates(){};
     
-    public Coordinates(int x, int y){
-        setX(x);
-        setY(y);
+    public Coordinates(int i, int j){
+        setI(i);
+        setJ(j);
+    }
+    
+    @Override
+    public Object clone(){
+        Coordinates coord = null;
+        try {
+            coord = (Coordinates)super.clone();
+        } catch (CloneNotSupportedException ex) {
+            //toDo logFiles
+            Logger.getLogger(Coordinates.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return coord;
     }
 }

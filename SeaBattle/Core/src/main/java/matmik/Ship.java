@@ -5,18 +5,23 @@ public class Ship {
     private int hits = 0;
     private boolean isRotated = false;
     private boolean isDestroyed = false;
-    private ShipContainer shipContainer;
+    //private ShipContainer shipContainer;
     private Coordinates bow;
 
     public Coordinates getBow() {
         return bow;
     }
 
+    
+    public void setIsRotated(boolean isRotated) {
+        this.isRotated = isRotated;
+    }
+    
     public Coordinates getStern(){
-        return new Coordinates(getBow().getX() + 
-                                    (!isRotated() ? getShipLength() - 1 : 0)
-                                , getBow().getY() + 
-                                    (isRotated() ? getShipLength() - 1 : 0));
+        return new Coordinates(getBow().getI() + 
+                                    (isRotated() ? getShipLength() - 1 : 0)
+                                , getBow().getJ() + 
+                                    (!isRotated() ? getShipLength() - 1 : 0));
     }
 
     public final void setBow(Coordinates bow) {
@@ -58,18 +63,18 @@ public class Ship {
     }
 
 
-    public ShipContainer getShipContainer() {
-        return shipContainer;
-    }
-
-
-    public void setShipContainer(ShipContainer shipContainer) {
-        this.shipContainer = shipContainer;
-    }
+//    public ShipContainer getShipContainer() {
+//        return shipContainer;
+//    }
+//
+//
+//    public void setShipContainer(ShipContainer shipContainer) {
+//        this.shipContainer = shipContainer;
+//    }
 
     public boolean inBounds(Coordinates coords){
         if (bow == null) return false;
-        return (coords.getX() >= bow.getX()) && (coords.getX() <= getStern().getX()) 
-                && (coords.getY() >= bow.getY()) && (coords.getY() <= getStern().getY());
+        return (coords.getI() >= bow.getI()) && (coords.getI() <= getStern().getI()) 
+                && (coords.getJ() >= bow.getJ()) && (coords.getJ() <= getStern().getJ());
     } 
 }
