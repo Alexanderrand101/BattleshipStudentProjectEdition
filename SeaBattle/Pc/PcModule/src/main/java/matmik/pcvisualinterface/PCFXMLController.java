@@ -54,7 +54,6 @@ public class PCFXMLController implements Initializable {
     @FXML
     private Label stateLabel;
     
-    @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
@@ -67,7 +66,7 @@ public class PCFXMLController implements Initializable {
     private void drawPlacementBoard(){
         int cellSize = globalDisplayConstants.getShipCellSize();
         Image cell = new Image("cell.png", cellSize, cellSize, true, true);
-        Image shipCell = new Image("shipCell.png", cellSize, cellSize, true, true);
+        Image shipCell = new Image("shipCell.png", cellSize, cellSize, false, true);
         Image candidate = new Image("candidate.png", cellSize, cellSize, true, true);
         Image intersect = new Image("intersect.png", cellSize, cellSize, true, true);
         Image nearshiparea = new Image("nearshiparea.png", cellSize, cellSize, true, true);
@@ -121,8 +120,8 @@ public class PCFXMLController implements Initializable {
     private void transferImage(Image source, WritableImage scene, int xoffset, int yoffset){
         PixelReader sourceReader = source.getPixelReader();
         PixelWriter sceneWriter = scene.getPixelWriter();
-        for(int y = 0; y < Math.round(source.getHeight()); y++)
-            for(int x = 0; x < Math.round(source.getWidth()); x++)
+        for(int y = 0; y < source.getHeight(); y++)
+            for(int x = 0; x < source.getWidth(); x++)
             {
                 sceneWriter.setColor(xoffset + x, yoffset + y, sourceReader.getColor(x, y));
             }
