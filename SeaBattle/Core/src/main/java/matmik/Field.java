@@ -5,9 +5,12 @@
  */
 package matmik;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -187,5 +190,50 @@ public class Field implements ShipContainer{
 
     public Cell[][] getGrid() {
         return grid;
+    }
+    
+    public int shipsDestroyed(){
+        int destroyedCount = 0;
+        for(Ship ship:ships){
+            if (ship.destroyed()) destroyedCount++;
+        }
+        return destroyedCount;
+    }
+    
+    public void setMiss(Coordinates cellToMiss){
+        grid[cellToMiss.getI()][cellToMiss.getJ()].setState(CellState.HIT_MISSED);
+    }
+    
+    public void setHit(Coordinates cellToHit){
+        grid[cellToHit.getI()][cellToHit.getJ()].setState(CellState.HIT_DAMAGED);
+    }
+    
+    public Cell cellAt(Coordinates cell){
+        return grid[cell.getI()][cell.getJ()];
+    }
+    
+    public Map<Coordinates,Cell> destroy(Ship shipToDestroy){
+        Map<Coordinates,Cell> cells = new HashMap<Coordinates, Cell>();
+        int startI = (shipToDestroy.getBow().getI() - 1 < 0) ? 0 : shipToDestroy.getBow().getI() - 1;
+        int startJ = (shipToDestroy.getBow().getJ() - 1 < 0) ? 0 : shipToDestroy.getBow().getJ() - 1;
+
+        int endI = (shipToDestroy.getStern().getI() + 1 > GRID_WIDTH - 1) 
+                ? shipToDestroy.getStern().getI() : shipToDestroy.getStern().getI() + 1;
+        int endJ = (shipToDestroy.getStern().getJ() + 1 > GRID_HEIGHT - 1) 
+                ? shipToDestroy.getStern().getJ() : shipToDestroy.getStern().getJ() + 1;
+
+        for(int  i = startI; i <= endI; i++)
+            for(int j = startJ; j <= endJ; j++){
+                if(shipToDestroy.inBounds(new Coordinates(i, j))){
+                    grid[i][j].setState(CellState.DESTROYED);
+                    cells.put(new Coordinates(i, j), grid[i][j]);
+                }
+                else if(grid[i][j].getState() == CellState.FREE)//осторожно тут
+                {
+                    grid[i][j].setState(CellState.HIT_MISSED);
+                    cells.put(new Coordinates(i, j), grid[i][j]);
+                }
+            }
+        return cells;
     }
 }

@@ -5,14 +5,13 @@
  */
 package matmik;
 
+import java.util.Map;
+
 /**
  *
  * @author Алескандр
  */
-public interface Opponent {
-    
-    Coordinates makeMove();
-    CellState checkMove(Coordinates move);
-    Ship destroyedShip();
-    void sendDestroyedShip(Ship ship);
+public interface BattleView {
+    void animate(Map<Coordinates,Cell> cellsToAnimate);
+    void gameEnd();
 }

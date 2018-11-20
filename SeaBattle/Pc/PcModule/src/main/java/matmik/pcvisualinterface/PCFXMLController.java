@@ -22,6 +22,7 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import matmik.BattleView;
 import matmik.Bounds;
 import matmik.CellState;
 import matmik.GlobalDisplayConstants;
@@ -32,7 +33,7 @@ import matmik.Ship;
  *
  * @author Ð�Ð»ÐµÑ�ÐºÐ°Ð½Ð´Ñ€
  */
-public class PCFXMLController implements Initializable {
+public class PCFXMLController implements Initializable,BattleView {
     
     @FXML
     private TabPane tabPane;
@@ -196,5 +197,13 @@ public class PCFXMLController implements Initializable {
     private void rotateBank(MouseEvent event) {
         placementController.rotateBank();
         drawPlacementBoard();
+    }
+
+    @FXML
+    private void toBattle(MouseEvent event) {
+    }
+
+    public void animate() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

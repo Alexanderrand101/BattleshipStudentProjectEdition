@@ -40,6 +40,7 @@
                         <Button layoutX="309.0" layoutY="251.0" mnemonicParsing="false" onMouseClicked="#clearBoard" text="Очистить" />
                         <Button layoutX="384.0" layoutY="250.0" mnemonicParsing="false" onMouseClicked="#placeShips" text="Авторасставить" />
                         <Button layoutX="493.0" layoutY="250.0" mnemonicParsing="false" onMouseClicked="#rotateBank" text="Повернуть" />
+                        <Button layoutX="351.0" layoutY="313.0" mnemonicParsing="false" onMouseClicked="#toBattle" text="В бой" />
                      </children>
                   </AnchorPane>
               </content>

@@ -13,6 +13,7 @@ public abstract class MachineOpponent implements Opponent{
 
     protected Field myField; 
     protected Field fleshbagsField; 
+    protected Ship lastDestroyedShip;
     
     public Field getMyField() {
         return myField;
@@ -33,7 +34,17 @@ public abstract class MachineOpponent implements Opponent{
     public abstract Coordinates makeMove();
 
     public CellState checkMove(Coordinates move) {
-        return myField.hit(move);
+        CellState hitResult = myField.hit(move);
+        if(hitResult == CellState.DESTROYED)
+            lastDestroyedShip = myField.shipAt(move);
+        return hitResult;
     }
     
+    public Ship destroyedShip(){
+        return lastDestroyedShip;
+    }
+    
+    public void sendDestroyedShip(Ship ship){
+        fleshbagsField.add(ship);
+    }
 }
