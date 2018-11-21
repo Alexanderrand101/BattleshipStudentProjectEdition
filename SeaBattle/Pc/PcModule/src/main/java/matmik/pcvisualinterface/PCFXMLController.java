@@ -7,6 +7,7 @@ package matmik.pcvisualinterface;
 
 import java.net.URL;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,12 +23,7 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import matmik.BattleView;
-import matmik.Bounds;
-import matmik.CellState;
-import matmik.GlobalDisplayConstants;
-import matmik.PlacementController;
-import matmik.Ship;
+import matmik.*;
 
 /**
  *
@@ -202,7 +198,11 @@ public class PCFXMLController implements Initializable,BattleView {
     private void toBattle(MouseEvent event) {
     }
 
-    public void animate() {
+    public void animate(Map<Coordinates,Cell> cellsToAnimate) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+	
+	public void gameEnd(){
+		
+	}
 }
