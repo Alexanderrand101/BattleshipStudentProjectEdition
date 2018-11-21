@@ -7,6 +7,19 @@
   <version>1.0-SNAPSHOT</version>
   <name>PcModule</name>
   <url>http://maven.apache.org</url>
+  <build>
+  <plugins>
+    <plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-compiler-plugin</artifactId>
+	<version>3.8.0</version>
+	<configuration>
+		<sourse>1.10</sourse>
+		<target>1.10</target>
+	</configuration>
+    </plugin>
+  </plugins>
+</build>
   <dependencies>
   	<dependency>
 	  <groupId>matmik</groupId>
@@ -19,5 +32,6 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
+    
   </dependencies>
 </project>
