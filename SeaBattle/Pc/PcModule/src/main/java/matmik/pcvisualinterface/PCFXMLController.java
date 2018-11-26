@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -46,10 +47,15 @@ public class PCFXMLController implements Initializable,BattleView {
     
     private ShipControl selectedShip;
     private PlacementController placementController;
+    private BattleController battleController;
     
     private GlobalDisplayConstants globalDisplayConstants;
     @FXML
     private Label stateLabel;
+    @FXML
+    private ImageView gameImage;
+    @FXML
+    private Tab gameTab;
     
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
@@ -196,13 +202,73 @@ public class PCFXMLController implements Initializable,BattleView {
 
     @FXML
     private void toBattle(MouseEvent event) {
+        Opponent opponent = new ZeroBrainsMachineOpponent();
+        Field opponentsField = new Field();
+        battleController = new BattleController(placementController.getField(), 
+                opponentsField, opponent, this ,true);
+        tabPane.getSelectionModel().select(gameTab); 
+        drawGameBoard();
+        battleController.gameStart();
     }
 
     public void animate(Map<Coordinates,Cell> cellsToAnimate) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Platform.runLater(
+                new Thread()
+                {
+                    @Override
+                    public void run(){
+                        drawGameBoard();
+                    }
+                }
+        );
     }
 	
-	public void gameEnd(){
+    public void gameEnd(){
 		
-	}
+    }
+
+    private void drawGameBoard() {
+        int cellSize = globalDisplayConstants.getShipCellSize();
+        Image cell = new Image("cell.png", cellSize, cellSize, true, true);
+        Image shipCell = new Image("shipCell.png", cellSize, cellSize, false, true);
+        Image candidate = new Image("candidate.png", cellSize, cellSize, true, true);
+        Image intersect = new Image("intersect.png", cellSize, cellSize, true, true);
+        Image nearshiparea = new Image("nearshiparea.png", cellSize, cellSize, true, true);
+        WritableImage placementField = new WritableImage(600, 300);
+        int baseOffsetX = globalDisplayConstants.getPlayerFieldBounds().getLeftBound();
+        int baseOffsetY = globalDisplayConstants.getPlayerFieldBounds().getTopBound();
+        //поле для расстановки
+        for(int i = 0; i < 10; i++)
+            for(int j = 0; j < 10; j++){
+                transferImage(cell, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
+                if(battleController.getPlayerGrid()[i][j].getState() == CellState.BUSY)
+                   transferImage(shipCell, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
+                if(battleController.getPlayerGrid()[i][j].getState() == CellState.HIT_MISSED)
+                   transferImage(candidate, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
+                if(battleController.getPlayerGrid()[i][j].getState() == CellState.HIT_DAMAGED)
+                   transferImage(intersect, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
+                if(battleController.getPlayerGrid()[i][j].getState() == CellState.DESTROYED)
+                   transferImage(nearshiparea, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
+            }
+        baseOffsetX = globalDisplayConstants.getOpponentFieldBounds().getLeftBound();
+        baseOffsetY = globalDisplayConstants.getOpponentFieldBounds().getTopBound();
+        for(int i = 0; i < 10; i++)
+            for(int j = 0; j < 10; j++){
+                transferImage(cell, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
+                if(battleController.getOpponentGrid()[i][j].getState() == CellState.BUSY)
+                   transferImage(shipCell, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
+                if(battleController.getOpponentGrid()[i][j].getState() == CellState.HIT_MISSED)
+                   transferImage(candidate, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
+                if(battleController.getOpponentGrid()[i][j].getState() == CellState.HIT_DAMAGED)
+                   transferImage(intersect, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
+                if(battleController.getOpponentGrid()[i][j].getState() == CellState.DESTROYED)
+                   transferImage(nearshiparea, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
+            }
+        gameImage.setImage(placementField);
+    }
+
+    @FXML
+    private void hitPosition(MouseEvent event) {
+        battleController.hitAttempt((int)event.getX(), (int)event.getY());
+    }
 }

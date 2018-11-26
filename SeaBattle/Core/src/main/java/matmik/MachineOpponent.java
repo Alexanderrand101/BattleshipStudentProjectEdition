@@ -47,4 +47,8 @@ public abstract class MachineOpponent implements Opponent{
     public void sendDestroyedShip(Ship ship){
         fleshbagsField.add(ship);
     }
+    
+    public void responseDelivery(Coordinates coord, CellState state){
+        fleshbagsField.getGrid()[coord.getI()][coord.getJ()].setState(state);
+    }
 }

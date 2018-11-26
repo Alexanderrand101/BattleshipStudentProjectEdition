@@ -150,8 +150,8 @@ public class Field implements ShipContainer{
     }
     
     private void embedShip(Ship ship){
-        for(int i = ship.getBow().getJ(); i <= ship.getStern().getJ(); i++)
-            for(int j = ship.getBow().getI(); j <= ship.getStern().getI(); j++)
+        for(int i = ship.getBow().getI(); i <= ship.getStern().getI(); i++)
+            for(int j = ship.getBow().getJ(); j <= ship.getStern().getJ(); j++)
                 grid[i][j].setShip(ship);
     }
     //todo validation for file loading for game and for placement

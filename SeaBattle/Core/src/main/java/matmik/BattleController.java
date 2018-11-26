@@ -5,6 +5,9 @@
  */
 package matmik;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
@@ -20,6 +23,7 @@ import java.util.logging.Logger;
 public class BattleController {
     private final Semaphore semaphore1 = new Semaphore(1);
     private final Semaphore semaphore2 = new Semaphore(1);
+    private GlobalDisplayConstants displayConstants;
     private Field playerField;
     private Field opponentField;
     private Opponent opponent;
@@ -30,10 +34,12 @@ public class BattleController {
     public BattleController(Field playerField, Field opponentField, 
             Opponent opponent, BattleView battleView, boolean initialMoveOrder) {
         this.playerField = playerField;
+        playerField.gameInit();
         this.opponentField = opponentField;
         this.opponent = opponent;
         this.battleView = battleView;
         this.moveOrder = initialMoveOrder;
+        this.displayConstants = GlobalDisplayConstants.getInstance();
         try {
             semaphore2.acquire();
             semaphore1.acquire();
@@ -73,20 +79,24 @@ public class BattleController {
                             }
                         }
                         else{
-                            switch(playerField.hit(opponent.makeMove())){
+                            Coordinates opponentHitCoordinates = opponent.makeMove();
+                            switch(playerField.hit(opponentHitCoordinates)){
                                 case HIT_MISSED: 
+                                    opponent.responseDelivery(opponentHitCoordinates, CellState.HIT_MISSED);
                                     moveOrder = true;
-                                    playerField.setMiss(hitCoordinates);
                                     toAnimate = new HashMap<Coordinates, Cell>();
-                                    toAnimate.put(hitCoordinates,playerField.cellAt(hitCoordinates));
+                                    toAnimate.put(opponentHitCoordinates,
+                                            playerField.cellAt(opponentHitCoordinates));
                                     break;
                                 case HIT_DAMAGED:
-                                    playerField.setHit(hitCoordinates);
+                                    opponent.responseDelivery(opponentHitCoordinates, CellState.HIT_DAMAGED);
                                     toAnimate = new HashMap<Coordinates, Cell>();
-                                    toAnimate.put(hitCoordinates,playerField.cellAt(hitCoordinates));
+                                    toAnimate.put(opponentHitCoordinates,
+                                            playerField.cellAt(opponentHitCoordinates));
                                     break;
                                 case DESTROYED:
-                                    Ship destroyedShip = playerField.shipAt(hitCoordinates);
+                                    opponent.responseDelivery(opponentHitCoordinates, CellState.DESTROYED);
+                                    Ship destroyedShip = playerField.shipAt(opponentHitCoordinates);
                                     opponent.sendDestroyedShip(destroyedShip);
                                     toAnimate = playerField.destroy(destroyedShip); 
                                     break;
@@ -97,7 +107,12 @@ public class BattleController {
                     } 
                 }
                 catch(Exception e){
-                    //game over
+                    try {
+                        FileWriter fwr = new FileWriter("log.txt");
+                        fwr.write(e.toString());
+                    } catch (IOException ex) {
+                        Logger.getLogger(BattleController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
             
@@ -114,6 +129,20 @@ public class BattleController {
                 semaphore2.release();
             }
         }
+    }
+    
+    public void hitAttempt(int x, int y){
+        if (displayConstants.getOpponentFieldBounds().inBounds(x, y)){
+            hit(displayConstants.cellAtOpponentField(x, y));
+        }
+    }
+
+    public Cell[][] getPlayerGrid() {
+        return playerField.getGrid();
+    }
+
+    public Cell[][] getOpponentGrid() {
+        return opponentField.getGrid();
     }
     
     

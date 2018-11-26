@@ -130,4 +130,8 @@ public class PlacementController {
     public void rotateBank() {
         shipBank.rotate();
     }
+    
+    public Field getField(){
+        return field;
+    }
 }

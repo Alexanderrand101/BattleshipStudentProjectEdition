@@ -45,6 +45,15 @@
                   </AnchorPane>
               </content>
             </Tab>
+            <Tab fx:id="gameTab" text="Game Tab">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fx:id="gameImage" fitHeight="300.0" fitWidth="600.0" onMouseClicked="#hitPosition" onMousePressed="#pickShip" onMouseReleased="#dropShip" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
         </tabs>
       </TabPane>
     </children>

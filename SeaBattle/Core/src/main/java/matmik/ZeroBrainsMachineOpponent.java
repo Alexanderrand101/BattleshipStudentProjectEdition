@@ -21,6 +21,8 @@ public class ZeroBrainsMachineOpponent extends MachineOpponent{
         Field emptyField = new Field();
         RandomAutoPlacer.placeShips(emptyField, ShipUtils.defaultShipList());
         setMyField(emptyField);
+        myField.gridRefresh();
+        myField.gameInit();
     }
     
     @Override

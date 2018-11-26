@@ -73,6 +73,14 @@ public class GlobalDisplayConstants {
                 );
     }
     
+    public Coordinates cellAtOpponentField(int x, int y){
+        return new Coordinates((y - opponentFieldBounds.getTopBound()) * 10 /
+                (opponentFieldBounds.getBottomBound() - opponentFieldBounds.getTopBound()),
+                (x - opponentFieldBounds.getLeftBound()) * 10 /
+                (opponentFieldBounds.getRightBound() - opponentFieldBounds.getLeftBound())  
+                );
+    }
+    
     public int lengthOfShipInBank(int x, int y)
     {
         for(int i = 0; i < 4; i++){
@@ -108,7 +116,7 @@ public class GlobalDisplayConstants {
         opponentFieldBounds.setTopBound(sizey / 9);
         opponentFieldBounds.setBottomBound(opponentFieldBounds.getTopBound() + shipCellSize * 10);
         opponentFieldBounds.setLeftBound(sizex / 16 + playerFieldBounds.getRightBound());
-        opponentFieldBounds.setBottomBound(opponentFieldBounds.getTopBound() + shipCellSize * 10);
+        opponentFieldBounds.setRightBound(opponentFieldBounds.getLeftBound() + shipCellSize * 10);
         shipBankBounds.setTopBound(sizey / 9);
         shipBankBounds.setBottomBound(shipBankBounds.getTopBound() + shipCellSize * 8);
         shipBankBounds.setLeftBound(sizex / 16 + playerFieldBounds.getRightBound());

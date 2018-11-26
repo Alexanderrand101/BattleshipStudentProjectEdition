@@ -13,6 +13,7 @@ public interface Opponent {
     
     Coordinates makeMove();
     CellState checkMove(Coordinates move);
+    void responseDelivery(Coordinates coords, CellState result);
     Ship destroyedShip();
     void sendDestroyedShip(Ship ship);
 }
