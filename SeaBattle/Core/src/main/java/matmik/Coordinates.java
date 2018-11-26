@@ -7,13 +7,18 @@ package matmik;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
 
 /**
  *
  * @author Алескандр
  */
+@Root
 public class Coordinates implements Cloneable{
+    @Element
     private int i;
+    @Element
     private int j;
 
     public int getI() {

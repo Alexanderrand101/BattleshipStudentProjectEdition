@@ -5,13 +5,12 @@
  */
 package matmik;
 
-import org.simpleframework.xml.Root;
-
 /**
  *
  * @author Алескандр
  */
-@Root
-public enum CellState {
-    FREE, HIT_MISSED, HIT_DAMAGED, DESTROYED, BUSY, NEAR_SHIP_AREA, INTERSECTION, CANDIDATE
+public interface AbstractHostConnector {
+    
+    AbstractConnector open();
+    
 }

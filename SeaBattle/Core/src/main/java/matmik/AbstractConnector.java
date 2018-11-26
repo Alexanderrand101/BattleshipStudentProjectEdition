@@ -5,13 +5,15 @@
  */
 package matmik;
 
-import org.simpleframework.xml.Root;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  *
  * @author Алескандр
  */
-@Root
-public enum CellState {
-    FREE, HIT_MISSED, HIT_DAMAGED, DESTROYED, BUSY, NEAR_SHIP_AREA, INTERSECTION, CANDIDATE
+public interface AbstractConnector {
+    
+    InputStream in();
+    OutputStream out();
 }

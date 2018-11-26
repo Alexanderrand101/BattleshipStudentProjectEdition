@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
@@ -44,6 +45,12 @@ public class PCFXMLController implements Initializable,BattleView {
     private Tab setDifficultyTab;
     @FXML
     private Tab placementTab;
+    @FXML
+    private Tab inputIpTab;
+    @FXML
+    private TextField inputIP;
+    @FXML
+    private Tab hostOrGuestTab;
     
     private ShipControl selectedShip;
     private PlacementController placementController;
@@ -61,6 +68,21 @@ public class PCFXMLController implements Initializable,BattleView {
         // TODO
     }    
 
+    @FXML
+    private void asHost(MouseEvent event){
+        SocketHostConnector
+    }
+    
+    @FXML
+    private void asGuest(MouseEvent event){
+        
+    }
+    
+    @FXML
+    private void connectTo(MouseEvent event){
+        
+    }
+    
     @FXML
     private void initForPC(MouseEvent event) {
         tabPane.getSelectionModel().select(setDifficultyTab); 
