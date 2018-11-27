@@ -5,10 +5,16 @@
  */
 package matmik.pcvisualinterface;
 
+import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.simpleframework.xml.core.Persister;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,7 +35,7 @@ import matmik.*;
 
 /**
  *
- * @author Ð�Ð»ÐµÑ�ÐºÐ°Ð½Ð´Ñ€
+ * @author Ã�ï¿½Ã�Â»Ã�ÂµÃ‘ï¿½Ã�ÂºÃ�Â°Ã�Â½Ã�Â´Ã‘â‚¬
  */
 public class PCFXMLController implements Initializable,BattleView {
     
@@ -52,6 +58,8 @@ public class PCFXMLController implements Initializable,BattleView {
     @FXML
     private Tab hostOrGuestTab;
     
+    private boolean isHost;
+    private HumanOpponent hopponent;
     private ShipControl selectedShip;
     private PlacementController placementController;
     private BattleController battleController;
@@ -70,17 +78,33 @@ public class PCFXMLController implements Initializable,BattleView {
 
     @FXML
     private void asHost(MouseEvent event){
-        SocketHostConnector
+    	isHost = true;
+    	hopponent = new GuestOpponent(new SocketHostConnector(4444).open());
+    	tabPane.getSelectionModel().select(placementTab);
+        placementController = new PlacementController(
+                (int)placementImage.fitWidthProperty().get(),
+                (int)placementImage.fitHeightProperty().get());
+        globalDisplayConstants = placementController.getDisplayConstants();
+        drawPlacementBoard();
+    	tabPane.getSelectionModel().select(placementTab);
     }
     
     @FXML
     private void asGuest(MouseEvent event){
-        
+    	isHost = false;
+    	tabPane.getSelectionModel().select(inputIpTab);
     }
     
     @FXML
     private void connectTo(MouseEvent event){
-        
+    	hopponent = new HostOpponent(new SocketConnector(inputIP.getText(), 4444));
+    	tabPane.getSelectionModel().select(placementTab);
+        placementController = new PlacementController(
+                (int)placementImage.fitWidthProperty().get(),
+                (int)placementImage.fitHeightProperty().get());
+        globalDisplayConstants = placementController.getDisplayConstants();
+        drawPlacementBoard();
+        tabPane.getSelectionModel().select(placementTab);
     }
     
     @FXML
@@ -98,7 +122,7 @@ public class PCFXMLController implements Initializable,BattleView {
         WritableImage placementField = new WritableImage(600, 300);
         int baseOffsetX = globalDisplayConstants.getPlayerFieldBounds().getLeftBound();
         int baseOffsetY = globalDisplayConstants.getPlayerFieldBounds().getTopBound();
-        //поле для расстановки
+        //Ð¿Ð¾Ð»Ðµ Ð´Ð»Ñ� Ñ€Ð°Ñ�Ñ�Ñ‚Ð°Ð½Ð¾Ð²ÐºÐ¸
         for(int i = 0; i < 10; i++)
             for(int j = 0; j < 10; j++){
                 transferImage(cell, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
@@ -111,7 +135,7 @@ public class PCFXMLController implements Initializable,BattleView {
                 if(placementController.getGrid()[i][j].getState() == CellState.NEAR_SHIP_AREA)
                    transferImage(nearshiparea, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
             }
-        //банк икорабли в нем
+        //Ð±Ð°Ð½Ðº Ð¸ÐºÐ¾Ñ€Ð°Ð±Ð»Ð¸ Ð² Ð½ÐµÐ¼
         Bounds bankBounds;
         List<Bounds> shipBounds;
         if (!placementController.bankRotated()){
@@ -154,6 +178,7 @@ public class PCFXMLController implements Initializable,BattleView {
 
     @FXML
     private void initForHuman(MouseEvent event) {
+    	tabPane.getSelectionModel().select(hostOrGuestTab);
     }
 
     @FXML
@@ -224,10 +249,27 @@ public class PCFXMLController implements Initializable,BattleView {
 
     @FXML
     private void toBattle(MouseEvent event) {
-        Opponent opponent = new ZeroBrainsMachineOpponent();
+    	Opponent opponent = null;
+    	if (hopponent == null) {
+    		opponent = new ZeroBrainsMachineOpponent();
+    	}else {
+    		if(isHost) {
+    			try {
+					((GuestOpponent)hopponent).acceptReady();
+				} catch (Exception e) {
+					Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, null, e);
+				}
+    		}
+    		else ((HostOpponent)hopponent).ready();
+    	}
+    	try {
+			new Persister().write(new Coordinates(-1,-1), new File("test.txt"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         Field opponentsField = new Field();
         battleController = new BattleController(placementController.getField(), 
-                opponentsField, opponent, this ,true);
+                opponentsField, opponent, this ,isHost);
         tabPane.getSelectionModel().select(gameTab); 
         drawGameBoard();
         battleController.gameStart();
@@ -259,7 +301,7 @@ public class PCFXMLController implements Initializable,BattleView {
         WritableImage placementField = new WritableImage(600, 300);
         int baseOffsetX = globalDisplayConstants.getPlayerFieldBounds().getLeftBound();
         int baseOffsetY = globalDisplayConstants.getPlayerFieldBounds().getTopBound();
-        //поле для расстановки
+        //Ð¿Ð¾Ð»Ðµ Ð´Ð»Ñ� Ñ€Ð°Ñ�Ñ�Ñ‚Ð°Ð½Ð¾Ð²ÐºÐ¸
         for(int i = 0; i < 10; i++)
             for(int j = 0; j < 10; j++){
                 transferImage(cell, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);

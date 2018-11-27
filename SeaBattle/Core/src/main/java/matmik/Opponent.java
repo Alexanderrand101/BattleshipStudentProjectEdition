@@ -7,13 +7,13 @@ package matmik;
 
 /**
  *
- * @author Алескандр
+ * @author Ð�Ð»ÐµÑ�ÐºÐ°Ð½Ð´Ñ€
  */
 public interface Opponent {
     
-    Coordinates makeMove();
-    CellState checkMove(Coordinates move);
-    void responseDelivery(Coordinates coords, CellState result);
-    Ship destroyedShip();
-    void sendDestroyedShip(Ship ship);
+    Coordinates makeMove() throws Exception;
+    CellState checkMove(Coordinates move) throws Exception;
+    void responseDelivery(Coordinates coords, CellState result) throws Exception;
+    Ship destroyedShip() throws Exception;
+    void sendDestroyedShip(Ship ship) throws Exception;
 }

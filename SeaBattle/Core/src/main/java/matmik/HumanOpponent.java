@@ -5,6 +5,7 @@
  */
 package matmik;
 
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.simpleframework.xml.Serializer;
@@ -12,55 +13,32 @@ import org.simpleframework.xml.core.Persister;
 
 /**
  *
- * @author Алескандр
+ * @author Ð�Ð»ÐµÑ�ÐºÐ°Ð½Ð´Ñ€
  */
 public abstract class HumanOpponent implements Opponent {
     
     AbstractConnector connector;
     
-    public Coordinates makeMove() {
-        try {
+    public Coordinates makeMove() throws Exception {
             return new Persister().read(Coordinates.class, connector.in());
-        } catch (Exception ex) {
-            Logger.getLogger(HumanOpponent.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
     }
 
-    public CellState checkMove(Coordinates move) {
-        try {
+    public CellState checkMove(Coordinates move) throws Exception {
             Serializer sc = new Persister();
             sc.write(move, connector.out());
-            return sc.read(CellState.class, connector.in());
-        } catch (Exception ex) {
-            Logger.getLogger(HumanOpponent.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+            return sc.read(BodgeEnumWrap.class, connector.in()).getState();
     }
 
-    public void responseDelivery(Coordinates coords, CellState result) {
-        try {
-            new Persister().write(result, connector.out());
-        } catch (Exception ex) {
-            Logger.getLogger(HumanOpponent.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void responseDelivery(Coordinates coords, CellState result) throws Exception {
+            new Persister().write(new BodgeEnumWrap(result), connector.out());
     }
 
-    public Ship destroyedShip() {
-        try {
+    public Ship destroyedShip() throws Exception {
             return (Ship)new Persister().read(Ship.class, connector.in());
-        } catch (Exception ex) {
-            Logger.getLogger(HumanOpponent.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
     }
 
-    public void sendDestroyedShip(Ship ship) {
-        try {
+    public void sendDestroyedShip(Ship ship) throws Exception {
             new Persister().write(ship, connector.out());
-        } catch (Exception ex) {
-            Logger.getLogger(HumanOpponent.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
 }

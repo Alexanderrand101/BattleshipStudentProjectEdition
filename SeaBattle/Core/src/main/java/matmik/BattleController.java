@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Алескандр
+ * @author Ð�Ð»ÐµÑ�ÐºÐ°Ð½Ð´Ñ€
  */
 public class BattleController {
     private final Semaphore semaphore1 = new Semaphore(1);
@@ -58,7 +58,8 @@ public class BattleController {
                         if(moveOrder){
                             semaphore2.release();
                             semaphore1.acquire();
-                            switch(opponent.checkMove(hitCoordinates)){
+                            CellState res = opponent.checkMove(hitCoordinates);
+                            switch(res){
                                 case HIT_MISSED: 
                                     moveOrder = false;
                                     opponentField.setMiss(hitCoordinates);
@@ -107,12 +108,7 @@ public class BattleController {
                     } 
                 }
                 catch(Exception e){
-                    try {
-                        FileWriter fwr = new FileWriter("log.txt");
-                        fwr.write(e.toString());
-                    } catch (IOException ex) {
-                        Logger.getLogger(BattleController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, null, e);
                 }
             }
             

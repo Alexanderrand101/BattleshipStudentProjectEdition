@@ -10,10 +10,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import matmik.BodgeGlobalLogger;
 
 /**
  *
- * @author Алескандр
+ * @author Ð�Ð»ÐµÑ�ÐºÐ°Ð½Ð´Ñ€
  */
 public class PCVisualInterface extends Application {
     
@@ -25,6 +26,7 @@ public class PCVisualInterface extends Application {
         scene.getStylesheets().add("hide-tab.css");
         stage.setScene(scene);
         stage.show();
+        BodgeGlobalLogger.setup();
     }
 
     /**

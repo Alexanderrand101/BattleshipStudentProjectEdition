@@ -11,7 +11,7 @@ import org.simpleframework.xml.core.Persister;
 
 /**
  *
- * @author Алескандр
+ * @author Ð�Ð»ÐµÑ�ÐºÐ°Ð½Ð´Ñ€
  */
 public class GuestOpponent extends HumanOpponent{
     
@@ -19,11 +19,7 @@ public class GuestOpponent extends HumanOpponent{
         this.connector = connector;
     }
     
-    public void acceptReady(){
-        try {
-            Coordinates x = (Coordinates)new Persister().read(Coordinates.class, connector.in());
-        } catch (Exception ex) {
-            Logger.getLogger(GuestOpponent.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void acceptReady() throws Exception{
+            Coordinates x = new Persister().read(Coordinates.class, connector.in());
     }
 }
