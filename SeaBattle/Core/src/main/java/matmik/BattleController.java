@@ -8,6 +8,7 @@ package matmik;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
@@ -15,6 +16,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.simpleframework.xml.core.Persister;
 
 /**
  *
@@ -73,6 +75,10 @@ public class BattleController {
                                     break;
                                 case DESTROYED:
                                     Ship destroyedShip = opponent.destroyedShip();
+//                                    if (destroyedShip != null)
+//                                    Logger.getLogger(Logger.GLOBAL_LOGGER_NAME + "1").log(Level.SEVERE, serialize(destroyedShip));
+//                                    else 
+//                                    Logger.getLogger(Logger.GLOBAL_LOGGER_NAME + "1").log(Level.SEVERE, "null");    
                                     opponentField.add(destroyedShip);
                                     toAnimate = opponentField.destroy(destroyedShip); 
                                     break;
@@ -98,6 +104,10 @@ public class BattleController {
                                 case DESTROYED:
                                     opponent.responseDelivery(opponentHitCoordinates, CellState.DESTROYED);
                                     Ship destroyedShip = playerField.shipAt(opponentHitCoordinates);
+//                                    if (destroyedShip != null)
+//                                    Logger.getLogger(Logger.GLOBAL_LOGGER_NAME + "1").log(Level.SEVERE, serialize(destroyedShip));
+//                                    else 
+//                                    Logger.getLogger(Logger.GLOBAL_LOGGER_NAME + "1").log(Level.SEVERE, "null"); 
                                     opponent.sendDestroyedShip(destroyedShip);
                                     toAnimate = playerField.destroy(destroyedShip); 
                                     break;
@@ -125,6 +135,12 @@ public class BattleController {
                 semaphore2.release();
             }
         }
+    }
+    
+    private String serialize(Ship ship) throws Exception{
+        StringWriter str = new StringWriter();
+        new Persister().write(ship, str);
+        return str.toString();
     }
     
     public void hitAttempt(int x, int y){

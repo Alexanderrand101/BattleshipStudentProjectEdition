@@ -20,6 +20,7 @@ public class GuestOpponent extends HumanOpponent{
     }
     
     public void acceptReady() throws Exception{
+            syncRead();
             Coordinates x = new Persister().read(Coordinates.class, connector.in());
     }
 }

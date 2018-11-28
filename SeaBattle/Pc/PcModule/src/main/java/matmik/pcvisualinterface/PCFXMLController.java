@@ -261,12 +261,8 @@ public class PCFXMLController implements Initializable,BattleView {
 				}
     		}
     		else ((HostOpponent)hopponent).ready();
+                opponent = hopponent;
     	}
-    	try {
-			new Persister().write(new Coordinates(-1,-1), new File("test.txt"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
         Field opponentsField = new Field();
         battleController = new BattleController(placementController.getField(), 
                 opponentsField, opponent, this ,isHost);

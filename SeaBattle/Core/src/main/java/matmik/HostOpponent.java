@@ -21,6 +21,7 @@ public class HostOpponent extends HumanOpponent{
     
     public void ready(){
         try {
+            syncWrite();
             new Persister().write(new Coordinates(-1, -1), connector.out());
         } catch (Exception ex) {
             Logger.getLogger(HostOpponent.class.getName()).log(Level.SEVERE, null, ex);
