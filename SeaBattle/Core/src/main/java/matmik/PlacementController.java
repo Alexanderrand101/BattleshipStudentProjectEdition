@@ -17,12 +17,11 @@ public class PlacementController {
     private Coordinates shipStartPos;
     private ShipContainer shipStartContainer;
     
-    public PlacementController(int sizex, int sizey){
+    public PlacementController(){
         field = new Field();
         shipBank = new ShipBank();
         shipBank.addRange(ShipUtils.defaultShipList());
         displayConstants = GlobalDisplayConstants.getInstanceAndUpdate();
-        displayConstants.CalcConstants(sizex, sizey);
     }
     
     public Cell[][] getGrid(){

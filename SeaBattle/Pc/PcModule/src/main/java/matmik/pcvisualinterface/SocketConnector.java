@@ -24,30 +24,20 @@ class SocketConnector implements AbstractConnector {
         socket = accept;
     }
 
-    public SocketConnector(String ip, int port) {
-        try {
+    public SocketConnector(String ip, int port) throws IOException {
             socket = new Socket(ip, port);
-        } catch (IOException ex) {
-            Logger.getLogger(SocketConnector.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
-    public InputStream in() {
-        try {
+    public InputStream in() throws IOException {
             return socket.getInputStream();
-        } catch (IOException ex) {
-            Logger.getLogger(SocketConnector.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
     }
 
-    public OutputStream out() {
-        try {
+    public OutputStream out() throws IOException {
             return socket.getOutputStream();
-        } catch (IOException ex) {
-            Logger.getLogger(SocketConnector.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+    }
+
+    public void close() throws Exception{
+        socket.close();
     }
     
 }

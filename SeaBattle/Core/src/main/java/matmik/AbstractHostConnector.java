@@ -11,6 +11,6 @@ package matmik;
  */
 public interface AbstractHostConnector {
     
-    AbstractConnector open();
-    
+    AbstractConnector open() throws Exception;
+    void close() throws Exception;
 }

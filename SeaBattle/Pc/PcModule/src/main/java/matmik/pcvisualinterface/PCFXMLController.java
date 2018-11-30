@@ -6,6 +6,7 @@
 package matmik.pcvisualinterface;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +38,7 @@ import matmik.*;
  *
  * @author Ã�ï¿½Ã�Â»Ã�ÂµÃ‘ï¿½Ã�ÂºÃ�Â°Ã�Â½Ã�Â´Ã‘â‚¬
  */
-public class PCFXMLController implements Initializable,BattleView {
+public class PCFXMLController implements Initializable,View {
     
     @FXML
     private TabPane tabPane;
@@ -57,12 +58,19 @@ public class PCFXMLController implements Initializable,BattleView {
     private TextField inputIP;
     @FXML
     private Tab hostOrGuestTab;
+    @FXML
+    private Tab hostWaitTab;
+    @FXML
+    private Tab hostTab;
+    @FXML
+    private Tab readyWaitTab;
     
     private boolean isHost;
     private HumanOpponent hopponent;
     private ShipControl selectedShip;
     private PlacementController placementController;
     private BattleController battleController;
+    private GlobalStateMachine globalStateMachine;
     
     private GlobalDisplayConstants globalDisplayConstants;
     @FXML
@@ -72,44 +80,62 @@ public class PCFXMLController implements Initializable,BattleView {
     @FXML
     private Tab gameTab;
     
+    @FXML
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        globalStateMachine = GlobalStateMachine.getInstance(this);
+        globalDisplayConstants = GlobalDisplayConstants.getInstanceAndUpdate();
+        globalDisplayConstants.CalcConstants((int)placementImage.fitWidthProperty().get(),
+                (int)placementImage.fitHeightProperty().get());
     }    
+    
+    @FXML
+    public void initialize(){
+        globalStateMachine = GlobalStateMachine.getInstance(this);
+        globalDisplayConstants = GlobalDisplayConstants.getInstanceAndUpdate();
+        globalDisplayConstants.CalcConstants((int)placementImage.fitWidthProperty().get(),
+                (int)placementImage.fitHeightProperty().get());
+    }
 
     @FXML
+    private void openConnection(MouseEvent event) throws IOException{
+        globalStateMachine.setUpAsHost(new SocketHostConnector(4444));
+    }
+    
+    @FXML
     private void asHost(MouseEvent event){
-    	isHost = true;
-    	hopponent = new GuestOpponent(new SocketHostConnector(4444).open());
-    	tabPane.getSelectionModel().select(placementTab);
-        placementController = new PlacementController(
-                (int)placementImage.fitWidthProperty().get(),
-                (int)placementImage.fitHeightProperty().get());
-        globalDisplayConstants = placementController.getDisplayConstants();
-        drawPlacementBoard();
-    	tabPane.getSelectionModel().select(placementTab);
+//    	isHost = true;
+//    	hopponent = new GuestOpponent(new SocketHostConnector(4444).open());
+//    	tabPane.getSelectionModel().select(placementTab);
+////        placementController = new PlacementController(
+////                (int)placementImage.fitWidthProperty().get(),
+////                (int)placementImage.fitHeightProperty().get());
+//        globalDisplayConstants = placementController.getDisplayConstants();
+//        drawPlacementBoard();
+//    	tabPane.getSelectionModel().select(placementTab);
+        globalStateMachine.pickedAsHost();
     }
     
     @FXML
     private void asGuest(MouseEvent event){
-    	isHost = false;
-    	tabPane.getSelectionModel().select(inputIpTab);
+    	globalStateMachine.pickedAsGuest();
     }
     
     @FXML
-    private void connectTo(MouseEvent event){
-    	hopponent = new HostOpponent(new SocketConnector(inputIP.getText(), 4444));
-    	tabPane.getSelectionModel().select(placementTab);
-        placementController = new PlacementController(
-                (int)placementImage.fitWidthProperty().get(),
-                (int)placementImage.fitHeightProperty().get());
-        globalDisplayConstants = placementController.getDisplayConstants();
-        drawPlacementBoard();
-        tabPane.getSelectionModel().select(placementTab);
+    private void connectTo(MouseEvent event) throws IOException{
+//    	hopponent = new HostOpponent(new SocketConnector(inputIP.getText(), 4444));
+//    	tabPane.getSelectionModel().select(placementTab);
+//        placementController = new PlacementController(
+//                (int)placementImage.fitWidthProperty().get(),
+//                (int)placementImage.fitHeightProperty().get());
+//        globalDisplayConstants = placementController.getDisplayConstants();
+//        drawPlacementBoard();
+//        tabPane.getSelectionModel().select(placementTab);
+        globalStateMachine.connectAsGuest(new SocketConnector(inputIP.getText(), 4444));
     }
     
     @FXML
     private void initForPC(MouseEvent event) {
-        tabPane.getSelectionModel().select(setDifficultyTab); 
+        globalStateMachine.pickedComputer();
     }
     
     private void drawPlacementBoard(){
@@ -178,17 +204,12 @@ public class PCFXMLController implements Initializable,BattleView {
 
     @FXML
     private void initForHuman(MouseEvent event) {
-    	tabPane.getSelectionModel().select(hostOrGuestTab);
+    	globalStateMachine.pickedHuman();
     }
 
     @FXML
     private void pickDifficultyEasy(MouseEvent event) {
-        tabPane.getSelectionModel().select(placementTab);
-        placementController = new PlacementController(
-                (int)placementImage.fitWidthProperty().get(),
-                (int)placementImage.fitHeightProperty().get());
-        globalDisplayConstants = placementController.getDisplayConstants();
-        drawPlacementBoard();
+        globalStateMachine.pickedDifficulty(OpponentSubType.MACHINE_DUMB);
     }
 
     @FXML
@@ -205,6 +226,11 @@ public class PCFXMLController implements Initializable,BattleView {
         drawPlacementBoard();
     }
 
+    @FXML 
+    private void back(MouseEvent event){
+        globalStateMachine.back();
+    }
+    
     @FXML
     private void moveShip(MouseEvent event) {
         if(selectedShip != null){
@@ -249,26 +275,27 @@ public class PCFXMLController implements Initializable,BattleView {
 
     @FXML
     private void toBattle(MouseEvent event) {
-    	Opponent opponent = null;
-    	if (hopponent == null) {
-    		opponent = new ZeroBrainsMachineOpponent();
-    	}else {
-    		if(isHost) {
-    			try {
-					((GuestOpponent)hopponent).acceptReady();
-				} catch (Exception e) {
-					Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, null, e);
-				}
-    		}
-    		else ((HostOpponent)hopponent).ready();
-                opponent = hopponent;
-    	}
-        Field opponentsField = new Field();
-        battleController = new BattleController(placementController.getField(), 
-                opponentsField, opponent, this ,isHost);
-        tabPane.getSelectionModel().select(gameTab); 
-        drawGameBoard();
-        battleController.gameStart();
+//    	Opponent opponent = null;
+//    	if (hopponent == null) {
+//    		opponent = new ZeroBrainsMachineOpponent();
+//    	}else {
+//    		if(isHost) {
+//    			try {
+//					((GuestOpponent)hopponent).acceptReady();
+//				} catch (Exception e) {
+//					Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, null, e);
+//				}
+//    		}
+//    		else ((HostOpponent)hopponent).ready();
+//                opponent = hopponent;
+//    	}
+//        Field opponentsField = new Field();
+//        battleController = new BattleController(placementController.getField(), 
+//                opponentsField, opponent, this ,isHost);
+//        tabPane.getSelectionModel().select(gameTab); 
+//        drawGameBoard();
+//        battleController.gameStart();
+        globalStateMachine.toBattle();
     }
 
     public void animate(Map<Coordinates,Cell> cellsToAnimate) {
@@ -330,5 +357,55 @@ public class PCFXMLController implements Initializable,BattleView {
     @FXML
     private void hitPosition(MouseEvent event) {
         battleController.hitAttempt((int)event.getX(), (int)event.getY());
+    }
+
+    public void stateTransition(final ViewState state){
+        Platform.runLater(new Runnable(){
+
+            public void run() {
+               uiStateTransition(state);
+            }
+                    
+        });
+    }
+    
+    private void uiStateTransition(ViewState state) {
+        switch(state){
+            case START_PAGE:
+                tabPane.getSelectionModel().select(titleTab);
+                break;
+            case LOAD_SAVE:
+                break;
+            case PLACEMENT:
+                placementController = globalStateMachine.getPlacementController();
+                drawPlacementBoard();
+                tabPane.getSelectionModel().select(placementTab);
+                break;
+            case DIFFICULTY_SELECTOR:
+                tabPane.getSelectionModel().select(setDifficultyTab);
+                break;
+            case HOST_OR_GUEST:
+                tabPane.getSelectionModel().select(hostOrGuestTab);
+                break;
+            case GUEST_PAGE:
+                tabPane.getSelectionModel().select(inputIpTab);
+                break;
+            case HOST_PAGE:
+                tabPane.getSelectionModel().select(hostTab);
+                break;
+            case HOST_WAITING_PAGE:
+                tabPane.getSelectionModel().select(hostWaitTab);
+                break;
+            case READY_WAITING_PAGE:
+                tabPane.getSelectionModel().select(readyWaitTab);
+                break;
+            case GAME_PAGE:
+                battleController = globalStateMachine.getBattleController();
+                drawGameBoard();
+                battleController.gameStart();
+                tabPane.getSelectionModel().select(gameTab);
+                break;
+            default:;
+        }
     }
 }

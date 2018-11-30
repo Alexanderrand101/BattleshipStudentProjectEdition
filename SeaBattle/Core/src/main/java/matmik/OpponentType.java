@@ -5,16 +5,10 @@
  */
 package matmik;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-
 /**
  *
  * @author Алескандр
  */
-public interface AbstractConnector {
-    
-    InputStream in() throws Exception;
-    OutputStream out() throws Exception;
-    void close() throws Exception;
+public enum OpponentType {
+    HUMAN, MACHINE
 }

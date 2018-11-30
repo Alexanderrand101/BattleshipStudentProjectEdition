@@ -19,21 +19,16 @@ import matmik.AbstractHostConnector;
 public class SocketHostConnector implements AbstractHostConnector{
     ServerSocket hostSocket;
     
-    public SocketHostConnector(int port){
-        try {
-            hostSocket = new ServerSocket(port);
-        } catch (IOException ex) {
-            Logger.getLogger(SocketHostConnector.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public SocketHostConnector(int port) throws IOException{
+        hostSocket = new ServerSocket(port);
     }
     
-    public AbstractConnector open() {
-        try {
-            return new SocketConnector(hostSocket.accept());
-        } catch (IOException ex) {
-            Logger.getLogger(SocketHostConnector.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+    public AbstractConnector open() throws IOException {
+        return new SocketConnector(hostSocket.accept());
+    }
+
+    public void close() throws Exception {
+        hostSocket.close();
     }
     
 }

@@ -19,12 +19,10 @@ public class HostOpponent extends HumanOpponent{
         this.connector = connector;
     }
     
-    public void ready(){
-        try {
+    public void ready() throws Exception{       
+            syncRead();
+            new Persister().read(Coordinates.class, connector.in());
             syncWrite();
             new Persister().write(new Coordinates(-1, -1), connector.out());
-        } catch (Exception ex) {
-            Logger.getLogger(HostOpponent.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 }

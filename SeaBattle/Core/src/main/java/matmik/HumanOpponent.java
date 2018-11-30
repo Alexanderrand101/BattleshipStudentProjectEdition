@@ -25,6 +25,12 @@ public abstract class HumanOpponent implements Opponent {
     boolean readAllowed = true;
     boolean writeAllowed = true;
     
+    public abstract void ready() throws Exception;
+    
+    public void leave() throws Exception{
+        connector.close();
+    }
+    
     public Coordinates makeMove() throws Exception {
             syncRead();
             return new Persister().read(Coordinates.class, connector.in());

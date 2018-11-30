@@ -15,12 +15,17 @@ import org.simpleframework.xml.core.Persister;
  */
 public class GuestOpponent extends HumanOpponent{
     
-    public GuestOpponent(AbstractConnector connector){
+    public GuestOpponent(){
+    }
+    
+    public void setConnectior(AbstractConnector connector){
         this.connector = connector;
     }
     
-    public void acceptReady() throws Exception{
+    public void ready() throws Exception{
+            syncWrite();
+            new Persister().write(new Coordinates(-1,-1), connector.out());
             syncRead();
-            Coordinates x = new Persister().read(Coordinates.class, connector.in());
+            new Persister().read(Coordinates.class, connector.in());
     }
 }

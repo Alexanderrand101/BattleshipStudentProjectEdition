@@ -5,13 +5,12 @@
  */
 package matmik;
 
-import java.util.Map;
-
 /**
  *
  * @author Алескандр
  */
-public interface BattleView {
-    void animate(Map<Coordinates,Cell> cellsToAnimate);
-    void gameEnd();
+public enum ViewState {
+    START_PAGE, LOAD_SAVE, PLACEMENT, DIFFICULTY_SELECTOR, HOST_OR_GUEST, GUEST_PAGE,
+    HOST_PAGE, GAME_PAGE, READY_WAITING_PAGE, HOST_WAITING_PAGE
+    
 }

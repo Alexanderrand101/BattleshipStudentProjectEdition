@@ -5,16 +5,14 @@
  */
 package matmik;
 
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.util.Map;
 
 /**
  *
  * @author Алескандр
  */
-public interface AbstractConnector {
-    
-    InputStream in() throws Exception;
-    OutputStream out() throws Exception;
-    void close() throws Exception;
+public interface View {
+    void stateTransition(ViewState state);
+    void animate(Map<Coordinates,Cell> cellsToAnimate);
+    void gameEnd();
 }

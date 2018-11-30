@@ -30,11 +30,11 @@ public class BattleController {
     private Field opponentField;
     private Opponent opponent;
     private Coordinates hitCoordinates;
-    private BattleView battleView;
+    private View battleView;
     private boolean moveOrder;
     
     public BattleController(Field playerField, Field opponentField, 
-            Opponent opponent, BattleView battleView, boolean initialMoveOrder) {
+            Opponent opponent, View battleView, boolean initialMoveOrder) {
         this.playerField = playerField;
         playerField.gameInit();
         this.opponentField = opponentField;
