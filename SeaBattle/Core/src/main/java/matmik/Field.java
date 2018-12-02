@@ -11,15 +11,19 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import org.simpleframework.xml.ElementList;
+import org.simpleframework.xml.Root;
 
 /**
  *
  * @author Алескандр
  */
+@Root
 public class Field implements ShipContainer{
         
     private static final int GRID_WIDTH = 10;
     private static final int GRID_HEIGHT = 10;
+    @ElementList
     private List<Ship> ships = new LinkedList<Ship>();
     private Cell[][] grid = new Cell[GRID_HEIGHT][GRID_WIDTH];
     private boolean initializedForGame = false;

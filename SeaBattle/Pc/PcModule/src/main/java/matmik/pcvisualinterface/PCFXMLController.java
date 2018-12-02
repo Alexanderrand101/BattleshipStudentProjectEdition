@@ -31,7 +31,9 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import matmik.*;
 
 /**
@@ -64,6 +66,8 @@ public class PCFXMLController implements Initializable,View {
     private Tab hostTab;
     @FXML
     private Tab readyWaitTab;
+    @FXML
+    private AnchorPane mainAnchor; 
     
     private boolean isHost;
     private HumanOpponent hopponent;
@@ -80,20 +84,34 @@ public class PCFXMLController implements Initializable,View {
     @FXML
     private Tab gameTab;
     
-    @FXML
-    public void initialize(URL url, ResourceBundle rb) {
+    private int sizex, sizey;
+    
+    private void reDrawView(){
         globalStateMachine = GlobalStateMachine.getInstance(this);
         globalDisplayConstants = GlobalDisplayConstants.getInstanceAndUpdate();
+//        placementImage.setFitHeight(sizey * 0.8);
+//        placementImage.setFitWidth(sizex);
+//        gameImage.setFitHeight(sizey * 0.8);
+//        gameImage.setFitWidth(sizex);
         globalDisplayConstants.CalcConstants((int)placementImage.fitWidthProperty().get(),
-                (int)placementImage.fitHeightProperty().get());
-    }    
+                (int)(placementImage.fitHeightProperty().get() * 0.9));
+        gameImage.setFitHeight(placementImage.fitHeightProperty().get());
+        gameImage.setFitWidth(placementImage.fitWidthProperty().get());
+    }
     
     @FXML
-    public void initialize(){
-        globalStateMachine = GlobalStateMachine.getInstance(this);
-        globalDisplayConstants = GlobalDisplayConstants.getInstanceAndUpdate();
-        globalDisplayConstants.CalcConstants((int)placementImage.fitWidthProperty().get(),
-                (int)placementImage.fitHeightProperty().get());
+    public void initialize(URL url, ResourceBundle rb) {
+        reDrawView();
+    }    
+    
+//    public PCFXMLController(int x, int y){
+//        sizex = x;
+//        sizey = y;
+//    }
+    
+    @FXML
+    public void initialize(){   
+        reDrawView();
     }
 
     @FXML
@@ -145,7 +163,8 @@ public class PCFXMLController implements Initializable,View {
         Image candidate = new Image("candidate.png", cellSize, cellSize, true, true);
         Image intersect = new Image("intersect.png", cellSize, cellSize, true, true);
         Image nearshiparea = new Image("nearshiparea.png", cellSize, cellSize, true, true);
-        WritableImage placementField = new WritableImage(600, 300);
+        WritableImage placementField = new WritableImage((int)placementImage.fitWidthProperty().get(),
+                (int)placementImage.fitHeightProperty().get());
         int baseOffsetX = globalDisplayConstants.getPlayerFieldBounds().getLeftBound();
         int baseOffsetY = globalDisplayConstants.getPlayerFieldBounds().getTopBound();
         //Ð¿Ð¾Ð»Ðµ Ð´Ð»Ñ� Ñ€Ð°Ñ�Ñ�Ñ‚Ð°Ð½Ð¾Ð²ÐºÐ¸
@@ -321,7 +340,8 @@ public class PCFXMLController implements Initializable,View {
         Image candidate = new Image("candidate.png", cellSize, cellSize, true, true);
         Image intersect = new Image("intersect.png", cellSize, cellSize, true, true);
         Image nearshiparea = new Image("nearshiparea.png", cellSize, cellSize, true, true);
-        WritableImage placementField = new WritableImage(600, 300);
+        WritableImage placementField = new WritableImage((int)placementImage.fitWidthProperty().get(),
+                (int)placementImage.fitHeightProperty().get());
         int baseOffsetX = globalDisplayConstants.getPlayerFieldBounds().getLeftBound();
         int baseOffsetY = globalDisplayConstants.getPlayerFieldBounds().getTopBound();
         //Ð¿Ð¾Ð»Ðµ Ð´Ð»Ñ� Ñ€Ð°Ñ�Ñ�Ñ‚Ð°Ð½Ð¾Ð²ÐºÐ¸

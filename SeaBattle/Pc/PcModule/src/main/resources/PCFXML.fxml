@@ -6,7 +6,6 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -14,22 +13,20 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" minHeight="400.0" minWidth="600.0" pickOnBounds="false" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="matmik.pcvisualinterface.PCFXMLController">
+<!-- fx:controller="matmik.pcvisualinterface.PCFXMLController" removed in order to set values before init-->
+
+<AnchorPane id="AnchorPane" fx:id="mainAnchor" minHeight="400.0" minWidth="600.0" pickOnBounds="false" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="matmik.pcvisualinterface.PCFXMLController">
     <children>
-      <SplitPane dividerPositions="0.1" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0">
+      <SplitPane dividerPositions="0.1" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <ToolBar prefHeight="40.0" prefWidth="200.0">
-                    <items>
-                      <Button mnemonicParsing="false" onMouseClicked="#back" text="Назад" />
-                    </items>
-                  </ToolBar>
+                <Button layoutX="543.0" layoutY="6.0" mnemonicParsing="false" onMouseClicked="#back" text="Назад" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="248.0" prefWidth="598.0">
                <children>
-                  <TabPane fx:id="tabPane" pickOnBounds="false" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
+                  <TabPane fx:id="tabPane" pickOnBounds="false" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <tabs>
                       <Tab id="titleTab" fx:id="titleTab" text="TitleTab">
                         <content>
@@ -75,14 +72,15 @@
                       </Tab>
                         <Tab id="placementTab" fx:id="placementTab" text="PlacementTab">
                           <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <AnchorPane fx:id="placementAnchor" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
                                     <Label fx:id="stateLabel" text="Label" />
-                                    <ImageView fx:id="placementImage" fitHeight="300.0" fitWidth="600.0" layoutY="25.0" onMouseDragged="#moveShip" onMousePressed="#pickShip" onMouseReleased="#dropShip" pickOnBounds="true" preserveRatio="true" />
-                                    <Button layoutX="309.0" layoutY="251.0" mnemonicParsing="false" onMouseClicked="#clearBoard" text="Очистить" />
-                                    <Button layoutX="384.0" layoutY="250.0" mnemonicParsing="false" onMouseClicked="#placeShips" text="Авторасставить" />
-                                    <Button layoutX="493.0" layoutY="250.0" mnemonicParsing="false" onMouseClicked="#rotateBank" text="Повернуть" />
-                                    <Button layoutX="351.0" layoutY="313.0" mnemonicParsing="false" onMouseClicked="#toBattle" text="В бой" />
+                                    <ImageView fx:id="placementImage" fitHeight="327.0" fitWidth="600.0" layoutY="25.0" onMouseDragged="#moveShip" onMousePressed="#pickShip" onMouseReleased="#dropShip" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <Button layoutX="317.0" layoutY="217.0" mnemonicParsing="false" onMouseClicked="#clearBoard" text="Очистить" />
+                                    <Button layoutX="391.0" layoutY="217.0" mnemonicParsing="false" onMouseClicked="#placeShips" text="Авторасставить" />
+                                    <Button layoutX="500.0" layoutY="217.0" mnemonicParsing="false" onMouseClicked="#rotateBank" text="Повернуть" />
+                                    <Button layoutX="361.0" layoutY="287.0" mnemonicParsing="false" onMouseClicked="#toBattle" text="В бой" />
+                                    <Button layoutX="490.0" layoutY="287.0" mnemonicParsing="false" onAction="#placementFileManager" text="Расстановки" />
                                  </children>
                               </AnchorPane>
                           </content>
@@ -91,7 +89,7 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <ImageView fx:id="gameImage" fitHeight="300.0" fitWidth="600.0" onMouseClicked="#hitPosition" onMousePressed="#pickShip" onMouseReleased="#dropShip" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="gameImage" fitHeight="300.0" fitWidth="600.0" onMouseClicked="#hitPosition" onMousePressed="#pickShip" onMouseReleased="#dropShip" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                  </children>
                               </AnchorPane>
                           </content>
