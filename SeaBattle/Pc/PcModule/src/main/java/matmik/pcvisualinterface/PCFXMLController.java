@@ -23,7 +23,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -36,7 +38,9 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import matmik.*;
 
 /**
@@ -166,6 +170,7 @@ public class PCFXMLController implements Initializable,View {
         Image candidate = new Image("candidate.png", cellSize, cellSize, true, true);
         Image intersect = new Image("intersect.png", cellSize, cellSize, true, true);
         Image nearshiparea = new Image("nearshiparea.png", cellSize, cellSize, true, true);
+   
         WritableImage placementField = new WritableImage((int)placementImage.fitWidthProperty().get(),
                 (int)placementImage.fitHeightProperty().get());
         int baseOffsetX = globalDisplayConstants.getPlayerFieldBounds().getLeftBound();
@@ -332,8 +337,20 @@ public class PCFXMLController implements Initializable,View {
         );
     }
 	
-    public void gameEnd(){
-		
+    public void gameEnd(final boolean result){
+	Platform.runLater(
+                new Thread()
+                {
+                    @Override
+                    public void run(){
+                        if (result) 
+                            new Alert(Alert.AlertType.INFORMATION, "Вы победили", ButtonType.OK).showAndWait();
+                        else
+                            new Alert(Alert.AlertType.INFORMATION, "Вы проиграли", ButtonType.OK).showAndWait();
+                         GlobalStateMachine.getInstance().reset();
+                    }
+                }
+        );	
     }
 
     private void drawGameBoard() {
@@ -343,10 +360,18 @@ public class PCFXMLController implements Initializable,View {
         Image candidate = new Image("candidate.png", cellSize, cellSize, true, true);
         Image intersect = new Image("intersect.png", cellSize, cellSize, true, true);
         Image nearshiparea = new Image("nearshiparea.png", cellSize, cellSize, true, true);
+        Image myTurn = new Image("myTurn.png", cellSize, cellSize, true, true);
+        Image opponentTurn = new Image("opponentTurn.png", cellSize, cellSize, true, true);
         WritableImage placementField = new WritableImage((int)placementImage.fitWidthProperty().get(),
                 (int)placementImage.fitHeightProperty().get());
         int baseOffsetX = globalDisplayConstants.getPlayerFieldBounds().getLeftBound();
         int baseOffsetY = globalDisplayConstants.getPlayerFieldBounds().getTopBound();
+        int arrowOffsetX = globalDisplayConstants.getTurnArrowBounds().getLeftBound();
+        int arrowOffsetY = globalDisplayConstants.getTurnArrowBounds().getTopBound();
+        if(battleController.getMoveOrder()) 
+            transferImage(myTurn, placementField, arrowOffsetX, arrowOffsetY);
+        else
+            transferImage(opponentTurn, placementField, arrowOffsetX, arrowOffsetY);
         //Ð¿Ð¾Ð»Ðµ Ð´Ð»Ñ� Ñ€Ð°Ñ�Ñ�Ñ‚Ð°Ð½Ð¾Ð²ÐºÐ¸
         for(int i = 0; i < 10; i++)
             for(int j = 0; j < 10; j++){
@@ -444,6 +469,9 @@ public class PCFXMLController implements Initializable,View {
             Parent root = FXMLLoader.load(getClass().getResource("/PlacementLoaderFXML.fxml"));
             Stage stage = new Stage();
             Scene scene = new Scene(root);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(tabPane.getScene().getWindow());
+            stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(scene);
             stage.show();
         } catch (IOException ex) {

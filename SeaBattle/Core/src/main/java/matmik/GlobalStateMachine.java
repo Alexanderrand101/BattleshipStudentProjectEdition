@@ -228,4 +228,15 @@ public class GlobalStateMachine {
             Logger.getLogger(GlobalStateMachine.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public void reset() {
+        if(OpponentType.HUMAN == opponentType)
+            try {
+                ((HumanOpponent)opponent).leave();
+        } catch (Exception ex) {
+            Logger.getLogger(GlobalStateMachine.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        view.stateTransition(ViewState.START_PAGE);
+        currentViewState = ViewState.START_PAGE;
+    }
 }

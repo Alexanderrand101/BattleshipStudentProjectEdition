@@ -33,6 +33,10 @@ public class BattleController {
     private View battleView;
     private boolean moveOrder;
     
+    public boolean getMoveOrder(){
+        return moveOrder;
+    }
+    
     public BattleController(Field playerField, Field opponentField, 
             Opponent opponent, View battleView, boolean initialMoveOrder) {
         this.playerField = playerField;
@@ -120,6 +124,7 @@ public class BattleController {
                 catch(Exception e){
                         Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, null, e);
                 }
+                battleView.gameEnd(playerField.shipsDestroyed() < 10);
             }
             
         }).start();

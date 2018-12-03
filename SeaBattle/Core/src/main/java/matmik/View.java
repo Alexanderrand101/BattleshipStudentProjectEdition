@@ -14,5 +14,5 @@ import java.util.Map;
 public interface View {
     void stateTransition(ViewState state);
     void animate(Map<Coordinates,Cell> cellsToAnimate);
-    void gameEnd();
+    void gameEnd(boolean result);
 }

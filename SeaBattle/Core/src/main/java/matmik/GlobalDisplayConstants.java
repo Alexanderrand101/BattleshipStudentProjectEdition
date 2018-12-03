@@ -53,6 +53,11 @@ public class GlobalDisplayConstants {
     private Bounds shipBankBoundsRotated;
     private Bounds playerFieldBounds;
     private Bounds opponentFieldBounds;
+    private Bounds turnArrowBounds;
+
+    public Bounds getTurnArrowBounds() {
+        return turnArrowBounds;
+    }
     
     public static GlobalDisplayConstants getInstanceAndUpdate(){//todo a better Singleton
         if (instance == null){
@@ -104,11 +109,12 @@ public class GlobalDisplayConstants {
         shipBankBoundsRotated = new Bounds();
         shipsInBank = new ArrayList<Bounds>();
         shipsInBankRotated = new ArrayList<Bounds>();
+        turnArrowBounds = new Bounds();
         for(int i = 0; i < 4; i++) {
         	shipsInBankRotated.add(new Bounds());
         	shipsInBank.add(new Bounds());
         }
-        shipCellSize = sizey / 9 * 15 / 20;
+        shipCellSize = sizey / 9 * 7 / 10;
         playerFieldBounds.setTopBound(sizey / 9);
         playerFieldBounds.setBottomBound(playerFieldBounds.getTopBound() + shipCellSize * 10);
         playerFieldBounds.setLeftBound(sizex / 16);
@@ -117,6 +123,9 @@ public class GlobalDisplayConstants {
         opponentFieldBounds.setBottomBound(opponentFieldBounds.getTopBound() + shipCellSize * 10);
         opponentFieldBounds.setLeftBound(sizex / 16 + playerFieldBounds.getRightBound());
         opponentFieldBounds.setRightBound(opponentFieldBounds.getLeftBound() + shipCellSize * 10);
+        turnArrowBounds.setLeftBound(playerFieldBounds.getRightBound() + sizex / 16 * 3 / 20);
+        turnArrowBounds.setTopBound((playerFieldBounds.getBottomBound() - playerFieldBounds.getTopBound() - shipCellSize / 2) 
+                + playerFieldBounds.getTopBound());
         shipBankBounds.setTopBound(sizey / 9);
         shipBankBounds.setBottomBound(shipBankBounds.getTopBound() + shipCellSize * 8);
         shipBankBounds.setLeftBound(sizex / 16 + playerFieldBounds.getRightBound());
