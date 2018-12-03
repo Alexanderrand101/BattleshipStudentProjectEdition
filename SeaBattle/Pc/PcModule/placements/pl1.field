@@ -1,0 +1,14 @@
+<field>
+   <ships class="java.util.LinkedList">
+      <ship>
+         <shipLength>4</shipLength>
+         <hits>0</hits>
+         <isRotated>false</isRotated>
+         <isDestroyed>false</isDestroyed>
+         <bow>
+            <i>3</i>
+            <j>2</j>
+         </bow>
+      </ship>
+   </ships>
+</field>
