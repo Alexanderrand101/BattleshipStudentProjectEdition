@@ -1,13 +1,39 @@
+.button {
+    -fx-text-fill: white;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+	-fx-font-size: 14;
+    -fx-background-color: linear-gradient(#61a2b1, #2A5058);
+	-fx-text-alignment: center; 
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+.button:hover {
+        -fx-background-color: linear-gradient(#61a2F1, #2A5078);
+}
+ #auto,#placements,#rotate, #clean{
+    -fx-background-size: 30px;
+	-fx-background-position: center;
+	-fx-alignment: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 90%;
+}
+#placements{
+	-fx-background-image: url("saveIcon.png");
+}
+#rotate{
+	-fx-background-image: url("rotate.png");
+}
+#clean{
+	-fx-background-image: url("clean.png");
+}
+#auto{
+	-fx-background-image: url("auto.png");
+}
+
 .tab-pane{
     -fx-tab-max-height: 0 ;
 }
 .tab-pane .tab-header-area{
     visibility: hidden;
 }
-.button {
-    -fx-text-fill: white;
-    -fx-font-family: "Arial Narrow";
-    -fx-font-weight: bold;
-    -fx-background-color: linear-gradient(#c7d0cc, #2e8b57);
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
-}
+

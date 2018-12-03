@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package matmik.pcvisualinterface;
 
 import java.io.File;
@@ -45,7 +41,7 @@ import matmik.*;
 
 /**
  *
- * @author Ã�ï¿½Ã�Â»Ã�ÂµÃ‘ï¿½Ã�ÂºÃ�Â°Ã�Â½Ã�Â´Ã‘â‚¬
+ * @author 
  */
 public class PCFXMLController implements Initializable,View {
     
@@ -175,7 +171,7 @@ public class PCFXMLController implements Initializable,View {
                 (int)placementImage.fitHeightProperty().get());
         int baseOffsetX = globalDisplayConstants.getPlayerFieldBounds().getLeftBound();
         int baseOffsetY = globalDisplayConstants.getPlayerFieldBounds().getTopBound();
-        //Ð¿Ð¾Ð»Ðµ Ð´Ð»Ñ� Ñ€Ð°Ñ�Ñ�Ñ‚Ð°Ð½Ð¾Ð²ÐºÐ¸
+        //compilation failure
         for(int i = 0; i < 10; i++)
             for(int j = 0; j < 10; j++){
                 transferImage(cell, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
@@ -188,11 +184,11 @@ public class PCFXMLController implements Initializable,View {
                 if(placementController.getGrid()[i][j].getState() == CellState.NEAR_SHIP_AREA)
                    transferImage(nearshiparea, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
             }
-        //Ð±Ð°Ð½Ðº Ð¸ÐºÐ¾Ñ€Ð°Ð±Ð»Ð¸ Ð² Ð½ÐµÐ¼
+        //compilation failure
         Bounds bankBounds;
         List<Bounds> shipBounds;
         if (!placementController.bankRotated()){
-            bankBounds = globalDisplayConstants.getShipBankBounds();
+            bankBounds = globalDisplayConstants.getShipBankBoundsRotated();
             shipBounds = globalDisplayConstants.getShipsInBank();
         }
         else{
@@ -344,9 +340,9 @@ public class PCFXMLController implements Initializable,View {
                     @Override
                     public void run(){
                         if (result) 
-                            new Alert(Alert.AlertType.INFORMATION, "Вы победили", ButtonType.OK).showAndWait();
+                            new Alert(Alert.AlertType.INFORMATION, "Р’С‹ РїРѕР±РµРґРёР»Рё", ButtonType.OK).showAndWait();
                         else
-                            new Alert(Alert.AlertType.INFORMATION, "Вы проиграли", ButtonType.OK).showAndWait();
+                            new Alert(Alert.AlertType.INFORMATION, "Р’С‹ РїСЂРѕРёРіСЂР°Р»Рё", ButtonType.OK).showAndWait();
                          GlobalStateMachine.getInstance().reset();
                     }
                 }
@@ -372,7 +368,7 @@ public class PCFXMLController implements Initializable,View {
             transferImage(myTurn, placementField, arrowOffsetX, arrowOffsetY);
         else
             transferImage(opponentTurn, placementField, arrowOffsetX, arrowOffsetY);
-        //Ð¿Ð¾Ð»Ðµ Ð´Ð»Ñ� Ñ€Ð°Ñ�Ñ�Ñ‚Ð°Ð½Ð¾Ð²ÐºÐ¸
+        //compilation failure
         for(int i = 0; i < 10; i++)
             for(int j = 0; j < 10; j++){
                 transferImage(cell, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
