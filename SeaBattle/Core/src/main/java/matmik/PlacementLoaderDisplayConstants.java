@@ -10,11 +10,11 @@ package matmik;
  * @author Алескандр
  */
 public class PlacementLoaderDisplayConstants {
-    private PlacementLoaderDisplayConstants instance;
+    private static PlacementLoaderDisplayConstants instance;
     private int shipCellSize;
     private Bounds fieldBounds;
     
-    public PlacementLoaderDisplayConstants getInstance(){
+    public static PlacementLoaderDisplayConstants getInstance(){
         if(instance == null){
             instance = new PlacementLoaderDisplayConstants();
         }
@@ -23,8 +23,16 @@ public class PlacementLoaderDisplayConstants {
     
     private PlacementLoaderDisplayConstants(){}
     
+    public int getShipCellSize(){
+        return shipCellSize;
+    }
+    
+    public Bounds getFieldBounds(){
+        return fieldBounds;
+    }
+    
     public void calcConstants(int x, int y){
-        int shipCellSize = y / 9 * 15 / 20;
+        shipCellSize = y / 9 * 8 / 10;
         fieldBounds = new Bounds();
         fieldBounds.setLeftBound((x - shipCellSize * 10)/2);
         fieldBounds.setTopBound((y - shipCellSize * 10)/2);

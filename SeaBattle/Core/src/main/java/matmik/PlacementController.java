@@ -24,6 +24,12 @@ public class PlacementController {
         displayConstants = GlobalDisplayConstants.getInstanceAndUpdate();
     }
     
+    public PlacementController(Field field){
+        this.field = field;
+        shipBank = new ShipBank();
+        shipBank.addRange(ShipUtils.remainingShipList(field.getShips()));
+    }
+    
     public Cell[][] getGrid(){
         return field.getGrid();
     }

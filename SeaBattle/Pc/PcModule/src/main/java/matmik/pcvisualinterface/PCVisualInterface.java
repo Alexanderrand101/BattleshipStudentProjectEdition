@@ -25,6 +25,7 @@ public class PCVisualInterface extends Application {
         Scene scene = new Scene(root);
         scene.getStylesheets().add("hide-tab.css");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
         BodgeGlobalLogger.setup();
     }

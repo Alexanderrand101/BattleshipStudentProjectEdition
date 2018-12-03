@@ -28,6 +28,7 @@ public class GlobalStateMachine {
     private Semaphore stateLock;
     private ViewState currentViewState;
     private AbstractHostConnector hostConnector;
+    private PlacementFileManager placementFileManager;
     
     public static GlobalStateMachine getInstance(View view){
         if (stateMachine == null){
@@ -156,7 +157,21 @@ public class GlobalStateMachine {
         view.stateTransition(ViewState.START_PAGE);
         currentViewState = ViewState.START_PAGE;
     }
-
+    
+    public void loadPlacementsTransition(String pathToPlacements){
+        placementFileManager = new PlacementFileManager(pathToPlacements, placementController.getField());
+        view.stateTransition(ViewState.LOAD_PLACEMENT);
+        currentViewState = ViewState.LOAD_PLACEMENT;
+    }
+    
+    public PlacementFileManager getPlacementFileManager(){
+        return placementFileManager;
+    }
+    
+    public void buildPlacementController(Field field){
+        placementController = new PlacementController(field);
+    }
+    
     public void back() {
         try {
             stateLock.acquire();
@@ -164,6 +179,10 @@ public class GlobalStateMachine {
                 case START_PAGE:
                     break;
                 case LOAD_SAVE:
+                    break;
+                case LOAD_PLACEMENT:
+                    view.stateTransition(ViewState.PLACEMENT);
+                    currentViewState = ViewState.PLACEMENT;
                     break;
                 case PLACEMENT:
                     view.stateTransition(ViewState.START_PAGE);

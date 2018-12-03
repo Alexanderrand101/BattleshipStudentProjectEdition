@@ -19,7 +19,10 @@ import org.simpleframework.xml.core.Persister;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
@@ -379,6 +382,10 @@ public class PCFXMLController implements Initializable,View {
         battleController.hitAttempt((int)event.getX(), (int)event.getY());
     }
 
+    @FXML
+    private void placementFileManager(ActionEvent event){
+        globalStateMachine.loadPlacementsTransition("placements/");
+    }
     public void stateTransition(final ViewState state){
         Platform.runLater(new Runnable(){
 
@@ -395,6 +402,9 @@ public class PCFXMLController implements Initializable,View {
                 tabPane.getSelectionModel().select(titleTab);
                 break;
             case LOAD_SAVE:
+                break;
+            case LOAD_PLACEMENT:
+                showPlacementLoaderWindow();
                 break;
             case PLACEMENT:
                 placementController = globalStateMachine.getPlacementController();
@@ -426,6 +436,18 @@ public class PCFXMLController implements Initializable,View {
                 tabPane.getSelectionModel().select(gameTab);
                 break;
             default:;
+        }
+    }
+
+    private void showPlacementLoaderWindow() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/PlacementLoaderFXML.fxml"));
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(PCFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
