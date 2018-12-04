@@ -97,4 +97,12 @@ public class ShipBank implements ShipContainer{
         }
         return null;
     }
+    
+    public int getShipAmountOfLength(int length){
+        int counter = 0;
+        for(Ship ship: ships){
+            if(ship.getShipLength() == length) counter++;
+        }
+        return counter;
+    }
 }

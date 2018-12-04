@@ -72,6 +72,15 @@ public class PCFXMLController implements Initializable,View {
     @FXML
     private AnchorPane mainAnchor; 
     
+    @FXML 
+    private Label quantity1;
+    @FXML
+    private Label quantity2;
+    @FXML 
+    private Label quantity3;
+    @FXML
+    private Label quantity4;
+    
     private boolean isHost;
     private HumanOpponent hopponent;
     private ShipControl selectedShip;
@@ -187,13 +196,16 @@ public class PCFXMLController implements Initializable,View {
         //compilation failure
         Bounds bankBounds;
         List<Bounds> shipBounds;
+        List<Bounds> labelBounds;
         if (!placementController.bankRotated()){
             bankBounds = globalDisplayConstants.getShipBankBoundsRotated();
             shipBounds = globalDisplayConstants.getShipsInBank();
+            labelBounds = globalDisplayConstants.getLabelBounds();
         }
         else{
             bankBounds = globalDisplayConstants.getShipBankBoundsRotated();
             shipBounds = globalDisplayConstants.getShipsInBankRotated();
+            labelBounds = globalDisplayConstants.getLabelBoundsRotated();
         }
         int bankHeight = bankBounds.getBottomBound() - bankBounds.getTopBound();
         int bankWidth = bankBounds.getRightBound() - bankBounds.getLeftBound();
@@ -207,6 +219,18 @@ public class PCFXMLController implements Initializable,View {
             transferImage(shipImage, placementField, shipBounds.get(i).getLeftBound(),
                     shipBounds.get(i).getTopBound());
         }
+        quantity1.setText(Integer.toString(placementController.getShipBank().getShipAmountOfLength(1)));
+        quantity1.setLayoutX(labelBounds.get(0).getLeftBound() + placementImage.layoutXProperty().get());
+        quantity1.setLayoutY(labelBounds.get(0).getTopBound()+ placementImage.layoutYProperty().get());
+        quantity2.setText(Integer.toString(placementController.getShipBank().getShipAmountOfLength(2)));
+        quantity2.setLayoutX(labelBounds.get(1).getLeftBound() + placementImage.layoutXProperty().get());
+        quantity2.setLayoutY(labelBounds.get(1).getTopBound()+ placementImage.layoutYProperty().get());
+        quantity3.setText(Integer.toString(placementController.getShipBank().getShipAmountOfLength(3)));
+        quantity3.setLayoutX(labelBounds.get(2).getLeftBound() + placementImage.layoutXProperty().get());
+        quantity3.setLayoutY(labelBounds.get(2).getTopBound()+ placementImage.layoutYProperty().get());
+        quantity4.setText(Integer.toString(placementController.getShipBank().getShipAmountOfLength(4)));
+        quantity4.setLayoutX(labelBounds.get(3).getLeftBound() + placementImage.layoutXProperty().get());
+        quantity4.setLayoutY(labelBounds.get(3).getTopBound() + placementImage.layoutYProperty().get());
         if (selectedShip != null)
         {
             stateLabel.setText("drawing selected ship");
@@ -221,6 +245,9 @@ public class PCFXMLController implements Initializable,View {
         for(int y = 0; y < source.getHeight(); y++)
             for(int x = 0; x < source.getWidth(); x++)
             {
+                Color color = sourceReader.getColor(x, y);
+                if (Color.WHITE.equals(color))
+                    continue;
                 sceneWriter.setColor(xoffset + x, yoffset + y, sourceReader.getColor(x, y));
             }
     }
@@ -340,9 +367,9 @@ public class PCFXMLController implements Initializable,View {
                     @Override
                     public void run(){
                         if (result) 
-                            new Alert(Alert.AlertType.NONE, "Вы победили", ButtonType.OK).showAndWait();
+                            new Alert(Alert.AlertType.NONE, "пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ", ButtonType.OK).showAndWait();
                         else
-                            new Alert(Alert.AlertType.NONE, "Вы проиграли", ButtonType.OK).showAndWait();
+                            new Alert(Alert.AlertType.NONE, "пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ", ButtonType.OK).showAndWait();
                          GlobalStateMachine.getInstance().reset();
                     }
                 }

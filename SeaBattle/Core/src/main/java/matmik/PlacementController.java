@@ -10,6 +10,10 @@ package matmik;
  * @author Алескандр
  */
 public class PlacementController {
+
+    public ShipBank getShipBank() {
+        return shipBank;
+    }
     private ShipBank shipBank;
     private Field field;
     private GlobalDisplayConstants displayConstants;

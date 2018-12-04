@@ -49,6 +49,22 @@ public class GlobalDisplayConstants {
     private int shipCellSize;
     private List<Bounds> shipsInBank;
     private List<Bounds> shipsInBankRotated;
+
+    public List<Bounds> getLabelBounds() {
+        return labelBounds;
+    }
+
+    public void setLabelBounds(List<Bounds> labelBounds) {
+        this.labelBounds = labelBounds;
+    }
+
+    public List<Bounds> getLabelBoundsRotated() {
+        return labelBoundsRotated;
+    }
+
+    public void setLabelBoundsRotated(List<Bounds> labelBoundsRotated) {
+        this.labelBoundsRotated = labelBoundsRotated;
+    }
     private List<Bounds> labelBounds;
     private List<Bounds> labelBoundsRotated;
     private Bounds shipBankBounds;
@@ -157,7 +173,7 @@ public class GlobalDisplayConstants {
             labelBound.setLeftBound(shipsInBank.get(3).getRightBound() + shipCellSize);
             labelBound.setTopBound(shipsInBank.get(i).getTopBound());
             Bounds labelBoundRotated = labelBoundsRotated.get(i);
-            labelBoundRotated.setTopBound(shipsInBankRotated.get(3).getRightBound() + shipCellSize);
+            labelBoundRotated.setTopBound(shipsInBankRotated.get(3).getBottomBound() + shipCellSize);
             labelBoundRotated.setLeftBound(shipsInBankRotated.get(i).getLeftBound());
         }
     }
