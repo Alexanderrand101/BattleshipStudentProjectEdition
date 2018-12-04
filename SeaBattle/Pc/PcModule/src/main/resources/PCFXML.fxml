@@ -27,7 +27,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                <Button id="back" layoutX="543.0" layoutY="6.0" mnemonicParsing="false" onMouseClicked="#back" prefHeight="25.0" prefWidth="45.0" style="-fx-background-position: center; -fx-background-image: &quot;back.png&quot;;" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0" />
+                <Button id="back" layoutX="543.0" layoutY="6.0" mnemonicParsing="false" onMouseClicked="#back" prefHeight="25.0" prefWidth="45.0" style="-fx-background-position: center; -fx-background-image: &quot;back.png&quot;;" text="Назад" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="248.0" prefWidth="598.0">
@@ -86,7 +86,7 @@
                                           <Button alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#pickDifficultyEasy" prefHeight="25.0" prefWidth="101.0" text="Лёгкая" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                           <Button alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Средняя" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                           <Button alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Сложная" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                          <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="45.0" prefWidth="197.0" text="Сложность" textAlignment="CENTER" textFill="#42a191" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
+                                          <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="45.0" prefWidth="197.0" text="Сложность" textAlignment="CENTER" textFill="#1ac1cd" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
                                              <font>
                                                 <Font size="36.0" />
                                              </font>
@@ -164,7 +164,7 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <Label layoutX="171.0" layoutY="202.0" text="Мы делаем всё возможное, а оно не делается" />
+                                    <Label layoutX="235.0" layoutY="213.0" text="Ожидание подключения" />
                                     <ProgressIndicator layoutX="233.0" layoutY="97.0" prefHeight="97.0" prefWidth="141.0" />
                                  </children>
                               </AnchorPane>
@@ -174,7 +174,7 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <Label layoutX="199.0" layoutY="169.0" text="Оппонент тормоз, но это лечится" />
+                                    <Label layoutX="196.0" layoutY="195.0" text="Ожидание готовности противника" />
                                     <ProgressIndicator layoutX="241.0" layoutY="58.0" prefHeight="97.0" prefWidth="101.0" />
                                  </children>
                               </AnchorPane>
