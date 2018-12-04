@@ -81,6 +81,15 @@ public class PCFXMLController implements Initializable,View {
     @FXML
     private Label quantity4;
     
+    private Image ver1;
+    private Image hor1;
+    private Image ver2;
+    private Image hor2;
+    private Image ver3;
+    private Image hor3;
+    private Image ver4;
+    private Image hor4;
+    
     private boolean isHost;
     private HumanOpponent hopponent;
     private ShipControl selectedShip;
@@ -98,6 +107,18 @@ public class PCFXMLController implements Initializable,View {
     
     private int sizex, sizey;
     
+    private void loadImages(){
+        int cellSize = globalDisplayConstants.getShipCellSize();
+        ver1 = new Image("1ver.png", cellSize, cellSize, true, true);
+        ver2 = new Image("2ver.png", cellSize, cellSize * 2, true, true);
+        ver3 = new Image("3ver.png", cellSize, cellSize * 3, true, true);
+        ver4 = new Image("4ver.png", cellSize, cellSize * 4, true, true);
+        hor1 = new Image("1hor.png", cellSize, cellSize, true, true);
+        hor2 = new Image("2hor.png", cellSize * 2, cellSize, true, true);
+        hor3 = new Image("3hor.png", cellSize * 3, cellSize, true, true);
+        hor4 = new Image("4hor.png", cellSize * 4, cellSize, true, true);
+    }
+    
     private void reDrawView(){
         globalStateMachine = GlobalStateMachine.getInstance(this);
         globalDisplayConstants = GlobalDisplayConstants.getInstanceAndUpdate();
@@ -114,6 +135,7 @@ public class PCFXMLController implements Initializable,View {
     @FXML
     public void initialize(URL url, ResourceBundle rb) {
         reDrawView();
+        loadImages();
     }    
     
 //    public PCFXMLController(int x, int y){
@@ -124,6 +146,7 @@ public class PCFXMLController implements Initializable,View {
     @FXML
     public void initialize(){   
         reDrawView();
+        loadImages();
     }
 
     @FXML
@@ -175,7 +198,6 @@ public class PCFXMLController implements Initializable,View {
         Image candidate = new Image("candidate.png", cellSize, cellSize, true, true);
         Image intersect = new Image("intersect.png", cellSize, cellSize, true, true);
         Image nearshiparea = new Image("nearshiparea.png", cellSize, cellSize, true, true);
-   
         WritableImage placementField = new WritableImage((int)placementImage.fitWidthProperty().get(),
                 (int)placementImage.fitHeightProperty().get());
         int baseOffsetX = globalDisplayConstants.getPlayerFieldBounds().getLeftBound();
@@ -184,8 +206,8 @@ public class PCFXMLController implements Initializable,View {
         for(int i = 0; i < 10; i++)
             for(int j = 0; j < 10; j++){
                 transferImage(cell, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
-                if(placementController.getGrid()[i][j].getState() == CellState.BUSY)
-                   transferImage(shipCell, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
+//                if(placementController.getGrid()[i][j].getState() == CellState.BUSY)
+//                   transferImage(shipCell, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
                 if(placementController.getGrid()[i][j].getState() == CellState.CANDIDATE)
                    transferImage(candidate, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
                 if(placementController.getGrid()[i][j].getState() == CellState.INTERSECTION)
@@ -193,6 +215,24 @@ public class PCFXMLController implements Initializable,View {
                 if(placementController.getGrid()[i][j].getState() == CellState.NEAR_SHIP_AREA)
                    transferImage(nearshiparea, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
             }
+        for(Ship ship: placementController.getField().getShips()){
+            if(ship.isRotated()){
+                switch(ship.getShipLength()){
+                    case 1: transferImage(ver1, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
+                    case 2: transferImage(ver2, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;   
+                    case 3: transferImage(ver3, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
+                    case 4: transferImage(ver4, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
+                } 
+            }
+            else{
+                switch(ship.getShipLength()){
+                    case 1 :transferImage(hor1, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
+                    case 2: transferImage(hor2, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;    
+                    case 3: transferImage(hor3, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
+                    case 4: transferImage(hor4, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
+                }
+            }
+        }
         //compilation failure
         Bounds bankBounds;
         List<Bounds> shipBounds;
@@ -295,13 +335,23 @@ public class PCFXMLController implements Initializable,View {
     private void pickShip(MouseEvent event) {
         Ship pickedShip = placementController.pickShip((int)event.getX(), (int)event.getY());
         if(pickedShip != null){
-            Image image;
-            if(!pickedShip.isRotated()) image = new Image("shipCell.png", 
-                    globalDisplayConstants.getShipCellSize() * pickedShip.getShipLength(), 
-                    globalDisplayConstants.getShipCellSize(), false, true); // todo Scale this
-            else image = new Image("shipCell.png", 
-                    globalDisplayConstants.getShipCellSize() , 
-                    globalDisplayConstants.getShipCellSize()* pickedShip.getShipLength(), false, true);
+            Image image = null;
+            if(pickedShip.isRotated()){
+                switch(pickedShip.getShipLength()){
+                    case 1: image = ver1; break;
+                    case 2: image = ver2; break;   
+                    case 3: image = ver3; break;
+                    case 4: image = ver4; break;
+                } 
+            }
+            else{
+                switch(pickedShip.getShipLength()){
+                    case 1: image = hor1; break;
+                    case 2: image = hor2; break;   
+                    case 3: image = hor3; break;
+                    case 4: image = hor4; break;
+                }
+            }
             selectedShip = new ShipControl((int)event.getX(), (int)event.getY(), image);
         }
     }
