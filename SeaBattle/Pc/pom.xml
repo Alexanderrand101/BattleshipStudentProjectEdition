@@ -23,8 +23,8 @@
 		<target>1.10</target>
 	</configuration>
     </plugin>
-	
-</build>
+	</plugins>
+  </build>
   <dependencies>
 	<dependency>
 	  <groupId>matmik</groupId>
