@@ -24,7 +24,7 @@
 	</configuration>
     </plugin>
 	</plugins>
-</build>
+  </build>
   <dependencies>
 	<dependency>
 	  <groupId>matmik</groupId>

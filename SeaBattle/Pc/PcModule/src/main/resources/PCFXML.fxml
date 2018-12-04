@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
@@ -26,7 +27,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                <Button layoutX="543.0" layoutY="6.0" mnemonicParsing="false" onMouseClicked="#back" text="Назад" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0" />
+                <Button id="back" layoutX="543.0" layoutY="6.0" mnemonicParsing="false" onMouseClicked="#back" prefHeight="25.0" prefWidth="45.0" style="-fx-background-position: center; -fx-background-image: &quot;back.png&quot;;" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="248.0" prefWidth="598.0">
@@ -68,9 +69,30 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <Button alignment="CENTER" layoutX="233.0" layoutY="96.0" mnemonicParsing="false" onMouseClicked="#pickDifficultyEasy" prefHeight="25.0" prefWidth="101.0" text="Совсем тупой" textAlignment="CENTER" />
-                                    <Button alignment="CENTER" layoutX="233.0" layoutY="134.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Тупой" textAlignment="CENTER" />
-                                    <Button alignment="CENTER" layoutX="233.0" layoutY="173.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Почти тупой" textAlignment="CENTER" />
+                                    <GridPane layoutX="6.0" prefHeight="340.0" prefWidth="590.0">
+                                      <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Button alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#pickDifficultyEasy" prefHeight="25.0" prefWidth="101.0" text="Лёгкая" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <Button alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Средняя" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <Button alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Сложная" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                          <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="45.0" prefWidth="197.0" text="Сложность" textAlignment="CENTER" textFill="#42a191" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
+                                             <font>
+                                                <Font size="36.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </GridPane>
                                  </children>
                               </AnchorPane>
                         </content>
@@ -86,6 +108,10 @@
                                     <Button id="rotate" layoutX="382.0" layoutY="197.0" mnemonicParsing="false" onMouseClicked="#rotateBank" prefHeight="45.0" prefWidth="45.0" style="-fx-background-position: center;" />
                                     <Button layoutX="358.0" layoutY="278.0" mnemonicParsing="false" onMouseClicked="#toBattle" text="В бой" />
                                     <Button id="placements" layoutX="427.0" layoutY="197.0" mnemonicParsing="false" onAction="#placementFileManager" prefHeight="45.0" prefWidth="45.0" style="-fx-background-position: center;" />
+                                    <Label fx:id="quantity1" layoutX="526.0" layoutY="28.0" text="Label" />
+                                    <Label fx:id="quantity2" layoutX="526.0" layoutY="57.0" text="Label" />
+                                    <Label fx:id="quantity3" layoutX="526.0" layoutY="84.0" text="Label" />
+                                    <Label fx:id="quantity4" layoutX="526.0" layoutY="115.0" text="Label" />
                                  </children>
                               </AnchorPane>
                           </content>
@@ -103,8 +129,23 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <Button layoutX="272.0" layoutY="126.0" mnemonicParsing="false" onMouseClicked="#asHost" text="As Host" />
-                                    <Button layoutX="269.0" layoutY="186.0" mnemonicParsing="false" onMouseClicked="#asGuest" text="As Guest" />
+                                    <GridPane prefHeight="341.0" prefWidth="598.0">
+                                      <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                          <RowConstraints minHeight="10.0" percentHeight="25.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <Button alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#asHost" text="Создать игру" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                          <Button alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#asGuest" text="Подключиться" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                       </children>
+                                    </GridPane>
                                  </children>
                               </AnchorPane>
                           </content>

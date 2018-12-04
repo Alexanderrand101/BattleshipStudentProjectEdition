@@ -29,9 +29,16 @@
 #auto{
 	-fx-background-image: url("auto.png");
 }
-
+#back{
+fx-background-image: url("back.png");
+}
 .tab-pane{
     -fx-tab-max-height: 0 ;
+-fx-background-color: linear-gradient(#9EA0A1, #6A93B0);
+}
+.split-pane
+{
+-fx-background-color: linear-gradient(#9EA0A1, #6A93B0);
 }
 .tab-pane .tab-header-area{
     visibility: hidden;
