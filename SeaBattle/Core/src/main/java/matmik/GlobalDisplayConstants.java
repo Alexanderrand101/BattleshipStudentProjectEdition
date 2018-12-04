@@ -49,6 +49,8 @@ public class GlobalDisplayConstants {
     private int shipCellSize;
     private List<Bounds> shipsInBank;
     private List<Bounds> shipsInBankRotated;
+    private List<Bounds> labelBounds;
+    private List<Bounds> labelBoundsRotated;
     private Bounds shipBankBounds;
     private Bounds shipBankBoundsRotated;
     private Bounds playerFieldBounds;
@@ -109,10 +111,14 @@ public class GlobalDisplayConstants {
         shipBankBoundsRotated = new Bounds();
         shipsInBank = new ArrayList<Bounds>();
         shipsInBankRotated = new ArrayList<Bounds>();
+        labelBounds = new ArrayList<Bounds>();
+        labelBoundsRotated = new ArrayList<Bounds>();
         turnArrowBounds = new Bounds();
         for(int i = 0; i < 4; i++) {
         	shipsInBankRotated.add(new Bounds());
         	shipsInBank.add(new Bounds());
+                labelBounds.add(new Bounds());
+                labelBoundsRotated.add(new Bounds());
         }
         shipCellSize = sizey / 9 * 7 / 10;
         playerFieldBounds.setTopBound(sizey / 9);
@@ -124,7 +130,7 @@ public class GlobalDisplayConstants {
         opponentFieldBounds.setLeftBound(sizex / 16 + playerFieldBounds.getRightBound());
         opponentFieldBounds.setRightBound(opponentFieldBounds.getLeftBound() + shipCellSize * 10);
         turnArrowBounds.setLeftBound(playerFieldBounds.getRightBound() + sizex / 16 * 3 / 20);
-        turnArrowBounds.setTopBound((playerFieldBounds.getBottomBound() - playerFieldBounds.getTopBound() - shipCellSize / 2) 
+        turnArrowBounds.setTopBound((playerFieldBounds.getBottomBound() - playerFieldBounds.getTopBound() - shipCellSize) / 2 
                 + playerFieldBounds.getTopBound());
         shipBankBounds.setTopBound(sizey / 9);
         shipBankBounds.setBottomBound(shipBankBounds.getTopBound() + shipCellSize * 8);
@@ -135,16 +141,24 @@ public class GlobalDisplayConstants {
         shipBankBoundsRotated.setLeftBound(sizex / 16 + playerFieldBounds.getRightBound());
         shipBankBoundsRotated.setRightBound(shipBankBounds.getLeftBound() + shipCellSize * 7);
         for(int i = 0; i < 4; i++) {
-        	Bounds shipInBank = shipsInBank.get(i);
-        	shipInBank.setTopBound(shipBankBounds.getTopBound() + shipCellSize / 2 * (i + 1) + shipCellSize * i);
-        	shipInBank.setBottomBound(shipInBank.getTopBound() + shipCellSize);
-        	shipInBank.setLeftBound(shipCellSize / 2 + shipBankBounds.getLeftBound());
-        	shipInBank.setRightBound(shipInBank.getLeftBound() + shipCellSize * (i + 1));
-        	Bounds shipInBankRotated = shipsInBankRotated.get(i);
-        	shipInBankRotated.setTopBound(shipBankBoundsRotated.getTopBound() + shipCellSize / 2);
-        	shipInBankRotated.setBottomBound(shipInBankRotated.getTopBound() + shipCellSize * (i + 1));
-        	shipInBankRotated.setLeftBound(shipCellSize / 2 * (i + 1) + shipCellSize * i + shipBankBoundsRotated.getLeftBound());
-        	shipInBankRotated.setRightBound(shipInBankRotated.getLeftBound() + shipCellSize);
+            Bounds shipInBank = shipsInBank.get(i);
+            shipInBank.setTopBound(shipBankBounds.getTopBound() + shipCellSize / 2 * (i + 1) + shipCellSize * i);
+            shipInBank.setBottomBound(shipInBank.getTopBound() + shipCellSize);
+            shipInBank.setLeftBound(shipCellSize / 2 + shipBankBounds.getLeftBound());
+            shipInBank.setRightBound(shipInBank.getLeftBound() + shipCellSize * (i + 1));
+            Bounds shipInBankRotated = shipsInBankRotated.get(i);
+            shipInBankRotated.setTopBound(shipBankBoundsRotated.getTopBound() + shipCellSize / 2);
+            shipInBankRotated.setBottomBound(shipInBankRotated.getTopBound() + shipCellSize * (i + 1));
+            shipInBankRotated.setLeftBound(shipCellSize / 2 * (i + 1) + shipCellSize * i + shipBankBoundsRotated.getLeftBound());
+            shipInBankRotated.setRightBound(shipInBankRotated.getLeftBound() + shipCellSize);
+        }
+        for(int i = 0; i < 4; i++){
+            Bounds labelBound = labelBounds.get(i);
+            labelBound.setLeftBound(shipsInBank.get(3).getRightBound() + shipCellSize);
+            labelBound.setTopBound(shipsInBank.get(i).getTopBound());
+            Bounds labelBoundRotated = labelBoundsRotated.get(i);
+            labelBoundRotated.setTopBound(shipsInBankRotated.get(3).getRightBound() + shipCellSize);
+            labelBoundRotated.setLeftBound(shipsInBankRotated.get(i).getLeftBound());
         }
     }
 }

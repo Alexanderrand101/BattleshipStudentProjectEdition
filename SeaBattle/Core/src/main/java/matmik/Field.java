@@ -133,6 +133,7 @@ public class Field implements ShipContainer{
         int endJ = (shipToPlace.getStern().getJ() + 1 > GRID_HEIGHT - 1) 
                 ? shipToPlace.getStern().getJ() : shipToPlace.getStern().getJ() + 1;
 
+        //gridPaint(shipToPlace.getBow(), shipToPlace.getStern(), CellState.CANDIDATE);
         for(int  i = startI; i <= endI; i++)
             for(int j = startJ; j <= endJ; j++){
                 if(grid[i][j].getState() == CellState.BUSY)
@@ -140,10 +141,12 @@ public class Field implements ShipContainer{
                     doesNotIntersect = false;
                     grid[i][j].setState(CellState.INTERSECTION);
                 }
-                else 
+                else if(!shipToPlace.inBounds(new Coordinates(i,j)))
                     grid[i][j].setState(CellState.NEAR_SHIP_AREA);
+                else
+                    grid[i][j].setState(CellState.CANDIDATE);
             }
-        gridPaint(shipToPlace.getBow(), shipToPlace.getStern(), CellState.CANDIDATE);
+        
         return doesNotIntersect;
     }
 
