@@ -340,9 +340,9 @@ public class PCFXMLController implements Initializable,View {
                     @Override
                     public void run(){
                         if (result) 
-                            new Alert(Alert.AlertType.INFORMATION, "Р’С‹ РїРѕР±РµРґРёР»Рё", ButtonType.OK).showAndWait();
+                            new Alert(Alert.AlertType.NONE, "�� ��������", ButtonType.OK).showAndWait();
                         else
-                            new Alert(Alert.AlertType.INFORMATION, "Р’С‹ РїСЂРѕРёРіСЂР°Р»Рё", ButtonType.OK).showAndWait();
+                            new Alert(Alert.AlertType.NONE, "�� ���������", ButtonType.OK).showAndWait();
                          GlobalStateMachine.getInstance().reset();
                     }
                 }
