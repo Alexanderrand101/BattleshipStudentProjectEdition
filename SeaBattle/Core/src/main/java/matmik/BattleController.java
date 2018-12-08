@@ -29,16 +29,23 @@ public class BattleController {
     private Field playerField;
     private Field opponentField;
     private Opponent opponent;
+    private int maxTurnTime;
     private Coordinates hitCoordinates;
     private View battleView;
     private boolean moveOrder;
+    private boolean hideErrors = false;
     
     public boolean getMoveOrder(){
         return moveOrder;
     }
     
+    
+    public Field getOpponentField() {
+        return opponentField;
+    }
+    
     public BattleController(Field playerField, Field opponentField, 
-            Opponent opponent, View battleView, boolean initialMoveOrder) {
+            Opponent opponent, View battleView, boolean initialMoveOrder, int maxTurnTime) {
         this.playerField = playerField;
         playerField.gameInit();
         this.opponentField = opponentField;
@@ -46,6 +53,7 @@ public class BattleController {
         this.battleView = battleView;
         this.moveOrder = initialMoveOrder;
         this.displayConstants = GlobalDisplayConstants.getInstance();
+        this.maxTurnTime = maxTurnTime;
         try {
             semaphore2.acquire();
             semaphore1.acquire();
@@ -55,15 +63,24 @@ public class BattleController {
     }
     
     public void gameStart(){
-        new Thread(new Runnable(){
+        final BattleController bc = this;
+        Thread game = new Thread(new Runnable(){
 
             public void run() {
                 try{
                     while(playerField.shipsDestroyed() < 10 && opponentField.shipsDestroyed() < 10){
                         Map<Coordinates,Cell> toAnimate = null;
                         if(moveOrder){
+                            TimerThread ttread = null;
+                            if(maxTurnTime > 0){
+                                 ttread = new TimerThread(maxTurnTime, battleView, bc);
+                                 ttread.setDaemon(true);
+                                 ttread.start();
+                            }
                             semaphore2.release();
                             semaphore1.acquire();
+                            if(ttread != null)
+                                 ttread.terminate();
                             CellState res = opponent.checkMove(hitCoordinates);
                             switch(res){
                                 case HIT_MISSED: 
@@ -119,18 +136,27 @@ public class BattleController {
                             }
                         }
                         battleView.animate(toAnimate);
-                    } 
+                    }
+                    battleView.gameEnd(playerField.shipsDestroyed() < 10);
                 }
                 catch(Exception e){
+                        if(!hideErrors)
+                            battleView.showError("your opponent left");
+                        GlobalStateMachine.getInstance().back();
                         Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, null, e);
                 }
-                battleView.gameEnd(playerField.shipsDestroyed() < 10);
             }
             
-        }).start();
+        });
+        game.setDaemon(true);//a hack but im in too deep already
+        game.start();
     }
     
-    private void hit(Coordinates hitCoordinates){
+    public void hideErrors(){
+        hideErrors = true;
+    }
+    
+    protected void hit(Coordinates hitCoordinates){
         if (semaphore2.tryAcquire()){
             if(opponentField.isHittable(hitCoordinates)){
                 this.hitCoordinates = hitCoordinates;

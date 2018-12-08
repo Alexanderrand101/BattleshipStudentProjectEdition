@@ -243,4 +243,32 @@ public class Field implements ShipContainer{
             }
         return cells;
     }
+    
+    public boolean isPlayValid(){
+        return ships.size() == 10;
+    }
+    
+    public boolean isOnLoadValid(){
+        List<Ship> ships = removeAll();
+        gridRefresh();
+        int s1 = 0;
+        int s2 = 0;
+        int s3 = 0; 
+        int s4 = 0;
+        for(Ship ship: ships){
+            switch(ship.getShipLength()){
+                case 1: s1++; break;
+                case 2: s2++; break;
+                case 3: s3++; break;
+                case 4: s4++; break;
+            }
+            if(nonPaintingValidate(ship)){
+                add(ship);
+                gridRefresh();
+            }
+            else 
+                return false;
+        }
+        return (s1 + s2 + s3 + s4 == ships.size()) && (s1 <= 4) && (s2 <= 3) && (s3 <= 2) && (s4 <= 1);
+    }
 }

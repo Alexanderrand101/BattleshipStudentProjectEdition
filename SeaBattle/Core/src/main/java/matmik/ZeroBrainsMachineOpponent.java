@@ -8,6 +8,8 @@ package matmik;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,7 +21,7 @@ public class ZeroBrainsMachineOpponent extends MachineOpponent{
     {
         setFleshbagsField(new Field());
         Field emptyField = new Field();
-        RandomAutoPlacer.placeShips(emptyField, ShipUtils.defaultShipList());
+        AutoPlacer.placeShips(emptyField, ShipUtils.defaultShipList());
         setMyField(emptyField);
         myField.gridRefresh();
         myField.gameInit();
@@ -27,15 +29,12 @@ public class ZeroBrainsMachineOpponent extends MachineOpponent{
     
     @Override
     public Coordinates makeMove() {
-        List<Coordinates> possibleHits = new LinkedList<Coordinates>();
-        for(int i = 0; i < fleshbagsField.getGRID_HEIGHT(); i++)
-            for(int j = 0; j < fleshbagsField.getGRID_WIDTH(); j++){
-                Coordinates hitCoodinates = new Coordinates(i,j);
-                if(fleshbagsField.isHittable(hitCoodinates))
-                    possibleHits.add(hitCoodinates);
-            }
-        Random r = new Random();
-        return possibleHits.get(r.nextInt(possibleHits.size()));
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ZeroBrainsMachineOpponent.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return AutoTurn.makeMove(fleshbagsField);
     }
     
 }

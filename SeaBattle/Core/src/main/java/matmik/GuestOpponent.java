@@ -22,10 +22,14 @@ public class GuestOpponent extends HumanOpponent{
         this.connector = connector;
     }
     
+    public void setTurntime(int turntime){
+        this.turntime = turntime;
+    }
+    
     public void ready() throws Exception{
             syncWrite();
-            new Persister().write(new Coordinates(-1,-1), connector.out());
+            new Persister().write(new HostPack(myName, turntime, !moveOrder), connector.out());
             syncRead();
-            new Persister().read(Coordinates.class, connector.in());
+            opponentName = new Persister().read(GuestPack.class, connector.in()).getName();
     }
 }

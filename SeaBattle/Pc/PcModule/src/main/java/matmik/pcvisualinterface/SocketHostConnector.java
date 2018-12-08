@@ -24,7 +24,9 @@ public class SocketHostConnector implements AbstractHostConnector{
     }
     
     public AbstractConnector open() throws IOException {
-        return new SocketConnector(hostSocket.accept());
+        AbstractConnector connector = new SocketConnector(hostSocket.accept());
+        hostSocket.close();
+        return connector;
     }
 
     public void close() throws Exception {

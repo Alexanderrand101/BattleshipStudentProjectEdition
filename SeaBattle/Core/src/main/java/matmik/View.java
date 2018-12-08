@@ -13,6 +13,8 @@ import java.util.Map;
  */
 public interface View {
     void stateTransition(ViewState state);
+    void showError(String errorMessage);
+    void drawRemaningTime(int seconds);
     void animate(Map<Coordinates,Cell> cellsToAnimate);
     void gameEnd(boolean result);
 }

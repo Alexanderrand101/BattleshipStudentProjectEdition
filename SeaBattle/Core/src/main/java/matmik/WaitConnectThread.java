@@ -16,6 +16,7 @@ public class WaitConnectThread extends Thread{
     private AbstractHostConnector abstractHostConnector;
     private Semaphore lock;
     
+    
     public WaitConnectThread(GuestOpponent opponent, 
             AbstractHostConnector abstractHostConnector, Semaphore lock){
         this.abstractHostConnector = abstractHostConnector;
@@ -36,6 +37,7 @@ public class WaitConnectThread extends Thread{
     }
     
     public void crashConnection() throws Exception{
+        
         abstractHostConnector.close();
     }
 }

@@ -24,11 +24,43 @@ public abstract class HumanOpponent implements Opponent {
     AbstractConnector connector;
     boolean readAllowed = true;
     boolean writeAllowed = true;
+    protected int turntime = 40;
+    protected String myName;
+    protected String opponentName;
+    protected boolean moveOrder;
+    
+    public boolean isMoveOrder() {
+        return moveOrder;
+    }
+
+    public void setMoveOrder(boolean moveOrder) {
+        this.moveOrder = moveOrder;
+    }   
+
+    public String getMyName() {
+        return myName;
+    }
+
+    public void setMyName(String myName) {
+        this.myName = myName;
+    }
+
+    public String getOpponentName() {
+        return opponentName;
+    }
+
+    public void setOpponentName(String opponentName) {
+        this.opponentName = opponentName;
+    }
     
     public abstract void ready() throws Exception;
     
     public void leave() throws Exception{
         connector.close();
+    }
+    
+    public int getTurntime(){
+        return turntime;
     }
     
     public Coordinates makeMove() throws Exception {

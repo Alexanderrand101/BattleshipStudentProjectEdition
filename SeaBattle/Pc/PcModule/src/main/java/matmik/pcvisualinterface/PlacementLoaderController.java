@@ -26,6 +26,7 @@ import matmik.Bounds;
 import matmik.Cell;
 import matmik.CellState;
 import matmik.GlobalStateMachine;
+import matmik.LoadResult;
 import matmik.PlacementFileManager;
 import matmik.PlacementLoaderDisplayConstants;
 
@@ -71,14 +72,18 @@ public class PlacementLoaderController implements Initializable {
     private void drawImages(){
         GlobalStateMachine gsm = GlobalStateMachine.getInstance();
         PlacementFileManager pfm = gsm.getPlacementFileManager();
-        if (pfm.loadPlacement(0) != null) drawField(placementImage1, pfm.getGrid(0), selectedID == 0);
-        else drawEmpty(placementImage1);
-        if (pfm.loadPlacement(1) != null) drawField(placementImage2, pfm.getGrid(1), selectedID == 1);
-        else drawEmpty(placementImage2);
-        if (pfm.loadPlacement(2) != null) drawField(placementImage3, pfm.getGrid(2), selectedID == 2);
-        else drawEmpty(placementImage3);
-        if (pfm.loadPlacement(3) != null) drawField(placementImage4, pfm.getGrid(3), selectedID == 3);
-        else drawEmpty(placementImage4);
+        if (pfm.loadResult(0) == LoadResult.VALID) drawField(placementImage1, pfm.getGrid(0), selectedID == 0);
+        else if(pfm.loadResult(0) == LoadResult.NONE) drawEmpty(placementImage1);
+        else drawError(placementImage1);
+        if (pfm.loadResult(1) == LoadResult.VALID) drawField(placementImage2, pfm.getGrid(1), selectedID == 1);
+        else if(pfm.loadResult(1) == LoadResult.NONE) drawEmpty(placementImage2);
+        else drawError(placementImage2);
+        if (pfm.loadResult(2) == LoadResult.VALID) drawField(placementImage3, pfm.getGrid(2), selectedID == 2);
+        else if(pfm.loadResult(2) == LoadResult.NONE) drawEmpty(placementImage3);
+        else drawError(placementImage3);
+        if (pfm.loadResult(3) == LoadResult.VALID) drawField(placementImage4, pfm.getGrid(3), selectedID == 3);
+        else if(pfm.loadResult(3) == LoadResult.NONE) drawEmpty(placementImage4);
+        else drawError(placementImage4);
     }
     
     private void drawField(ImageView image, Cell[][] grid, boolean isSelected){
@@ -121,7 +126,9 @@ public class PlacementLoaderController implements Initializable {
     }
     
     private void drawError(ImageView image){
-        
+        Image border = new Image("intersect.png", (int)image.fitWidthProperty().get(),
+                (int)image.fitHeightProperty().get(), true, true);
+        image.setImage(border);
     }
     
     @FXML
@@ -151,10 +158,19 @@ public class PlacementLoaderController implements Initializable {
     private void image1Pick(MouseEvent e){
         GlobalStateMachine gsm = GlobalStateMachine.getInstance();
         PlacementFileManager pfm = gsm.getPlacementFileManager();
-        if (pfm.loadPlacement(0) == null) pfm.savePlacement(0);
-        else selectedID = 0;
-        deleteBTN.setDisable(false);
-        pickBTN.setDisable(false);
+        if (pfm.loadResult(0) == LoadResult.NONE) {
+            pfm.savePlacement(0);
+        }
+        else if(pfm.loadResult(0) == LoadResult.VALID){
+            selectedID = 0;
+            deleteBTN.setDisable(false);
+            pickBTN.setDisable(false);
+        }
+        else {
+            selectedID = 0;
+            deleteBTN.setDisable(false);
+            pickBTN.setDisable(true);
+        }
         drawImages();
     }
     
@@ -162,10 +178,17 @@ public class PlacementLoaderController implements Initializable {
     private void image2Pick(MouseEvent e){
         GlobalStateMachine gsm = GlobalStateMachine.getInstance();
         PlacementFileManager pfm = gsm.getPlacementFileManager();
-        if (pfm.loadPlacement(1) == null) pfm.savePlacement(1);
-        else selectedID = 1;
-        deleteBTN.setDisable(false);
-        pickBTN.setDisable(false);
+        if (pfm.loadResult(1) == LoadResult.NONE) pfm.savePlacement(1);
+        else if(pfm.loadResult(1) == LoadResult.VALID){ 
+            selectedID = 1;
+            deleteBTN.setDisable(false);
+            pickBTN.setDisable(false);
+        }
+        else {
+            selectedID = 1;
+            deleteBTN.setDisable(false);
+            pickBTN.setDisable(true);
+        }
         drawImages();
     }
     
@@ -173,10 +196,17 @@ public class PlacementLoaderController implements Initializable {
     private void image3Pick(MouseEvent e){
         GlobalStateMachine gsm = GlobalStateMachine.getInstance();
         PlacementFileManager pfm = gsm.getPlacementFileManager();
-        if (pfm.loadPlacement(2) == null) pfm.savePlacement(2);
-        else selectedID = 2;
-        deleteBTN.setDisable(false);
-        pickBTN.setDisable(false);
+        if (pfm.loadResult(2) == LoadResult.NONE) pfm.savePlacement(2);
+        else if(pfm.loadResult(2) == LoadResult.VALID){ 
+            selectedID = 2;
+            deleteBTN.setDisable(false);
+            pickBTN.setDisable(false);
+        }
+        else {
+            selectedID = 2;
+            deleteBTN.setDisable(false);
+            pickBTN.setDisable(true);
+        }
         drawImages();
     }
     
@@ -184,10 +214,17 @@ public class PlacementLoaderController implements Initializable {
     private void image4Pick(MouseEvent e){
         GlobalStateMachine gsm = GlobalStateMachine.getInstance();
         PlacementFileManager pfm = gsm.getPlacementFileManager();
-        if (pfm.loadPlacement(3) == null) pfm.savePlacement(3);
-        else selectedID = 3;
-        deleteBTN.setDisable(false);
-        pickBTN.setDisable(false);
+        if (pfm.loadResult(3) == LoadResult.NONE) pfm.savePlacement(3);
+        else if(pfm.loadResult(3) == LoadResult.VALID){ 
+            selectedID = 3;
+            deleteBTN.setDisable(false);
+            pickBTN.setDisable(false);
+        }
+        else {
+            selectedID = 3;
+            deleteBTN.setDisable(false);
+            pickBTN.setDisable(true);
+        }
         drawImages();
     }
 }

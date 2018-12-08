@@ -14,6 +14,7 @@ import java.util.concurrent.Semaphore;
 public class WaitReadyThread extends Thread{
     private HumanOpponent opponent;
     private Semaphore lock;
+    private boolean causedByInternalAction = false;
     
     public WaitReadyThread(HumanOpponent opponent, Semaphore lock){
         this.opponent = opponent;
@@ -28,11 +29,12 @@ public class WaitReadyThread extends Thread{
             GlobalStateMachine.getInstance().asyncToBattle();
             lock.release();
         }catch(Exception e){
-            GlobalStateMachine.getInstance().disconnectTransition();
+            GlobalStateMachine.getInstance().disconnectTransition(causedByInternalAction);
         }
     }
     
     public void crashConnection() throws Exception{
+        causedByInternalAction = true;
         opponent.leave();
     }
 }

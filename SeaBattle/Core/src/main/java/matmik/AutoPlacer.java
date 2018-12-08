@@ -13,7 +13,7 @@ import java.util.Random;
  *
  * @author Алескандр
  */
-public class RandomAutoPlacer{
+public class AutoPlacer{
     
     public static boolean placeShips(Field field, List<Ship> ships) {
         //sort List here

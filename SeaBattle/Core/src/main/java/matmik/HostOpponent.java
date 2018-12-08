@@ -21,8 +21,11 @@ public class HostOpponent extends HumanOpponent{
     
     public void ready() throws Exception{       
             syncRead();
-            new Persister().read(Coordinates.class, connector.in());
+            HostPack hp = new Persister().read(HostPack.class, connector.in());
+            opponentName = hp.getName();
+            turntime = hp.getMaxTurnTime();
+            moveOrder = hp.isTurnOrder();
             syncWrite();
-            new Persister().write(new Coordinates(-1, -1), connector.out());
+            new Persister().write(new GuestPack(myName), connector.out());
     }
 }

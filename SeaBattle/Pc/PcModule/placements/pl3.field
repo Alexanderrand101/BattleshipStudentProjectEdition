@@ -6,18 +6,8 @@
          <isRotated>false</isRotated>
          <isDestroyed>false</isDestroyed>
          <bow>
-            <i>6</i>
-            <j>6</j>
-         </bow>
-      </ship>
-      <ship>
-         <shipLength>3</shipLength>
-         <hits>0</hits>
-         <isRotated>false</isRotated>
-         <isDestroyed>false</isDestroyed>
-         <bow>
-            <i>0</i>
-            <j>6</j>
+            <i>7</i>
+            <j>2</j>
          </bow>
       </ship>
       <ship>
@@ -27,27 +17,37 @@
          <isDestroyed>false</isDestroyed>
          <bow>
             <i>5</i>
-            <j>0</j>
+            <j>1</j>
          </bow>
       </ship>
       <ship>
-         <shipLength>2</shipLength>
-         <hits>0</hits>
-         <isRotated>false</isRotated>
-         <isDestroyed>false</isDestroyed>
-         <bow>
-            <i>2</i>
-            <j>0</j>
-         </bow>
-      </ship>
-      <ship>
-         <shipLength>2</shipLength>
+         <shipLength>3</shipLength>
          <hits>0</hits>
          <isRotated>false</isRotated>
          <isDestroyed>false</isDestroyed>
          <bow>
             <i>3</i>
-            <j>7</j>
+            <j>4</j>
+         </bow>
+      </ship>
+      <ship>
+         <shipLength>2</shipLength>
+         <hits>0</hits>
+         <isRotated>true</isRotated>
+         <isDestroyed>false</isDestroyed>
+         <bow>
+            <i>8</i>
+            <j>0</j>
+         </bow>
+      </ship>
+      <ship>
+         <shipLength>2</shipLength>
+         <hits>0</hits>
+         <isRotated>true</isRotated>
+         <isDestroyed>false</isDestroyed>
+         <bow>
+            <i>1</i>
+            <j>1</j>
          </bow>
       </ship>
       <ship>
@@ -57,13 +57,13 @@
          <isDestroyed>false</isDestroyed>
          <bow>
             <i>5</i>
-            <j>4</j>
+            <j>7</j>
          </bow>
       </ship>
       <ship>
          <shipLength>1</shipLength>
          <hits>0</hits>
-         <isRotated>true</isRotated>
+         <isRotated>false</isRotated>
          <isDestroyed>false</isDestroyed>
          <bow>
             <i>9</i>
@@ -76,8 +76,8 @@
          <isRotated>true</isRotated>
          <isDestroyed>false</isDestroyed>
          <bow>
-            <i>8</i>
-            <j>9</j>
+            <i>1</i>
+            <j>6</j>
          </bow>
       </ship>
       <ship>
@@ -86,8 +86,8 @@
          <isRotated>false</isRotated>
          <isDestroyed>false</isDestroyed>
          <bow>
-            <i>3</i>
-            <j>3</j>
+            <i>8</i>
+            <j>7</j>
          </bow>
       </ship>
       <ship>
@@ -96,8 +96,8 @@
          <isRotated>true</isRotated>
          <isDestroyed>false</isDestroyed>
          <bow>
-            <i>7</i>
-            <j>1</j>
+            <i>0</i>
+            <j>3</j>
          </bow>
       </ship>
    </ships>

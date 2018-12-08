@@ -133,7 +133,7 @@ public class PlacementController {
     }
 
     public void autoPlaceShips() {
-        RandomAutoPlacer.placeShips(field, shipBank.removeAll());
+        AutoPlacer.placeShips(field, shipBank.removeAll());
         field.gridRefresh();
     }
 

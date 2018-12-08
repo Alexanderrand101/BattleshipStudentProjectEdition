@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 import org.simpleframework.xml.core.Persister;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +25,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
@@ -44,11 +48,17 @@ import matmik.*;
  * @author 
  */
 public class PCFXMLController implements Initializable,View {
-    
+ 
+    @FXML
+    private Spinner<Integer> maxTimeSpinner;
     @FXML
     private TabPane tabPane;
     @FXML
     private Label label;
+    @FXML
+    private Label myNameLabel;
+    @FXML
+    private Label opponentNameLabel;
     @FXML
     private ImageView placementImage;
     @FXML
@@ -71,7 +81,8 @@ public class PCFXMLController implements Initializable,View {
     private Tab readyWaitTab;
     @FXML
     private AnchorPane mainAnchor; 
-    
+    @FXML
+    private Label timerLabel;
     @FXML 
     private Label quantity1;
     @FXML
@@ -80,6 +91,8 @@ public class PCFXMLController implements Initializable,View {
     private Label quantity3;
     @FXML
     private Label quantity4;
+    @FXML
+    private TextField nameTB;
     
     private Image ver1;
     private Image hor1;
@@ -109,14 +122,14 @@ public class PCFXMLController implements Initializable,View {
     
     private void loadImages(){
         int cellSize = globalDisplayConstants.getShipCellSize();
-        ver1 = new Image("1ver.png", cellSize, cellSize, true, true);
-        ver2 = new Image("2ver.png", cellSize, cellSize * 2, true, true);
-        ver3 = new Image("3ver.png", cellSize, cellSize * 3, true, true);
-        ver4 = new Image("4ver.png", cellSize, cellSize * 4, true, true);
-        hor1 = new Image("1hor.png", cellSize, cellSize, true, true);
-        hor2 = new Image("2hor.png", cellSize * 2, cellSize, true, true);
-        hor3 = new Image("3hor.png", cellSize * 3, cellSize, true, true);
-        hor4 = new Image("4hor.png", cellSize * 4, cellSize, true, true);
+        ver1 = new Image("1ver.png", cellSize, cellSize, true, false);
+        ver2 = new Image("2ver.png", cellSize, cellSize * 2, true, false);
+        ver3 = new Image("3ver.png", cellSize, cellSize * 3, true, false);
+        ver4 = new Image("4ver.png", cellSize, cellSize * 4, true, false);
+        hor1 = new Image("1hor.png", cellSize, cellSize, true, false);
+        hor2 = new Image("2hor.png", cellSize * 2, cellSize, true, false);
+        hor3 = new Image("3hor.png", cellSize * 3, cellSize, true, false);
+        hor4 = new Image("4hor.png", cellSize * 4, cellSize, true, false);
     }
     
     private void reDrawView(){
@@ -134,8 +147,7 @@ public class PCFXMLController implements Initializable,View {
     
     @FXML
     public void initialize(URL url, ResourceBundle rb) {
-        reDrawView();
-        loadImages();
+        initialize();
     }    
     
 //    public PCFXMLController(int x, int y){
@@ -147,11 +159,21 @@ public class PCFXMLController implements Initializable,View {
     public void initialize(){   
         reDrawView();
         loadImages();
+        nameTB.focusedProperty().addListener(
+                new ChangeListener<Boolean>(){
+                    public void changed(ObservableValue<? extends Boolean> ov, Boolean t, Boolean t1) {
+                       if(!t1){
+                           globalStateMachine.setPlayerName(nameTB.getText());
+                           nameTB.setText(globalStateMachine.getPlayerName());
+                       }
+                    }                 
+                }
+        );
     }
 
     @FXML
     private void openConnection(MouseEvent event) throws IOException{
-        globalStateMachine.setUpAsHost(new SocketHostConnector(4444));
+        globalStateMachine.setUpAsHost(new SocketHostConnector(4444), maxTimeSpinner.getValue());
     }
     
     @FXML
@@ -519,6 +541,7 @@ public class PCFXMLController implements Initializable,View {
                 tabPane.getSelectionModel().select(inputIpTab);
                 break;
             case HOST_PAGE:
+                maxTimeSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,60,10));
                 tabPane.getSelectionModel().select(hostTab);
                 break;
             case HOST_WAITING_PAGE:
@@ -530,6 +553,7 @@ public class PCFXMLController implements Initializable,View {
             case GAME_PAGE:
                 battleController = globalStateMachine.getBattleController();
                 drawGameBoard();
+                setNames();
                 battleController.gameStart();
                 tabPane.getSelectionModel().select(gameTab);
                 break;
@@ -550,5 +574,34 @@ public class PCFXMLController implements Initializable,View {
         } catch (IOException ex) {
             Logger.getLogger(PCFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public void showError(final String errorMessage) {
+        Platform.runLater(
+                new Thread()
+                {
+                    @Override
+                    public void run(){
+                            new Alert(Alert.AlertType.ERROR, errorMessage, ButtonType.OK).showAndWait();
+                    }
+                }
+        );	
+    }
+
+    public void setNames(){
+        myNameLabel.setText(globalStateMachine.getPlayerInGameName());
+        opponentNameLabel.setText(globalStateMachine.getOpponnetName());
+    }
+    
+    public void drawRemaningTime(final int seconds) {
+        Platform.runLater(
+                new Thread()
+                {
+                    @Override
+                    public void run(){
+                            timerLabel.setText(Integer.toString(seconds));
+                    }
+                }
+        );	
     }
 }

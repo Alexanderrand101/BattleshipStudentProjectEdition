@@ -16,7 +16,8 @@ import org.simpleframework.xml.core.Persister;
  */
 public class PlacementFileManager {
     private final static String[] PLACEMENT_FILENAMES = new String[]{"pl1.field","pl2.field","pl3.field","pl4.field"};
-    private Field[] fields = new Field[4]; 
+    private Field[] fields = new Field[4];
+    private LoadResult[] loadResults = new LoadResult[4]; 
     private String pathToPlacements;
     private Field current;
     
@@ -29,12 +30,17 @@ public class PlacementFileManager {
                 try{
                     fields[i] = new Persister().read(Field.class, fieldFile);
                     fields[i].gridRefresh();
-                    //add Validation
+                    if(fields[i].isOnLoadValid())
+                        loadResults[i] = LoadResult.VALID;
+                    else
+                        loadResults[i] = LoadResult.NOT_VALID; 
                 }
                 catch(Exception e){
-                    
+                    loadResults[i] = LoadResult.CORRUPTED;
                 }
             }
+            else
+                loadResults[i] = LoadResult.NONE;
         }
     }
     
@@ -56,21 +62,29 @@ public class PlacementFileManager {
                 try{
                     fields[i] = new Persister().read(Field.class, fieldFile);
                     fields[i].gridRefresh();
-                    //add Validation
+                    if(fields[i].isOnLoadValid())
+                        loadResults[i] = LoadResult.VALID;
+                    else
+                        loadResults[i] = LoadResult.NOT_VALID;
                 }
                 catch(Exception e){
-                    
+                    loadResults[i] = LoadResult.CORRUPTED;
                 }
             }
+    }
+    
+    public LoadResult loadResult(int i){
+        return loadResults[i];
     }
     
     public void deletePlacement(int i){
         File fieldFile = new File(pathToPlacements + PLACEMENT_FILENAMES[i]);
         fieldFile.delete();
         fields[i] = null;
+        loadResults[i] = LoadResult.NONE;
     }
     
     public Field loadPlacement(int i){
-        return fields[i];
+        return loadResults[i] == LoadResult.VALID ? fields[i] : null; 
     }
 }
