@@ -27,8 +27,10 @@ public class ShipUtils {
         List<Ship> ships = defaultShipList();
         for(Ship ship: shipList){
             for(int i = 0; i < ships.size(); i++){
-                if (ships.get(i).getShipLength() == ship.getShipLength())
+                if (ships.get(i).getShipLength() == ship.getShipLength()){
                     ships.remove(i);
+                    break;
+                }
             }
         }
         return ships;

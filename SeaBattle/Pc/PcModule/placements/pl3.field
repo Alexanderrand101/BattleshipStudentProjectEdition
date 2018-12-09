@@ -1,93 +1,33 @@
 <field>
    <ships class="java.util.LinkedList">
       <ship>
-         <shipLength>4</shipLength>
-         <hits>0</hits>
-         <isRotated>false</isRotated>
-         <isDestroyed>false</isDestroyed>
-         <bow>
-            <i>7</i>
-            <j>2</j>
-         </bow>
-      </ship>
-      <ship>
          <shipLength>3</shipLength>
-         <hits>0</hits>
-         <isRotated>false</isRotated>
-         <isDestroyed>false</isDestroyed>
-         <bow>
-            <i>5</i>
-            <j>1</j>
-         </bow>
-      </ship>
-      <ship>
-         <shipLength>3</shipLength>
-         <hits>0</hits>
-         <isRotated>false</isRotated>
-         <isDestroyed>false</isDestroyed>
-         <bow>
-            <i>3</i>
-            <j>4</j>
-         </bow>
-      </ship>
-      <ship>
-         <shipLength>2</shipLength>
          <hits>0</hits>
          <isRotated>true</isRotated>
          <isDestroyed>false</isDestroyed>
          <bow>
-            <i>8</i>
+            <i>7</i>
             <j>0</j>
          </bow>
       </ship>
       <ship>
          <shipLength>2</shipLength>
          <hits>0</hits>
-         <isRotated>true</isRotated>
+         <isRotated>false</isRotated>
          <isDestroyed>false</isDestroyed>
          <bow>
-            <i>1</i>
+            <i>2</i>
             <j>1</j>
          </bow>
       </ship>
       <ship>
          <shipLength>2</shipLength>
          <hits>0</hits>
-         <isRotated>true</isRotated>
-         <isDestroyed>false</isDestroyed>
-         <bow>
-            <i>5</i>
-            <j>7</j>
-         </bow>
-      </ship>
-      <ship>
-         <shipLength>1</shipLength>
-         <hits>0</hits>
          <isRotated>false</isRotated>
          <isDestroyed>false</isDestroyed>
          <bow>
-            <i>9</i>
-            <j>4</j>
-         </bow>
-      </ship>
-      <ship>
-         <shipLength>1</shipLength>
-         <hits>0</hits>
-         <isRotated>true</isRotated>
-         <isDestroyed>false</isDestroyed>
-         <bow>
-            <i>1</i>
-            <j>6</j>
-         </bow>
-      </ship>
-      <ship>
-         <shipLength>1</shipLength>
-         <hits>0</hits>
-         <isRotated>false</isRotated>
-         <isDestroyed>false</isDestroyed>
-         <bow>
-            <i>8</i>
-            <j>7</j>
+            <i>4</i>
+            <j>0</j>
          </bow>
       </ship>
       <ship>
@@ -100,5 +40,98 @@
             <j>3</j>
          </bow>
       </ship>
+      <ship>
+         <shipLength>1</shipLength>
+         <hits>0</hits>
+         <isRotated>true</isRotated>
+         <isDestroyed>false</isDestroyed>
+         <bow>
+            <i>6</i>
+            <j>6</j>
+         </bow>
+      </ship>
    </ships>
+   <cellWithCoordsList class="java.util.LinkedList">
+      <cellWithCoords>
+         <cell>
+            <state>BUSY</state>
+         </cell>
+         <coords>
+            <i>0</i>
+            <j>3</j>
+         </coords>
+      </cellWithCoords>
+      <cellWithCoords>
+         <cell>
+            <state>BUSY</state>
+         </cell>
+         <coords>
+            <i>2</i>
+            <j>1</j>
+         </coords>
+      </cellWithCoords>
+      <cellWithCoords>
+         <cell>
+            <state>BUSY</state>
+         </cell>
+         <coords>
+            <i>2</i>
+            <j>2</j>
+         </coords>
+      </cellWithCoords>
+      <cellWithCoords>
+         <cell>
+            <state>BUSY</state>
+         </cell>
+         <coords>
+            <i>4</i>
+            <j>0</j>
+         </coords>
+      </cellWithCoords>
+      <cellWithCoords>
+         <cell>
+            <state>BUSY</state>
+         </cell>
+         <coords>
+            <i>4</i>
+            <j>1</j>
+         </coords>
+      </cellWithCoords>
+      <cellWithCoords>
+         <cell>
+            <state>BUSY</state>
+         </cell>
+         <coords>
+            <i>6</i>
+            <j>6</j>
+         </coords>
+      </cellWithCoords>
+      <cellWithCoords>
+         <cell>
+            <state>BUSY</state>
+         </cell>
+         <coords>
+            <i>7</i>
+            <j>0</j>
+         </coords>
+      </cellWithCoords>
+      <cellWithCoords>
+         <cell>
+            <state>BUSY</state>
+         </cell>
+         <coords>
+            <i>8</i>
+            <j>0</j>
+         </coords>
+      </cellWithCoords>
+      <cellWithCoords>
+         <cell>
+            <state>BUSY</state>
+         </cell>
+         <coords>
+            <i>9</i>
+            <j>0</j>
+         </coords>
+      </cellWithCoords>
+   </cellWithCoordsList>
 </field>

@@ -1,5 +1,6 @@
 package matmik;
 
+import java.util.Comparator;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
@@ -74,6 +75,14 @@ public class Ship {
     }
 
 
+    public static class ShipComparator implements Comparator<Ship>
+    {
+
+        public int compare(Ship o1, Ship o2) {
+            return o2.getShipLength() - o1.getShipLength();
+        }
+        
+    }
 //    public ShipContainer getShipContainer() {
 //        return shipContainer;
 //    }

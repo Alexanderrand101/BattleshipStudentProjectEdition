@@ -21,7 +21,9 @@ public class GamePack {
     @Element
     private Field opponentField;
     @ElementUnion({
-        @Element(name = "ZeroBrainsMachineOpponent", type = ZeroBrainsMachineOpponent.class)
+        @Element(name = "ZeroBrainsMachineOpponent", type = ZeroBrainsMachineOpponent.class),
+        @Element(name = "SimpleBrainsMachineOpponent", type = SimpleBrainsMachineOpponent.class),
+        @Element(name = "OkayBrainsMachineOpponent", type = OkayBrainsMachineOpponent.class)
     })
     private MachineOpponent machineOpponent;
     @Element

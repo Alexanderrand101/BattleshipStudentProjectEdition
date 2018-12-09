@@ -131,6 +131,33 @@ public class Field implements ShipContainer{
         return true;
     }
 
+    public boolean possiblePosition(Ship shipToPlace)
+    {
+        //check if it is in bounds. If it is, highlight its potential placement.
+        //as only top left is tracked, we don't need to check left oob, or top oob
+        if ((shipToPlace.getStern().getI() > GRID_WIDTH - 1) ||
+                (shipToPlace.getStern().getJ() > GRID_HEIGHT - 1))
+            return false;
+        //draw potential placement
+        
+        //scan area around ship to determine whenever it touches others or not.
+
+        int startI = shipToPlace.getBow().getI();
+        int startJ = shipToPlace.getBow().getJ();
+
+        int endI = shipToPlace.getStern().getI();
+        int endJ = shipToPlace.getStern().getJ();
+
+        for(int  i = startI; i <= endI; i++)
+            for(int j = startJ; j <= endJ; j++){
+                if(grid[i][j].getState() != CellState.FREE)
+                {
+                    return false;
+                }
+            }
+        return true;
+    }
+    
     public boolean validate(Ship shipToPlace)
     {
         //check if it is in bounds. If it is, highlight its potential placement.
