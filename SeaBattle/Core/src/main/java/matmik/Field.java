@@ -21,8 +21,8 @@ import org.simpleframework.xml.Root;
 @Root
 public class Field implements ShipContainer{
         
-    private static final int GRID_WIDTH = 10;
-    private static final int GRID_HEIGHT = 10;
+    public static final int GRID_WIDTH = 10;
+    public static final int GRID_HEIGHT = 10;
     @ElementList
     private List<Ship> ships = new LinkedList<Ship>();
     private Cell[][] grid = new Cell[GRID_HEIGHT][GRID_WIDTH];

@@ -326,6 +326,11 @@ public class PCFXMLController implements Initializable,View {
     private void pickDifficultyEasy(MouseEvent event) {
         globalStateMachine.pickedDifficulty(OpponentSubType.MACHINE_DUMB);
     }
+    
+    @FXML
+    private void pickDifficultyNormal(ActionEvent e){
+        globalStateMachine.pickedDifficulty(OpponentSubType.MACHINE_NOT_SO_DUMB);
+    }
 
     @FXML
     private void clearBoard(MouseEvent event) {
@@ -569,6 +574,8 @@ public class PCFXMLController implements Initializable,View {
             default:;
         }
     }
+    
+
 
     private void showPlacementLoaderWindow() {
         try {

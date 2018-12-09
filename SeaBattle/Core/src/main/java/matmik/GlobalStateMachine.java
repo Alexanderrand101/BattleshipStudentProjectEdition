@@ -86,6 +86,9 @@ public class GlobalStateMachine {
             case MACHINE_DUMB:
                 opponent = new ZeroBrainsMachineOpponent();
                 break;
+            case MACHINE_NOT_SO_DUMB:
+                opponent = new SimpleBrainsMachineOpponent();
+                break;
             default:;
         }
         placementController = new PlacementController();
