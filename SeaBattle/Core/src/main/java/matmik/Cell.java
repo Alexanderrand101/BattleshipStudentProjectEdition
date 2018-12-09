@@ -5,12 +5,17 @@
  */
 package matmik;
 
+import org.simpleframework.xml.Element;
+import org.simpleframework.xml.Root;
+
 /**
  *
  * @author Алескандр
  */
+@Root
 public class Cell {
 
+    @Element
     private CellState state;
     private Ship ship;
     

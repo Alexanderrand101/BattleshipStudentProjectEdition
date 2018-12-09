@@ -5,6 +5,7 @@
  */
 package matmik;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -188,5 +189,12 @@ public class BattleController {
         return opponentField.getGrid();
     }
     
-    
+    public void saveBattle(String fileName){
+        try {
+            File file = new File(fileName);
+            new Persister().write(new GamePack(playerField, opponentField, (MachineOpponent)opponent, moveOrder), file);
+        } catch (Exception ex) {
+            battleView.showError("saving failed");
+        }
+    }
 }

@@ -5,10 +5,12 @@
  */
 package matmik;
 
+import java.io.File;
 import java.util.Random;
 import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.simpleframework.xml.core.Persister;
 
 /**
  *
@@ -288,5 +290,19 @@ public class GlobalStateMachine {
         }
         else
             return playerName; 
+    }
+    
+    public void loadGame(String filename){
+        try {
+            //validation required
+            GamePack gamePack = new Persister().read(GamePack.class, new File(filename));
+            gamePack.getMachineOpponent().getMyField().gameInit();
+            battleController = new BattleController(gamePack.getMyField(), gamePack.getOpponentField(),
+            gamePack.getMachineOpponent(), view, gamePack.isTurnOrder(), -1);
+            view.stateTransition(ViewState.GAME_PAGE);
+            currentViewState = ViewState.GAME_PAGE;
+        } catch (Exception ex) {
+            view.showError("load failed");
+        }
     }
 }

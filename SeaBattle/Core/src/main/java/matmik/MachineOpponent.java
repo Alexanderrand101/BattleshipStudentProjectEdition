@@ -5,13 +5,17 @@
  */
 package matmik;
 
+import org.simpleframework.xml.Element;
+
 /**
  *
  * @author Алескандр
  */
 public abstract class MachineOpponent implements Opponent{
-
-    protected Field myField; 
+    
+    @Element
+    protected Field myField;
+    @Element
     protected Field fleshbagsField; 
     protected Ship lastDestroyedShip;
     
@@ -46,6 +50,7 @@ public abstract class MachineOpponent implements Opponent{
     
     public void sendDestroyedShip(Ship ship){
         fleshbagsField.add(ship);
+        fleshbagsField.destroy(ship);
     }
     
     public void responseDelivery(Coordinates coord, CellState state){

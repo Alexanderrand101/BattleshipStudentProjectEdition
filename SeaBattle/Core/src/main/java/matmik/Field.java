@@ -28,6 +28,24 @@ public class Field implements ShipContainer{
     private Cell[][] grid = new Cell[GRID_HEIGHT][GRID_WIDTH];
     private boolean initializedForGame = false;
 
+    @ElementList(required = false)
+    public List<CellWithCoords> getCellWithCoordsList(){
+        List<CellWithCoords> listofstuff = new LinkedList<CellWithCoords>();
+        for(int i = 0; i < GRID_HEIGHT; i++)
+            for(int j = 0; j < GRID_WIDTH; j++){
+                if(!grid[i][j].isFree())
+                    listofstuff.add(new CellWithCoords(grid[i][j], new Coordinates(i,j)));
+            }
+        return listofstuff;
+    }
+    
+    @ElementList(required = false)
+    public void setCellWithCoordsList(List<CellWithCoords> listofstuff){
+        for(CellWithCoords cellwc : listofstuff){
+            grid[cellwc.getCoords().getI()][cellwc.getCoords().getJ()] = cellwc.getCell();
+        }
+    }
+    
     private void gridInit(){
         for(int i = 0; i < GRID_HEIGHT; i++)
             for(int j = 0; j < GRID_WIDTH; j++)

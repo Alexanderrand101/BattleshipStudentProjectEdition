@@ -38,6 +38,7 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -603,5 +604,27 @@ public class PCFXMLController implements Initializable,View {
                     }
                 }
         );	
+    }
+    
+    @FXML
+    private void loadFromFile(MouseEvent e){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("load Game");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Game files", "*.game"));
+        File file = fileChooser.showOpenDialog(tabPane.getScene().getWindow());
+        if (file != null){
+            globalStateMachine.loadGame(file.getAbsolutePath());
+        }
+    }
+    
+    @FXML 
+    private void saveGame(ActionEvent e){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("save Game");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Game files", "*.game"));
+        File file = fileChooser.showSaveDialog(tabPane.getScene().getWindow());
+        if (file != null){
+            battleController.saveBattle(file.getAbsolutePath());
+        }
     }
 }
