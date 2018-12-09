@@ -51,6 +51,8 @@ import matmik.*;
 public class PCFXMLController implements Initializable,View {
  
     @FXML
+    private Button saveGameBtn;
+    @FXML
     private Spinner<Integer> maxTimeSpinner;
     @FXML
     private TabPane tabPane;
@@ -555,6 +557,12 @@ public class PCFXMLController implements Initializable,View {
                 battleController = globalStateMachine.getBattleController();
                 drawGameBoard();
                 setNames();
+                if(globalStateMachine.getOpponentType() == OpponentType.HUMAN){
+                    saveGameBtn.setVisible(false);
+                }
+                else{
+                    saveGameBtn.setVisible(true);
+                }
                 battleController.gameStart();
                 tabPane.getSelectionModel().select(gameTab);
                 break;

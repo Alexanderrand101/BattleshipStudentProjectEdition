@@ -123,7 +123,7 @@
                                     <Label fx:id="timerLabel" layoutX="272.0" layoutY="23.0" text="Label" />
                                     <Label fx:id="myNameLabel" layoutX="51.0" layoutY="15.0" text="Label" />
                                     <Label fx:id="opponentNameLabel" layoutX="473.0" layoutY="15.0" text="Label" />
-                                    <Button layoutX="249.0" layoutY="288.0" mnemonicParsing="false" onAction="#saveGame" text="Сохранить игру" />
+                                    <Button fx:id="saveGameBtn" layoutX="249.0" layoutY="288.0" mnemonicParsing="false" onAction="#saveGame" text="Сохранить игру" />
                                  </children>
                               </AnchorPane>
                           </content>

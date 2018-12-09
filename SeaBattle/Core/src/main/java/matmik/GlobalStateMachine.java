@@ -18,7 +18,6 @@ import org.simpleframework.xml.core.Persister;
  */
 public class GlobalStateMachine {
     private static GlobalStateMachine stateMachine;
-    //arguments
     private OpponentType opponentType;
     private OpponentSubType opponentSubType;
     private Opponent opponent;
@@ -34,6 +33,12 @@ public class GlobalStateMachine {
     private PlacementFileManager placementFileManager;
     private String playerName;
     private Random turnOrderGenerator;
+    
+    
+    //arguments
+    public OpponentType getOpponentType() {
+        return opponentType;
+    }
     
     public static GlobalStateMachine getInstance(View view){
         if (stateMachine == null){
