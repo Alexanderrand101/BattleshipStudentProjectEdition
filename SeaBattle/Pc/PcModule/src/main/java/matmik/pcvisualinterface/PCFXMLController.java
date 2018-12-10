@@ -465,9 +465,9 @@ public class PCFXMLController implements Initializable,View {
         int cellSize = globalDisplayConstants.getShipCellSize();
         Image cell = new Image("cell.png", cellSize, cellSize, true, true);
         Image shipCell = new Image("shipCell.png", cellSize, cellSize, false, true);
-        Image candidate = new Image("candidate.png", cellSize, cellSize, true, true);
-        Image intersect = new Image("intersect.png", cellSize, cellSize, true, true);
-        Image nearshiparea = new Image("nearshiparea.png", cellSize, cellSize, true, true);
+        Image candidate = new Image("missed.png", cellSize, cellSize, true, true);
+        Image intersect = new Image("damaged.png", cellSize, cellSize, true, true);
+        Image nearshiparea = new Image("destroyed.png", cellSize, cellSize, true, true);
         Image myTurn = new Image("myTurn.png", cellSize, cellSize, true, true);
         Image opponentTurn = new Image("opponentTurn.png", cellSize, cellSize, true, true);
         WritableImage placementField = new WritableImage((int)placementImage.fitWidthProperty().get(),

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="305.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="matmik.pcvisualinterface.OptionsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="305.0" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="matmik.pcvisualinterface.OptionsController">
    <children>
-      <TitledPane animated="false" prefHeight="62.0" prefWidth="305.0" text="Стратегия авторасстановки">
+      <TitledPane animated="false" prefHeight="62.0" prefWidth="305.0" style="-fx-border-color: blue;" text="Стратегия авторасстановки">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: lightblue; -fx-border-color: blue; -fx-border-image-width: 2;">
                <children>
                   <RadioButton fx:id="randomRB" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Случайная" />
                   <RadioButton fx:id="shoreRB" layoutX="108.0" layoutY="14.0" mnemonicParsing="false" text="Берега" />
@@ -20,10 +20,14 @@
       </TitledPane>
       <TitledPane animated="false" layoutY="62.0" prefHeight="206.0" prefWidth="305.0" text="untitled">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="283.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="197.0" prefWidth="303.0" style="-fx-background-color: lightblue; -fx-border-width: 2; -fx-border-color: blue;" />
         </content>
       </TitledPane>
-      <Button layoutX="43.0" layoutY="361.0" mnemonicParsing="false" onAction="#saveProps" text="Сохранить" />
-      <Button layoutX="198.0" layoutY="361.0" mnemonicParsing="false" onAction="#close" text="Закрыть" />
+      <Button id="confirm" layoutX="55.0" layoutY="334.0" mnemonicParsing="false" onAction="#saveProps" prefHeight="53.0" prefWidth="70.0" style="-fx-background-position: center;" />
+      <Button id="close" layoutX="198.0" layoutY="334.0" mnemonicParsing="false" onAction="#close" prefHeight="53.0" prefWidth="70.0" style="-fx-background-position: center;" stylesheets="@placements.css" />
    </children>
+   <stylesheets>
+      <URL value="@buttons.css" />
+      <URL value="@placements.css" />
+   </stylesheets>
 </AnchorPane>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressIndicator?>
@@ -17,20 +18,20 @@
 
 <!-- fx:controller="matmik.pcvisualinterface.PCFXMLController" removed in order to set values before init-->
 
-<AnchorPane id="AnchorPane" fx:id="mainAnchor" minHeight="400.0" minWidth="600.0" pickOnBounds="false" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="matmik.pcvisualinterface.PCFXMLController">
+<AnchorPane id="AnchorPane" fx:id="mainAnchor" minHeight="400.0" minWidth="600.0" pickOnBounds="false" prefHeight="473.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="matmik.pcvisualinterface.PCFXMLController">
     <children>
       <SplitPane dividerPositions="0.0728643216080402" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="24.0" prefWidth="695.0">
                <children>
-                <Button id="back" layoutX="543.0" layoutY="6.0" mnemonicParsing="false" onMouseClicked="#back" prefHeight="25.0" prefWidth="71.0" style="-fx-background-position: center; -fx-background-image: &quot;back.png&quot;;" text="Назад" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0" />
-                  <TextField fx:id="nameTB" layoutX="6.0" />
-                  <Button layoutX="435.0" mnemonicParsing="false" onAction="#settingsDialog" text="Настройки" />
+                <Button id="back" layoutX="610.0" layoutY="3.0" mnemonicParsing="false" onMouseClicked="#back" prefHeight="33.0" prefWidth="71.0" style="-fx-background-position: center; -fx-background-image: &quot;back.png&quot;;" text="Назад" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="3.0" />
+                  <TextField fx:id="nameTB" layoutX="6.0" text="Игрок" />
+                  <Button id="options" layoutX="513.0" layoutY="3.0" mnemonicParsing="false" onAction="#settingsDialog" prefHeight="33.0" prefWidth="89.0" text="Настройки" />
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="248.0" prefWidth="598.0">
+          <AnchorPane id="mainScreen" minHeight="0.0" minWidth="0.0" prefHeight="248.0" prefWidth="598.0">
                <children>
-                  <TabPane fx:id="tabPane" pickOnBounds="false" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TabPane fx:id="tabPane" pickOnBounds="false" prefHeight="400.0" prefWidth="695.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <tabs>
                       <Tab id="titleTab" fx:id="titleTab" text="TitleTab">
                         <content>
@@ -44,21 +45,22 @@
                                       </columnConstraints>
                                       <rowConstraints>
                                         <RowConstraints maxHeight="176.0" minHeight="10.0" percentHeight="50.0" prefHeight="149.0" />
-                                        <RowConstraints maxHeight="141.0" minHeight="10.0" percentHeight="12.5" prefHeight="62.0" vgrow="SOMETIMES" />
-                                        <RowConstraints maxHeight="86.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="86.0" minHeight="10.0" percentHeight="9.0" prefHeight="53.0" vgrow="SOMETIMES" />
-                                          <RowConstraints maxHeight="133.0" minHeight="10.0" percentHeight="15.0" prefHeight="28.0" vgrow="ALWAYS" />
+                                        <RowConstraints maxHeight="141.0" minHeight="10.0" percentHeight="10.0" prefHeight="62.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="86.0" minHeight="10.0" percentHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="86.0" minHeight="10.0" percentHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
+                                          <RowConstraints maxHeight="133.0" minHeight="10.0" percentHeight="20.0" prefHeight="28.0" vgrow="ALWAYS" />
                                       </rowConstraints>
                                        <children>
                                           <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#loadFromFile" prefHeight="147.0" prefWidth="335.0" text="Загрузить сохранение" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                          <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#initForHuman" prefHeight="37.0" prefWidth="300.0" text="играть с человеком" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                                          <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#initForHuman" prefHeight="37.0" prefWidth="300.0" text="Играть с человеком" textAlignment="CENTER" wrapText="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                                              <font>
                                                 <Font size="14.0" />
                                              </font>
                                           </Button>
-                                          <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#initForPC" prefHeight="147.0" prefWidth="335.0" text="играть  с не человеком" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+                                          <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#initForPC" prefHeight="147.0" prefWidth="335.0" text="Играть  с компьютером" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
                                             <Label fx:id="label" minHeight="16" minWidth="69" GridPane.columnIndex="1" />
                                           <Label alignment="TOP_LEFT" text="Label" GridPane.valignment="TOP" />
+                                          <Label alignment="CENTER" maxWidth="1.7976931348623157E308" style="-fx-font-size: 40; -fx-font-style: oblique; -fx-font-weight: bold;" text="Морской бой" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
                                        </children>
                                     </GridPane>
                                  </children>
@@ -69,7 +71,7 @@
                         <content>
                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <GridPane layoutX="6.0" prefHeight="340.0" prefWidth="590.0">
+                                    <GridPane prefHeight="415.0" prefWidth="709.0">
                                       <columnConstraints>
                                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -86,7 +88,7 @@
                                           <Button alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#pickDifficultyEasy" prefHeight="25.0" prefWidth="101.0" text="Лёгкая" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                           <Button alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#pickDifficultyNormal" prefHeight="25.0" prefWidth="100.0" text="Средняя" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                           <Button alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#pickDifficultyHard" prefHeight="25.0" prefWidth="101.0" text="Сложная" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                          <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="45.0" prefWidth="197.0" text="Сложность" textAlignment="CENTER" textFill="#1ac1cd" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
+                                          <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="45.0" prefWidth="197.0" style="-fx-font-size: 36;" text="Сложность" textAlignment="CENTER" textFill="#1ac1cd" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
                                              <font>
                                                 <Font size="36.0" />
                                              </font>
@@ -102,12 +104,12 @@
                             <AnchorPane fx:id="placementAnchor" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
                                     <Label fx:id="stateLabel" text="Label" />
-                                    <ImageView fx:id="placementImage" fitHeight="327.0" fitWidth="600.0" layoutY="25.0" onMouseDragged="#moveShip" onMousePressed="#pickShip" onMouseReleased="#dropShip" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                    <Button id="clean" layoutX="292.0" layoutY="197.0" mnemonicParsing="false" onMouseClicked="#clearBoard" prefHeight="45.0" prefWidth="45.0" style="-fx-background-position: center;" />
-                                    <Button id="auto" layoutX="337.0" layoutY="197.0" mnemonicParsing="false" onMouseClicked="#placeShips" prefHeight="45.0" prefWidth="45.0" style="-fx-background-position: center;" />
-                                    <Button id="rotate" layoutX="382.0" layoutY="197.0" mnemonicParsing="false" onMouseClicked="#rotateBank" prefHeight="45.0" prefWidth="45.0" style="-fx-background-position: center;" />
-                                    <Button layoutX="358.0" layoutY="278.0" mnemonicParsing="false" onMouseClicked="#toBattle" text="В бой" />
-                                    <Button id="placements" layoutX="427.0" layoutY="197.0" mnemonicParsing="false" onAction="#placementFileManager" prefHeight="45.0" prefWidth="45.0" style="-fx-background-position: center;" />
+                                    <ImageView fx:id="placementImage" fitHeight="401.0" fitWidth="709.0" layoutY="25.0" onMouseDragged="#moveShip" onMousePressed="#pickShip" onMouseReleased="#dropShip" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                    <Button id="clean" layoutX="376.0" layoutY="245.0" mnemonicParsing="false" onMouseClicked="#clearBoard" prefHeight="45.0" prefWidth="45.0" style="-fx-background-position: center;" />
+                                    <Button id="auto" layoutX="421.0" layoutY="245.0" mnemonicParsing="false" onMouseClicked="#placeShips" prefHeight="45.0" prefWidth="45.0" style="-fx-background-position: center;" />
+                                    <Button id="rotate" layoutX="466.0" layoutY="245.0" mnemonicParsing="false" onMouseClicked="#rotateBank" prefHeight="45.0" prefWidth="45.0" style="-fx-background-position: center;" />
+                                    <Button layoutX="442.0" layoutY="326.0" mnemonicParsing="false" onMouseClicked="#toBattle" text="В бой" />
+                                    <Button id="placements" layoutX="511.0" layoutY="245.0" mnemonicParsing="false" onAction="#placementFileManager" prefHeight="45.0" prefWidth="45.0" style="-fx-background-position: center;" />
                                     <Label fx:id="quantity1" layoutX="526.0" layoutY="28.0" text="Label" />
                                     <Label fx:id="quantity2" layoutX="526.0" layoutY="57.0" text="Label" />
                                     <Label fx:id="quantity3" layoutX="526.0" layoutY="84.0" text="Label" />
@@ -120,11 +122,11 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <ImageView fx:id="gameImage" fitHeight="300.0" fitWidth="600.0" onMouseClicked="#hitPosition" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                    <Label fx:id="timerLabel" layoutX="272.0" layoutY="23.0" text="Label" />
-                                    <Label fx:id="myNameLabel" layoutX="51.0" layoutY="15.0" text="Label" />
-                                    <Label fx:id="opponentNameLabel" layoutX="473.0" layoutY="15.0" text="Label" />
-                                    <Button fx:id="saveGameBtn" layoutX="249.0" layoutY="288.0" mnemonicParsing="false" onAction="#saveGame" text="Сохранить игру" />
+                                    <ImageView fx:id="gameImage" fitHeight="436.0" fitWidth="711.0" onMouseClicked="#hitPosition" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="-7.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0" />
+                                    <Label fx:id="timerLabel" alignment="CENTER" layoutX="340.0" layoutY="24.0" prefHeight="17.0" prefWidth="0.0" />
+                                    <Label fx:id="myNameLabel" layoutX="47.0" layoutY="24.0" text="Label" />
+                                    <Label fx:id="opponentNameLabel" alignment="CENTER_RIGHT" layoutX="614.0" layoutY="24.0" text="Label" textAlignment="RIGHT" />
+                                    <Button fx:id="saveGameBtn" layoutX="299.0" layoutY="368.0" mnemonicParsing="false" onAction="#saveGame" text="Сохранить игру" />
                                  </children>
                               </AnchorPane>
                           </content>
@@ -133,7 +135,7 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <GridPane prefHeight="341.0" prefWidth="598.0">
+                                    <GridPane layoutY="-3.0" prefHeight="415.0" prefWidth="709.0">
                                       <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -148,6 +150,7 @@
                                        <children>
                                           <Button alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#asHost" text="Создать игру" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                           <Button alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#asGuest" text="Подключиться" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                          <Label alignment="BOTTOM_CENTER" maxWidth="1.7976931348623157E308" prefHeight="50.0" prefWidth="236.0" style="-fx-font-size: 36;" text="Сетевая игра" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
                                        </children>
                                     </GridPane>
                                  </children>
@@ -158,9 +161,9 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <TextField fx:id="inputIP" layoutX="226.0" layoutY="124.0" />
-                                    <Button layoutX="251.0" layoutY="156.0" mnemonicParsing="false" onMouseClicked="#connectTo" text="Подключиться" />
-                                    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="225.0" layoutY="89.0" prefHeight="17.0" prefWidth="149.0" text="Введите IP" textAlignment="CENTER">
+                                    <TextField fx:id="inputIP" layoutX="281.0" layoutY="193.0" />
+                                    <Button layoutX="306.0" layoutY="225.0" mnemonicParsing="false" onMouseClicked="#connectTo" text="Подключиться" />
+                                    <Label alignment="CENTER" contentDisplay="CENTER" layoutX="280.0" layoutY="158.0" prefHeight="17.0" prefWidth="149.0" text="Введите IP" textAlignment="CENTER">
                                        <font>
                                           <Font size="24.0" />
                                        </font>
@@ -173,8 +176,8 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <Label layoutX="235.0" layoutY="213.0" text="Ожидание подключения" />
-                                    <ProgressIndicator layoutX="233.0" layoutY="97.0" prefHeight="97.0" prefWidth="141.0" />
+                                    <Label layoutX="274.0" layoutY="295.0" text="Ожидание подключения" />
+                                    <ProgressIndicator layoutX="247.0" layoutY="125.0" prefHeight="158.0" prefWidth="202.0" AnchorPane.bottomAnchor="146.0" AnchorPane.leftAnchor="247.0" AnchorPane.rightAnchor="246.0" AnchorPane.topAnchor="125.0" />
                                  </children>
                               </AnchorPane>
                           </content>
@@ -183,8 +186,8 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <Label layoutX="196.0" layoutY="195.0" text="Ожидание готовности противника" />
-                                    <ProgressIndicator layoutX="241.0" layoutY="58.0" prefHeight="97.0" prefWidth="101.0" />
+                                    <Label layoutX="245.0" layoutY="283.0" text="Ожидание готовности противника" />
+                                    <ProgressIndicator layoutX="247.0" layoutY="125.0" prefHeight="158.0" prefWidth="202.0" AnchorPane.bottomAnchor="146.0" AnchorPane.leftAnchor="247.0" AnchorPane.rightAnchor="246.0" AnchorPane.topAnchor="125.0" />
                                  </children>
                               </AnchorPane>
                           </content>
@@ -193,9 +196,9 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <Button layoutX="253.0" layoutY="144.0" mnemonicParsing="false" onMouseClicked="#openConnection" text="Открыть порт" />
-                                    <Spinner fx:id="maxTimeSpinner" layoutX="330.0" layoutY="109.0" prefHeight="25.0" prefWidth="52.0" />
-                                    <Label layoutX="179.0" layoutY="113.0" text="Максимальное время хода" />
+                                    <Button layoutX="297.0" layoutY="231.0" mnemonicParsing="false" onMouseClicked="#openConnection" text="Открыть порт" />
+                                    <Spinner fx:id="maxTimeSpinner" layoutX="386.0" layoutY="179.0" prefHeight="25.0" prefWidth="52.0" />
+                                    <Label layoutX="216.0" layoutY="183.0" text="Максимальное время хода" />
                                  </children></AnchorPane>
                           </content>
                         </Tab>
@@ -206,4 +209,9 @@
         </items>
       </SplitPane>
     </children>
+   <stylesheets>
+      <URL value="@buttons.css" />
+      <URL value="@labels.css" />
+      <URL value="@hide-tab.css" />
+   </stylesheets>
 </AnchorPane>
