@@ -1,22 +1,3 @@
-.button {
-    -fx-text-fill: white;
-    -fx-font-family: "Arial Narrow";
-    -fx-font-weight: bold;
-	-fx-font-size: 14;
-    -fx-background-color: linear-gradient(#61a2b1, #2A5058);
-	-fx-text-alignment: center; 
-    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
-}
-.button:hover {
-        -fx-background-color: linear-gradient(#61a2F1, #2A5078);
-}
- #auto,#placements,#rotate, #clean{
-    -fx-background-size: 30px;
-	-fx-background-position: center;
-	-fx-alignment: center;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: 90%;
-}
 #placements{
 	-fx-background-image: url("saveIcon.png");
 }
@@ -29,12 +10,22 @@
 #auto{
 	-fx-background-image: url("auto.png");
 }
-#back{
-fx-background-image: url("back.png");
+#backBTN{
+	fx-background-image: url("back.png");
 }
+#options{
+	fx-background-image: url("options.png");
+}
+#auto,#placements,#rotate, #clean,#backBTN,#options{
+    -fx-background-size: 30px;
+	-fx-background-position: center;
+	-fx-alignment: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 90%;
+}
+
 .tab-pane{
     -fx-tab-max-height: 0 ;
--fx-background-color: linear-gradient(#9EA0A1, #6A93B0);
 }
 .split-pane
 {
@@ -42,5 +33,15 @@ fx-background-image: url("back.png");
 }
 .tab-pane .tab-header-area{
     visibility: hidden;
+}
+.split-pane *.split-pane-divider {
+    -fx-padding: 0 1 0 1;
+}
+#mainScreen{
+-fx-background-image:url("background.png");
+-fx-background-position: center;
+-fx-background-repeat: no-repeat;
+    -fx-background-size: 700 460;
+
 }
 
