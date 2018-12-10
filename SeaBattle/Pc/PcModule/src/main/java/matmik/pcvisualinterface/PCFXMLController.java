@@ -125,14 +125,14 @@ public class PCFXMLController implements Initializable,View {
     
     private void loadImages(){
         int cellSize = globalDisplayConstants.getShipCellSize();
-        ver1 = new Image("1ver.png", cellSize, cellSize, true, false);
-        ver2 = new Image("2ver.png", cellSize, cellSize * 2, true, false);
-        ver3 = new Image("3ver.png", cellSize, cellSize * 3, true, false);
-        ver4 = new Image("4ver.png", cellSize, cellSize * 4, true, false);
-        hor1 = new Image("1hor.png", cellSize, cellSize, true, false);
-        hor2 = new Image("2hor.png", cellSize * 2, cellSize, true, false);
-        hor3 = new Image("3hor.png", cellSize * 3, cellSize, true, false);
-        hor4 = new Image("4hor.png", cellSize * 4, cellSize, true, false);
+        ver1 = new Image("1ver.png", cellSize, cellSize, true, true);
+        ver2 = new Image("2ver.png", cellSize, cellSize * 2, true, true);
+        ver3 = new Image("3ver.png", cellSize, cellSize * 3, true, true);
+        ver4 = new Image("4ver.png", cellSize, cellSize * 4, true, true);
+        hor1 = new Image("1hor.png", cellSize, cellSize, true, true);
+        hor2 = new Image("2hor.png", cellSize * 2, cellSize, true, true);
+        hor3 = new Image("3hor.png", cellSize * 3, cellSize, true, true);
+        hor4 = new Image("4hor.png", cellSize * 4, cellSize, true, true);
     }
     
     private void reDrawView(){
@@ -218,7 +218,7 @@ public class PCFXMLController implements Initializable,View {
     
     private void drawPlacementBoard(){
         int cellSize = globalDisplayConstants.getShipCellSize();
-        Image cell = new Image("cell.png", cellSize, cellSize, true, true);
+        Image cell = new Image("clean1.png", cellSize, cellSize, true, true);
         Image shipCell = new Image("shipCell.png", cellSize, cellSize, false, true);
         Image candidate = new Image("candidate.png", cellSize, cellSize, true, true);
         Image intersect = new Image("intersect.png", cellSize, cellSize, true, true);
@@ -243,18 +243,18 @@ public class PCFXMLController implements Initializable,View {
         for(Ship ship: placementController.getField().getShips()){
             if(ship.isRotated()){
                 switch(ship.getShipLength()){
-                    case 1: transferImage(ver1, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
-                    case 2: transferImage(ver2, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;   
-                    case 3: transferImage(ver3, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
-                    case 4: transferImage(ver4, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
+                    case 1: transferImage2(ver1, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
+                    case 2: transferImage2(ver2, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;   
+                    case 3: transferImage2(ver3, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
+                    case 4: transferImage2(ver4, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
                 } 
             }
             else{
                 switch(ship.getShipLength()){
-                    case 1 :transferImage(hor1, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
-                    case 2: transferImage(hor2, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;    
-                    case 3: transferImage(hor3, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
-                    case 4: transferImage(hor4, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
+                    case 1 :transferImage2(hor1, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
+                    case 2: transferImage2(hor2, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;    
+                    case 3: transferImage2(hor3, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
+                    case 4: transferImage2(hor4, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
                 }
             }
         }
@@ -278,9 +278,23 @@ public class PCFXMLController implements Initializable,View {
         transferImage(bank, placementField, bankBounds.getLeftBound(),
                 bankBounds.getTopBound());
         for(int i = 0; i < 4; i++){
-            int shipHeight = shipBounds.get(i).getBottomBound() - shipBounds.get(i).getTopBound();
-            int shipWidth = shipBounds.get(i).getRightBound() - shipBounds.get(i).getLeftBound();
-            Image shipImage = new Image("shipCell.png", shipWidth, shipHeight, false, true);
+            Image shipImage = null;
+            if(placementController.bankRotated()){
+                switch(i + 1){
+                    case 1: shipImage = ver1;break;
+                    case 2: shipImage = ver2;break;
+                    case 3: shipImage = ver3;break;
+                    case 4: shipImage = ver4;break;
+                } 
+            }
+            else{
+                switch(i + 1){
+                    case 1: shipImage = hor1;break;
+                    case 2: shipImage = hor2;break;
+                    case 3: shipImage = hor3;break;
+                    case 4: shipImage = hor4;break;
+                }
+            }
             transferImage(shipImage, placementField, shipBounds.get(i).getLeftBound(),
                     shipBounds.get(i).getTopBound());
         }
@@ -299,7 +313,7 @@ public class PCFXMLController implements Initializable,View {
         if (selectedShip != null)
         {
             stateLabel.setText("drawing selected ship");
-            transferImage(selectedShip.getShipImage(), placementField, selectedShip.getX(), selectedShip.getY());
+            transferImage2(selectedShip.getShipImage(), placementField, selectedShip.getX(), selectedShip.getY());
         }
         placementImage.setImage(placementField);
     }
@@ -312,6 +326,19 @@ public class PCFXMLController implements Initializable,View {
             {
                 Color color = sourceReader.getColor(x, y);
                 if (Color.WHITE.equals(color))
+                    continue;
+                sceneWriter.setColor(xoffset + x, yoffset + y, sourceReader.getColor(x, y));
+            }
+    }
+    
+    private void transferImage2(Image source, WritableImage scene, int xoffset, int yoffset){
+        PixelReader sourceReader = source.getPixelReader();
+        PixelWriter sceneWriter = scene.getPixelWriter();
+        for(int y = 0; y < source.getHeight(); y++)
+            for(int x = 0; x < source.getWidth(); x++)
+            {
+                Color color = sourceReader.getColor(x, y);
+                if ((color.getRed() > 0.85) && (color.getBlue() > 0.85) && (color.getGreen() > 0.85))
                     continue;
                 sceneWriter.setColor(xoffset + x, yoffset + y, sourceReader.getColor(x, y));
             }
@@ -463,11 +490,11 @@ public class PCFXMLController implements Initializable,View {
 
     private void drawGameBoard() {
         int cellSize = globalDisplayConstants.getShipCellSize();
-        Image cell = new Image("cell.png", cellSize, cellSize, true, true);
+        Image cell = new Image("clean1.png", cellSize, cellSize, true, true);
         Image shipCell = new Image("shipCell.png", cellSize, cellSize, false, true);
-        Image candidate = new Image("candidate.png", cellSize, cellSize, true, true);
-        Image intersect = new Image("intersect.png", cellSize, cellSize, true, true);
-        Image nearshiparea = new Image("nearshiparea.png", cellSize, cellSize, true, true);
+        Image candidate = new Image("miss.png", cellSize, cellSize, true, true);
+        Image intersect = new Image("damaged2.png", cellSize, cellSize, true, true);
+        Image nearshiparea = new Image("destroyed.png", cellSize, cellSize, true, true);
         Image myTurn = new Image("myTurn.png", cellSize, cellSize, true, true);
         Image opponentTurn = new Image("opponentTurn.png", cellSize, cellSize, true, true);
         WritableImage placementField = new WritableImage((int)placementImage.fitWidthProperty().get(),
@@ -483,29 +510,69 @@ public class PCFXMLController implements Initializable,View {
         //compilation failure
         for(int i = 0; i < 10; i++)
             for(int j = 0; j < 10; j++){
-                transferImage(cell, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
-                if(battleController.getPlayerGrid()[i][j].getState() == CellState.BUSY)
-                   transferImage(shipCell, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
+                //if(battleController.getPlayerGrid()[i][j].isFree())
+                    transferImage(cell, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
+            }
+        for(Ship ship: battleController.getPlayerField().getShips()){
+            if(ship.isRotated()){
+                switch(ship.getShipLength()){
+                    case 1: transferImage2(ver1, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
+                    case 2: transferImage2(ver2, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;   
+                    case 3: transferImage2(ver3, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
+                    case 4: transferImage2(ver4, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
+                } 
+            }
+            else{
+                switch(ship.getShipLength()){
+                    case 1 :transferImage2(hor1, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
+                    case 2: transferImage2(hor2, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;    
+                    case 3: transferImage2(hor3, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
+                    case 4: transferImage2(hor4, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
+                }
+            }
+        }
+        for(int i = 0; i < 10; i++)
+            for(int j = 0; j < 10; j++){
                 if(battleController.getPlayerGrid()[i][j].getState() == CellState.HIT_MISSED)
-                   transferImage(candidate, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
+                   transferImage2(candidate, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
                 if(battleController.getPlayerGrid()[i][j].getState() == CellState.HIT_DAMAGED)
-                   transferImage(intersect, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
+                   transferImage2(intersect, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
                 if(battleController.getPlayerGrid()[i][j].getState() == CellState.DESTROYED)
-                   transferImage(nearshiparea, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
+                   transferImage2(nearshiparea, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
             }
         baseOffsetX = globalDisplayConstants.getOpponentFieldBounds().getLeftBound();
         baseOffsetY = globalDisplayConstants.getOpponentFieldBounds().getTopBound();
         for(int i = 0; i < 10; i++)
             for(int j = 0; j < 10; j++){
-                transferImage(cell, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
-                if(battleController.getOpponentGrid()[i][j].getState() == CellState.BUSY)
-                   transferImage(shipCell, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
+                //if(battleController.getOpponentGrid()[i][j].isFree())
+                    transferImage(cell, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
+            }
+        for(Ship ship: battleController.getOpponentField().getShips()){
+            if(ship.isRotated()){
+                switch(ship.getShipLength()){
+                    case 1: transferImage2(ver1, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
+                    case 2: transferImage2(ver2, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;   
+                    case 3: transferImage2(ver3, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
+                    case 4: transferImage2(ver4, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
+                } 
+            }
+            else{
+                switch(ship.getShipLength()){
+                    case 1 :transferImage2(hor1, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
+                    case 2: transferImage2(hor2, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;    
+                    case 3: transferImage2(hor3, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
+                    case 4: transferImage2(hor4, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
+                }
+            }
+        }
+        for(int i = 0; i < 10; i++)
+            for(int j = 0; j < 10; j++){
                 if(battleController.getOpponentGrid()[i][j].getState() == CellState.HIT_MISSED)
-                   transferImage(candidate, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
+                   transferImage2(candidate, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
                 if(battleController.getOpponentGrid()[i][j].getState() == CellState.HIT_DAMAGED)
-                   transferImage(intersect, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
+                   transferImage2(intersect, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
                 if(battleController.getOpponentGrid()[i][j].getState() == CellState.DESTROYED)
-                   transferImage(nearshiparea, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
+                   transferImage2(nearshiparea, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
             }
         gameImage.setImage(placementField);
     }

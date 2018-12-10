@@ -45,6 +45,10 @@ public class BattleController {
         return opponentField;
     }
     
+    public Field getPlayerField() {
+        return playerField;
+    }
+    
     public BattleController(Field playerField, Field opponentField, 
             Opponent opponent, View battleView, boolean initialMoveOrder, int maxTurnTime) {
         this.playerField = playerField;
