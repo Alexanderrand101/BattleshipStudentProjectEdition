@@ -13,10 +13,28 @@ public  class PossiblePlacement{
 
     private Coordinates bowCoordinate;
     private boolean isRotated;
+    private int freeReamining;
 
-    public PossiblePlacement(Coordinates bowCoordinate, boolean isRotated) {
+    public boolean isIsRotated() {
+        return isRotated;
+    }
+
+    public void setIsRotated(boolean isRotated) {
+        this.isRotated = isRotated;
+    }
+
+    public int getFreeReamining() {
+        return freeReamining;
+    }
+
+    public void setFreeReamining(int freeReamining) {
+        this.freeReamining = freeReamining;
+    }
+
+    public PossiblePlacement(Coordinates bowCoordinate, boolean isRotated, int freeRemaining) {
         this.bowCoordinate = bowCoordinate;
         this.isRotated = isRotated;
+        this.freeReamining = freeRemaining;
     }
     
     public Coordinates getBowCoordinate() {

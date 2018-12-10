@@ -647,4 +647,20 @@ public class PCFXMLController implements Initializable,View {
             battleController.saveBattle(file.getAbsolutePath());
         }
     }
+    
+    @FXML
+    private void settingsDialog(ActionEvent e){
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/OptionsFXML.fxml"));
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(tabPane.getScene().getWindow());
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(PCFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    } 
 }

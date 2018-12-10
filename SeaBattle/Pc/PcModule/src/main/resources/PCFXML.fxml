@@ -25,6 +25,7 @@
                <children>
                 <Button id="back" layoutX="543.0" layoutY="6.0" mnemonicParsing="false" onMouseClicked="#back" prefHeight="25.0" prefWidth="71.0" style="-fx-background-position: center; -fx-background-image: &quot;back.png&quot;;" text="Назад" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0" />
                   <TextField fx:id="nameTB" layoutX="6.0" />
+                  <Button layoutX="435.0" mnemonicParsing="false" onAction="#settingsDialog" text="Настройки" />
                </children>
             </AnchorPane>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="248.0" prefWidth="598.0">

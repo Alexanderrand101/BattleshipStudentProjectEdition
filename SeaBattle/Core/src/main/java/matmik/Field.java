@@ -201,6 +201,25 @@ public class Field implements ShipContainer{
             gridPaint(ship.getBow(), ship.getStern(), CellState.BUSY);
     }
     
+    public void gridExtendedRefresh(){
+        gridClear();
+        for(Ship ship: ships){
+            int startI = (ship.getBow().getI() - 1 < 0) ? 0 : ship.getBow().getI() - 1;
+            int startJ = (ship.getBow().getJ() - 1 < 0) ? 0 : ship.getBow().getJ() - 1;
+
+            int endI = (ship.getStern().getI() + 1 > GRID_WIDTH - 1) 
+                ? ship.getStern().getI() : ship.getStern().getI() + 1;
+            int endJ = (ship.getStern().getJ() + 1 > GRID_HEIGHT - 1) 
+                ? ship.getStern().getJ() : ship.getStern().getJ() + 1;
+
+        //gridPaint(shipToPlace.getBow(), shipToPlace.getStern(), CellState.CANDIDATE);
+        for(int  i = startI; i <= endI; i++)
+            for(int j = startJ; j <= endJ; j++){
+                grid[i][j].setState(CellState.BUSY);
+            }
+        }
+    }
+    
     private void embedShip(Ship ship){
         for(int i = ship.getBow().getI(); i <= ship.getStern().getI(); i++)
             for(int j = ship.getBow().getJ(); j <= ship.getStern().getJ(); j++)

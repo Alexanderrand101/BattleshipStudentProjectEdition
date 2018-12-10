@@ -133,7 +133,11 @@ public class PlacementController {
     }
 
     public void autoPlaceShips() {
-        AutoPlacer.placeShips(field, shipBank.removeAll());
+        switch(GlobalSettings.getInstance().getPlacementStrategy()){
+            case RANDOM:AutoPlacer.placeShips(field, shipBank.removeAll());break;
+            case SHORE:AutoPlacer.borderPlaceShips(field, shipBank.removeAll());break;
+            default:;
+        }
         field.gridRefresh();
     }
 

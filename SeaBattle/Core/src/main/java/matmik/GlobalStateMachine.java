@@ -31,7 +31,7 @@ public class GlobalStateMachine {
     private ViewState currentViewState;
     private AbstractHostConnector hostConnector;
     private PlacementFileManager placementFileManager;
-    private String playerName;
+    private String playerName = "";
     private Random turnOrderGenerator;
     
     
@@ -111,26 +111,46 @@ public class GlobalStateMachine {
     }
     
     public void connectAsGuest(AbstractConnector connector){ 
-        opponent = new HostOpponent(connector);
-        ((HostOpponent)opponent).setMyName(playerName);
-        opponentSubType = OpponentSubType.HUMAN_HOST;
-        placementController = new PlacementController();
-        view.stateTransition(ViewState.PLACEMENT);
-        currentViewState = ViewState.PLACEMENT;
+        if(!playerName.isEmpty()){
+            opponent = new HostOpponent(connector);
+            ((HostOpponent)opponent).setMyName(playerName);
+            opponentSubType = OpponentSubType.HUMAN_HOST;
+            placementController = new PlacementController();
+            view.stateTransition(ViewState.PLACEMENT);
+            currentViewState = ViewState.PLACEMENT;
+        }
+        else{
+            view.showError("please name yourself");
+            try {
+                connector.close();
+            } catch (Exception ex) {
+                Logger.getLogger(GlobalStateMachine.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
     public void setUpAsHost(AbstractHostConnector connector, int maxTurnValue){
-        view.stateTransition(ViewState.HOST_WAITING_PAGE);
-        currentViewState = ViewState.HOST_WAITING_PAGE;
-        GuestOpponent guestOpponent = new GuestOpponent();
-        guestOpponent.setTurntime(maxTurnValue);
-        guestOpponent.setMyName(playerName);
-        guestOpponent.setMoveOrder(turnOrderGenerator.nextBoolean());
-        waitConnectThread = new WaitConnectThread(guestOpponent, connector, stateLock);
-        opponent = guestOpponent;
-        opponentSubType = OpponentSubType.HUMAN_GUEST;
-        waitConnectThread.setDaemon(true);
-        waitConnectThread.start();
+        if(!playerName.isEmpty()){
+            view.stateTransition(ViewState.HOST_WAITING_PAGE);
+            currentViewState = ViewState.HOST_WAITING_PAGE;
+            GuestOpponent guestOpponent = new GuestOpponent();
+            guestOpponent.setTurntime(maxTurnValue);
+            guestOpponent.setMyName(playerName);
+            guestOpponent.setMoveOrder(turnOrderGenerator.nextBoolean());
+            waitConnectThread = new WaitConnectThread(guestOpponent, connector, stateLock);
+            opponent = guestOpponent;
+            opponentSubType = OpponentSubType.HUMAN_GUEST;
+            waitConnectThread.setDaemon(true);
+            waitConnectThread.start();
+        }
+        else{
+            view.showError("please name yourself");
+            try {
+                connector.close();
+            } catch (Exception ex) {
+                Logger.getLogger(GlobalStateMachine.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
     public void asyncAcceptedConnection(){

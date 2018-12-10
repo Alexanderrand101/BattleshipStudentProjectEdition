@@ -59,7 +59,7 @@ public class SimpleBrainsMachineOpponent extends MachineOpponent {
     
     private boolean validateCoordinates(Coordinates coords){
         if((coords.getI() > -1) && (coords.getI() < Field.GRID_HEIGHT) && (coords.getJ() > -1) && (coords.getJ() < Field.GRID_WIDTH)){
-            if(hitCoords.size() > 2){
+            if(hitCoords.size() > 1){
                 if(hitCoords.get(0).getI() == hitCoords.get(1).getI()){
                     if(hitCoords.get(0).getI() == coords.getI()) 
                         return true;
