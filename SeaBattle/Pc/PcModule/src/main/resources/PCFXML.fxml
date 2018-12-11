@@ -20,13 +20,13 @@
 
 <AnchorPane id="AnchorPane" fx:id="mainAnchor" minHeight="400.0" minWidth="600.0" pickOnBounds="false" prefHeight="473.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="matmik.pcvisualinterface.PCFXMLController">
     <children>
-      <SplitPane dividerPositions="0.0728643216080402" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane dividerPositions="0.09766454352441614" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="24.0" prefWidth="695.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="50.0" prefWidth="695.0">
                <children>
-                <Button id="back" layoutX="610.0" layoutY="3.0" mnemonicParsing="false" onMouseClicked="#back" prefHeight="33.0" prefWidth="71.0" style="-fx-background-position: center; -fx-background-image: &quot;back.png&quot;;" text="Назад" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="3.0" />
-                  <TextField fx:id="nameTB" layoutX="6.0" text="Игрок" />
-                  <Button id="options" layoutX="513.0" layoutY="3.0" mnemonicParsing="false" onAction="#settingsDialog" prefHeight="33.0" prefWidth="89.0" text="Настройки" />
+                <Button id="backBTN" layoutX="610.0" layoutY="3.0" mnemonicParsing="false" onMouseClicked="#back" prefHeight="42.0" prefWidth="46.0" style="-fx-background-position: center; -fx-background-image: url(&quot;back.png&quot;);" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="3.0" />
+                  <TextField fx:id="nameTB" layoutX="14.0" layoutY="10.0" text="Игрок" />
+                  <Button id="options" layoutX="589.0" layoutY="3.0" mnemonicParsing="false" onAction="#settingsDialog" prefHeight="42.0" prefWidth="46.0" style="-fx-background-image: url(&quot;options.png&quot;); -fx-background-position: center;" />
                </children>
             </AnchorPane>
           <AnchorPane id="mainScreen" minHeight="0.0" minWidth="0.0" prefHeight="248.0" prefWidth="598.0">
