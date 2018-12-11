@@ -176,7 +176,10 @@ public class PCFXMLController implements Initializable,View {
 
     @FXML
     private void openConnection(MouseEvent event) throws IOException{
-        globalStateMachine.setUpAsHost(new SocketHostConnector(4444), maxTimeSpinner.getValue());
+        if(globalStateMachine.playerNameNotEmpty())
+            globalStateMachine.setUpAsHost(new SocketHostConnector(4444), maxTimeSpinner.getValue());
+        else
+            showError("input a name");
     }
     
     @FXML
@@ -208,7 +211,10 @@ public class PCFXMLController implements Initializable,View {
 //        globalDisplayConstants = placementController.getDisplayConstants();
 //        drawPlacementBoard();
 //        tabPane.getSelectionModel().select(placementTab);
-        globalStateMachine.connectAsGuest(new SocketConnector(inputIP.getText(), 4444));
+        if(globalStateMachine.playerNameNotEmpty())
+            globalStateMachine.connectAsGuest(new SocketConnector(inputIP.getText(), 4444));
+        else
+            showError("input a name");
     }
     
     @FXML
@@ -274,7 +280,7 @@ public class PCFXMLController implements Initializable,View {
         }
         int bankHeight = bankBounds.getBottomBound() - bankBounds.getTopBound();
         int bankWidth = bankBounds.getRightBound() - bankBounds.getLeftBound();
-        Image bank = new Image("cell.png", bankWidth, bankHeight, false, true);
+        Image bank = new Image("clean1.png", bankWidth, bankHeight, false, true);
         transferImage(bank, placementField, bankBounds.getLeftBound(),
                 bankBounds.getTopBound());
         for(int i = 0; i < 4; i++){
@@ -295,7 +301,7 @@ public class PCFXMLController implements Initializable,View {
                     case 4: shipImage = hor4;break;
                 }
             }
-            transferImage(shipImage, placementField, shipBounds.get(i).getLeftBound(),
+            transferImage2(shipImage, placementField, shipBounds.get(i).getLeftBound(),
                     shipBounds.get(i).getTopBound());
         }
         quantity1.setText(Integer.toString(placementController.getShipBank().getShipAmountOfLength(1)));
@@ -479,9 +485,9 @@ public class PCFXMLController implements Initializable,View {
                     @Override
                     public void run(){
                         if (result) 
-                            new Alert(Alert.AlertType.NONE, "�� ��������", ButtonType.OK).showAndWait();
+                            new Alert(Alert.AlertType.NONE, "victory!", ButtonType.OK).showAndWait();
                         else
-                            new Alert(Alert.AlertType.NONE, "�� ���������", ButtonType.OK).showAndWait();
+                            new Alert(Alert.AlertType.NONE, "defeat!", ButtonType.OK).showAndWait();
                          GlobalStateMachine.getInstance().reset();
                     }
                 }
@@ -493,7 +499,7 @@ public class PCFXMLController implements Initializable,View {
         Image cell = new Image("clean1.png", cellSize, cellSize, true, true);
         Image shipCell = new Image("shipCell.png", cellSize, cellSize, false, true);
         Image candidate = new Image("missed.png", cellSize, cellSize, true, true);
-        Image intersect = new Image("damaged.png", cellSize, cellSize, true, true);
+        Image intersect = new Image("damaged2.png", cellSize, cellSize, true, true);
         Image nearshiparea = new Image("destroyed.png", cellSize, cellSize, true, true);
         Image myTurn = new Image("myTurn.png", cellSize, cellSize, true, true);
         Image opponentTurn = new Image("opponentTurn.png", cellSize, cellSize, true, true);
