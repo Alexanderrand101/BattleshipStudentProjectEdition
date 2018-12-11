@@ -1,4 +1,88 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE log SYSTEM "logger.dtd">
 <log>
+<record>
+  <date>2018-12-11T14:05:32</date>
+  <millis>1544522732392</millis>
+  <sequence>2</sequence>
+  <logger>global</logger>
+  <level>SEVERE</level>
+  <class>matmik.BattleController$1</class>
+  <method>run</method>
+  <thread>20</thread>
+  <exception>
+    <message>javax.xml.stream.XMLStreamException: ParseError at [row,col]:[1,1]
+Message: Premature end of file.</message>
+    <frame>
+      <class>com.sun.org.apache.xerces.internal.impl.XMLStreamReaderImpl</class>
+      <method>next</method>
+      <line>601</line>
+    </frame>
+    <frame>
+      <class>com.sun.xml.internal.stream.XMLEventReaderImpl</class>
+      <method>nextEvent</method>
+      <line>83</line>
+    </frame>
+    <frame>
+      <class>org.simpleframework.xml.stream.StreamReader</class>
+      <method>read</method>
+      <line>110</line>
+    </frame>
+    <frame>
+      <class>org.simpleframework.xml.stream.StreamReader</class>
+      <method>read</method>
+      <line>122</line>
+    </frame>
+    <frame>
+      <class>org.simpleframework.xml.stream.StreamReader</class>
+      <method>next</method>
+      <line>94</line>
+    </frame>
+    <frame>
+      <class>org.simpleframework.xml.stream.NodeReader</class>
+      <method>readElement</method>
+      <line>111</line>
+    </frame>
+    <frame>
+      <class>org.simpleframework.xml.stream.NodeReader</class>
+      <method>readRoot</method>
+      <line>85</line>
+    </frame>
+    <frame>
+      <class>org.simpleframework.xml.stream.NodeBuilder</class>
+      <method>read</method>
+      <line>84</line>
+    </frame>
+    <frame>
+      <class>org.simpleframework.xml.stream.NodeBuilder</class>
+      <method>read</method>
+      <line>58</line>
+    </frame>
+    <frame>
+      <class>org.simpleframework.xml.core.Persister</class>
+      <method>read</method>
+      <line>543</line>
+    </frame>
+    <frame>
+      <class>org.simpleframework.xml.core.Persister</class>
+      <method>read</method>
+      <line>444</line>
+    </frame>
+    <frame>
+      <class>matmik.HumanOpponent</class>
+      <method>makeMove</method>
+      <line>68</line>
+    </frame>
+    <frame>
+      <class>matmik.BattleController$1</class>
+      <method>run</method>
+      <line>115</line>
+    </frame>
+    <frame>
+      <class>java.lang.Thread</class>
+      <method>run</method>
+      <line>745</line>
+    </frame>
+  </exception>
+</record>
 </log>
