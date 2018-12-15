@@ -29,7 +29,7 @@
                   <Button id="options" layoutX="589.0" layoutY="3.0" mnemonicParsing="false" onAction="#settingsDialog" prefHeight="42.0" prefWidth="46.0" style="-fx-background-image: url(&quot;options.png&quot;); -fx-background-position: center;" />
                </children>
             </AnchorPane>
-          <AnchorPane id="mainScreen" minHeight="0.0" minWidth="0.0" prefHeight="248.0" prefWidth="598.0">
+          <AnchorPane id="mainScreen" maxHeight="424.0" minHeight="424.0" minWidth="0.0" prefHeight="424.0" prefWidth="598.0">
                <children>
                   <TabPane fx:id="tabPane" pickOnBounds="false" prefHeight="400.0" prefWidth="695.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <tabs>
@@ -59,7 +59,6 @@
                                           </Button>
                                           <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#initForPC" prefHeight="147.0" prefWidth="335.0" text="Играть  с компьютером" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
                                             <Label fx:id="label" minHeight="16" minWidth="69" GridPane.columnIndex="1" />
-                                          <Label alignment="TOP_LEFT" text="Label" GridPane.valignment="TOP" />
                                           <Label alignment="CENTER" maxWidth="1.7976931348623157E308" style="-fx-font-size: 40; -fx-font-style: oblique; -fx-font-weight: bold;" text="Морской бой" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
                                        </children>
                                     </GridPane>
