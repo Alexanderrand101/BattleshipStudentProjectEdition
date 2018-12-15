@@ -96,6 +96,10 @@ public class PCFXMLController implements Initializable,View {
     private Label quantity4;
     @FXML
     private TextField nameTB;
+    @FXML
+    private TextField guestPortTb;
+    @FXML
+    private TextField hostPortTb;
     
     private Image ver1;
     private Image hor1;
@@ -188,7 +192,11 @@ public class PCFXMLController implements Initializable,View {
     @FXML
     private void openConnection(MouseEvent event) throws IOException{
         if(globalStateMachine.playerNameValid())
-            globalStateMachine.setUpAsHost(new SocketHostConnector(4444), maxTimeSpinner.getValue());
+            try{
+                globalStateMachine.setUpAsHost(new SocketHostConnector(Integer.parseInt(hostPortTb.getText())), maxTimeSpinner.getValue());
+            }catch(Exception e){
+                showError("Не удвется открыть порт" + hostPortTb.getText());
+            }
         else
             showError("Представьтесь. Введите имя от 0 до 15 символов");
     }
@@ -223,7 +231,11 @@ public class PCFXMLController implements Initializable,View {
 //        drawPlacementBoard();
 //        tabPane.getSelectionModel().select(placementTab);
         if(globalStateMachine.playerNameValid())
-            globalStateMachine.connectAsGuest(new SocketConnector(inputIP.getText(), 4444));
+            try{
+                globalStateMachine.connectAsGuest(new SocketConnector(inputIP.getText(), Integer.parseInt(guestPortTb.getText())));
+            }catch(Exception e){
+                showError("Невозможно подключится по указанным параметрам");
+            }
         else
             showError("Представьтесь. Введите имя от 0 до 15 символов");
     }
@@ -638,7 +650,9 @@ public class PCFXMLController implements Initializable,View {
                 tabPane.getSelectionModel().select(inputIpTab);
                 break;
             case HOST_PAGE:
-                maxTimeSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,60,10));
+                SpinnerValueFactory.IntegerSpinnerValueFactory svf = new SpinnerValueFactory.IntegerSpinnerValueFactory(5,60,30);
+                svf.amountToStepByProperty().set(5);
+                maxTimeSpinner.setValueFactory(svf);
                 tabPane.getSelectionModel().select(hostTab);
                 break;
             case HOST_WAITING_PAGE:

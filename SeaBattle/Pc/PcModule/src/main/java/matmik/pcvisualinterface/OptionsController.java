@@ -64,11 +64,7 @@ public class OptionsController implements Initializable {
         randomRB.setToggleGroup(placerGroup);
         shoreRB.setToggleGroup(placerGroup);
         File f = new File("/../help.html");
-        try {
-            help.getEngine().load(f.toURI().toURL().toString());
-        } catch (MalformedURLException ex) {
-
-        }
+        help.getEngine().load(getClass().getResource("/help.html").toExternalForm());
         switch(GlobalSettings.getInstance().getPlacementStrategy()){
             case RANDOM: randomRB.setSelected(true);break;
             case SHORE: shoreRB.setSelected(true);break;
