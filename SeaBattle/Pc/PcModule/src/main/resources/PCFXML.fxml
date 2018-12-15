@@ -59,7 +59,6 @@
                                           </Button>
                                           <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#initForPC" prefHeight="147.0" prefWidth="335.0" text="Играть  с компьютером" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
                                             <Label fx:id="label" minHeight="16" minWidth="69" GridPane.columnIndex="1" />
-                                          <Label alignment="TOP_LEFT" text="Label" GridPane.valignment="TOP" />
                                           <Label alignment="CENTER" maxWidth="1.7976931348623157E308" style="-fx-font-size: 40; -fx-font-style: oblique; -fx-font-weight: bold;" text="Морской бой" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
                                        </children>
                                     </GridPane>
@@ -103,7 +102,6 @@
                           <content>
                             <AnchorPane fx:id="placementAnchor" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <Label fx:id="stateLabel" text="Label" />
                                     <ImageView fx:id="placementImage" fitHeight="401.0" fitWidth="709.0" layoutY="25.0" onMouseDragged="#moveShip" onMousePressed="#pickShip" onMouseReleased="#dropShip" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                     <Button id="clean" layoutX="376.0" layoutY="245.0" mnemonicParsing="false" onMouseClicked="#clearBoard" prefHeight="45.0" prefWidth="45.0" style="-fx-background-position: center;" />
                                     <Button id="auto" layoutX="421.0" layoutY="245.0" mnemonicParsing="false" onMouseClicked="#placeShips" prefHeight="45.0" prefWidth="45.0" style="-fx-background-position: center;" />

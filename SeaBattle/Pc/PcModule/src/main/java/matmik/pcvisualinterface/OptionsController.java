@@ -33,6 +33,10 @@ import matmik.LoadResult;
 import matmik.PlacementFileManager;
 import matmik.PlacementLoaderDisplayConstants;
 import matmik.PlacementStrategy;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import  java.io.File;
+import java.net.*;
 
 /**
  *
@@ -44,7 +48,8 @@ public class OptionsController implements Initializable {
     RadioButton randomRB;
     @FXML
     RadioButton shoreRB;
-    
+    @FXML
+	WebView help;
     private final ToggleGroup placerGroup = new ToggleGroup();
     
     @FXML
@@ -58,6 +63,12 @@ public class OptionsController implements Initializable {
     public void initialize() {
         randomRB.setToggleGroup(placerGroup);
         shoreRB.setToggleGroup(placerGroup);
+        File f = new File("/../help.html");
+        try {
+            help.getEngine().load(f.toURI().toURL().toString());
+        } catch (MalformedURLException ex) {
+
+        }
         switch(GlobalSettings.getInstance().getPlacementStrategy()){
             case RANDOM: randomRB.setSelected(true);break;
             case SHORE: shoreRB.setSelected(true);break;
@@ -78,6 +89,7 @@ public class OptionsController implements Initializable {
         if(shoreRB.isSelected()){
             GlobalSettings.getInstance().setPlacementStrategy(PlacementStrategy.SHORE);
         }
+		((Stage)randomRB.getScene().getWindow()).close();
     }
  
 }

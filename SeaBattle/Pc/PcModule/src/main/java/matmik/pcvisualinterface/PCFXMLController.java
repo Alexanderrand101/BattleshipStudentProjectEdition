@@ -179,7 +179,7 @@ public class PCFXMLController implements Initializable,View {
         if(globalStateMachine.playerNameNotEmpty())
             globalStateMachine.setUpAsHost(new SocketHostConnector(4444), maxTimeSpinner.getValue());
         else
-            showError("input a name");
+            showError("Представьтесь");
     }
     
     @FXML
@@ -250,7 +250,7 @@ public class PCFXMLController implements Initializable,View {
             if(ship.isRotated()){
                 switch(ship.getShipLength()){
                     case 1: transferImage2(ver1, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
-                    case 2: transferImage2(ver2, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;   
+                    case 2: transferImage2(ver2, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
                     case 3: transferImage2(ver3, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
                     case 4: transferImage2(ver4, placementField, baseOffsetX + ship.getBow().getJ() * cellSize, baseOffsetY + ship.getBow().getI() * cellSize);break;
                 } 
@@ -485,9 +485,9 @@ public class PCFXMLController implements Initializable,View {
                     @Override
                     public void run(){
                         if (result) 
-                            new Alert(Alert.AlertType.NONE, "victory!", ButtonType.OK).showAndWait();
+                            new Alert(Alert.AlertType.NONE, "Победа!", ButtonType.OK).showAndWait();
                         else
-                            new Alert(Alert.AlertType.NONE, "defeat!", ButtonType.OK).showAndWait();
+                            new Alert(Alert.AlertType.NONE, "Поражение!", ButtonType.OK).showAndWait();
                          GlobalStateMachine.getInstance().reset();
                     }
                 }
