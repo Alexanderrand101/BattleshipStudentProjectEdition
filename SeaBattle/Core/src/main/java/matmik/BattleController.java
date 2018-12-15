@@ -146,7 +146,7 @@ public class BattleController {
                 }
                 catch(Exception e){
                         if(!hideErrors)
-                            battleView.showError("your opponent left");
+                            battleView.showError("Потеряна связь с противником");
                         GlobalStateMachine.getInstance().back();
                         Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, null, e);
                 }
@@ -198,7 +198,7 @@ public class BattleController {
             File file = new File(fileName);
             new Persister().write(new GamePack(playerField, opponentField, (MachineOpponent)opponent, moveOrder), file);
         } catch (Exception ex) {
-            battleView.showError("saving failed");
+            battleView.showError("Ошибкапри сохранении файла игры");
         }
     }
 }

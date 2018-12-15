@@ -119,8 +119,8 @@ public class GlobalStateMachine {
             currentViewState = ViewState.PLACEMENT;
     }
     
-    public boolean playerNameNotEmpty(){
-        return !playerName.isEmpty();
+    public boolean playerNameValid(){
+        return !playerName.isEmpty() && playerName.length() <= 15;
     }
     
     public void setUpAsHost(AbstractHostConnector connector, int maxTurnValue){
@@ -159,7 +159,7 @@ public class GlobalStateMachine {
             }
         }
         else{
-            view.showError("Place All Ships First");
+            view.showError("Необходимо расставить все 10 кораблей");
         }
     }
     
@@ -191,7 +191,7 @@ public class GlobalStateMachine {
     }
 
     public void disconnectTransition(boolean causedByInternalAction) {
-        if(!causedByInternalAction)view.showError("your opponent left");
+        if(!causedByInternalAction)view.showError("Потеряна связь с противником");
         try {
             hostConnector.close();
             ((HumanOpponent)opponent).leave();
@@ -311,13 +311,14 @@ public class GlobalStateMachine {
         try {
             //validation required
             GamePack gamePack = new Persister().read(GamePack.class, new File(filename));
+            if(!gamePack.validate()) throw new Exception("validation exception"); 
             gamePack.getMachineOpponent().getMyField().gameInit();
             battleController = new BattleController(gamePack.getMyField(), gamePack.getOpponentField(),
             gamePack.getMachineOpponent(), view, gamePack.isTurnOrder(), -1);
             view.stateTransition(ViewState.GAME_PAGE);
             currentViewState = ViewState.GAME_PAGE;
         } catch (Exception ex) {
-            view.showError("load failed");
+            view.showError("Не удалось открыть файл");
         }
     }
 }

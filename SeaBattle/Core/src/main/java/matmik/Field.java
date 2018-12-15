@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Root;
 
@@ -19,7 +21,7 @@ import org.simpleframework.xml.Root;
  * @author Алескандр
  */
 @Root
-public class Field implements ShipContainer{
+public class Field implements ShipContainer, Cloneable{
         
     public static final int GRID_WIDTH = 10;
     public static final int GRID_HEIGHT = 10;
@@ -47,6 +49,7 @@ public class Field implements ShipContainer{
     }
     
     private void gridInit(){
+        grid = new Cell[GRID_HEIGHT][GRID_WIDTH];
         for(int i = 0; i < GRID_HEIGHT; i++)
             for(int j = 0; j < GRID_WIDTH; j++)
                 grid[i][j] = new Cell();
@@ -334,5 +337,23 @@ public class Field implements ShipContainer{
                 return false;
         }
         return (s1 + s2 + s3 + s4 == ships.size()) && (s1 <= 4) && (s2 <= 3) && (s3 <= 2) && (s4 <= 1);
+    }
+    
+    @Override
+    public Object clone(){
+        Field field = null;
+        try {
+            field = (Field)super.clone();
+            field.gridInit();
+            List<Ship> shipsCloned = new LinkedList<Ship>();
+            for(Ship ship:ships){
+                shipsCloned.add((Ship)ship.clone());
+            }
+            field.ships = shipsCloned;
+        } catch (CloneNotSupportedException ex) {
+            //toDo logFiles
+            Logger.getLogger(Coordinates.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return field;
     }
 }

@@ -1,13 +1,15 @@
 package matmik;
 
 import java.util.Comparator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
 
 @Root
-public class Ship {
+public class Ship implements Cloneable{
     @Element
     private int shipLength;
     @Element
@@ -97,4 +99,19 @@ public class Ship {
         return (coords.getI() >= bow.getI()) && (coords.getI() <= getStern().getI()) 
                 && (coords.getJ() >= bow.getJ()) && (coords.getJ() <= getStern().getJ());
     } 
+    
+    @Override
+    public Object clone(){
+        Ship ship = null;
+        try {
+            ship = (Ship)super.clone();
+            ship.setIsRotated(isRotated);
+            ship.setShipLength(shipLength);
+            ship.setBow((Coordinates)bow.clone());
+        } catch (CloneNotSupportedException ex) {
+            //toDo logFiles
+            Logger.getLogger(Coordinates.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ship;
+    }
 }

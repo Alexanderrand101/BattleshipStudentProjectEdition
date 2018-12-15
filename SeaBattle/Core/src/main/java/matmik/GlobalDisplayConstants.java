@@ -73,6 +73,21 @@ public class GlobalDisplayConstants {
     private Bounds opponentFieldBounds;
     private Bounds turnArrowBounds;
 
+    public Bounds getPlayerNameLabelBounds() {
+        return playerNameLabelBounds;
+    }
+
+    public Bounds getOpponentNameLabelBounds() {
+        return opponentNameLabelBounds;
+    }
+
+    public Bounds getTimerLabelBounds() {
+        return timerLabelBounds;
+    }
+    private Bounds playerNameLabelBounds;
+    private Bounds opponentNameLabelBounds;
+    private Bounds timerLabelBounds;
+
     public Bounds getTurnArrowBounds() {
         return turnArrowBounds;
     }
@@ -125,6 +140,9 @@ public class GlobalDisplayConstants {
         opponentFieldBounds = new Bounds();
         shipBankBounds = new Bounds();
         shipBankBoundsRotated = new Bounds();
+        playerNameLabelBounds = new Bounds();
+        opponentNameLabelBounds = new Bounds();
+        timerLabelBounds = new Bounds();
         shipsInBank = new ArrayList<Bounds>();
         shipsInBankRotated = new ArrayList<Bounds>();
         labelBounds = new ArrayList<Bounds>();
@@ -141,13 +159,23 @@ public class GlobalDisplayConstants {
         playerFieldBounds.setBottomBound(playerFieldBounds.getTopBound() + shipCellSize * 10);
         playerFieldBounds.setLeftBound(sizex / 16);
         playerFieldBounds.setRightBound(playerFieldBounds.getLeftBound() + shipCellSize * 10);
+        playerNameLabelBounds.setLeftBound(playerFieldBounds.getLeftBound());
+        playerNameLabelBounds.setRightBound(playerFieldBounds.getRightBound());
+        playerNameLabelBounds.setTopBound(playerFieldBounds.getTopBound() - 18);
         opponentFieldBounds.setTopBound(sizey / 9);
         opponentFieldBounds.setBottomBound(opponentFieldBounds.getTopBound() + shipCellSize * 10);
         opponentFieldBounds.setLeftBound(sizex / 16 + playerFieldBounds.getRightBound());
         opponentFieldBounds.setRightBound(opponentFieldBounds.getLeftBound() + shipCellSize * 10);
+        opponentNameLabelBounds.setLeftBound(opponentFieldBounds.getLeftBound());
+        opponentNameLabelBounds.setRightBound(opponentFieldBounds.getRightBound());
+        opponentNameLabelBounds.setTopBound(opponentFieldBounds.getTopBound() - 18);
+        
         turnArrowBounds.setLeftBound(playerFieldBounds.getRightBound() + sizex / 16 * 3 / 20);
         turnArrowBounds.setTopBound((playerFieldBounds.getBottomBound() - playerFieldBounds.getTopBound() - shipCellSize) / 2 
                 + playerFieldBounds.getTopBound());
+        timerLabelBounds.setLeftBound(turnArrowBounds.getLeftBound());
+        timerLabelBounds.setRightBound(opponentFieldBounds.getLeftBound() - (turnArrowBounds.getLeftBound() - playerFieldBounds.getRightBound()));
+        timerLabelBounds.setTopBound(playerFieldBounds.getTopBound() - 18);
         shipBankBounds.setTopBound(sizey / 9);
         shipBankBounds.setBottomBound(shipBankBounds.getTopBound() + shipCellSize * 8);
         shipBankBounds.setLeftBound(sizex / 16 + playerFieldBounds.getRightBound());

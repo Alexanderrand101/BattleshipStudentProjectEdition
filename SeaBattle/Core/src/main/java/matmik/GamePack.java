@@ -71,5 +71,8 @@ public class GamePack {
     public GamePack() {
     }
     
-    
+    public boolean validate(){
+        return (((Field)myField.clone()).isOnLoadValid() && myField.isPlayValid()
+                && ((Field)machineOpponent.getMyField().clone()).isOnLoadValid() && machineOpponent.getMyField().isPlayValid());
+    }
 }

@@ -114,8 +114,7 @@ public class PCFXMLController implements Initializable,View {
     private GlobalStateMachine globalStateMachine;
     
     private GlobalDisplayConstants globalDisplayConstants;
-    @FXML
-    private Label stateLabel;
+
     @FXML
     private ImageView gameImage;
     @FXML
@@ -146,6 +145,18 @@ public class PCFXMLController implements Initializable,View {
                 (int)(placementImage.fitHeightProperty().get() * 0.9));
         gameImage.setFitHeight(placementImage.fitHeightProperty().get());
         gameImage.setFitWidth(placementImage.fitWidthProperty().get());
+        myNameLabel.setLayoutX(gameImage.layoutXProperty().get() + globalDisplayConstants.getPlayerNameLabelBounds().getLeftBound());
+        myNameLabel.setLayoutY(gameImage.layoutYProperty().get() + globalDisplayConstants.getPlayerNameLabelBounds().getTopBound() - 12);
+        myNameLabel.setMinWidth(globalDisplayConstants.getPlayerNameLabelBounds().getRightBound() - 
+                globalDisplayConstants.getPlayerNameLabelBounds().getLeftBound());
+        opponentNameLabel.setLayoutX(gameImage.layoutXProperty().get() + globalDisplayConstants.getOpponentNameLabelBounds().getLeftBound());
+        opponentNameLabel.setLayoutY(gameImage.layoutYProperty().get() + globalDisplayConstants.getOpponentNameLabelBounds().getTopBound() - 12);
+        opponentNameLabel.setMinWidth(globalDisplayConstants.getOpponentNameLabelBounds().getRightBound() - 
+                globalDisplayConstants.getOpponentNameLabelBounds().getLeftBound());
+        timerLabel.setLayoutX(gameImage.layoutXProperty().get() + globalDisplayConstants.getTimerLabelBounds().getLeftBound());
+        timerLabel.setLayoutY(gameImage.layoutYProperty().get() + globalDisplayConstants.getTimerLabelBounds().getTopBound() - 12);
+        timerLabel.setMinWidth(globalDisplayConstants.getTimerLabelBounds().getRightBound() - 
+                globalDisplayConstants.getTimerLabelBounds().getLeftBound());
     }
     
     @FXML
@@ -176,10 +187,10 @@ public class PCFXMLController implements Initializable,View {
 
     @FXML
     private void openConnection(MouseEvent event) throws IOException{
-        if(globalStateMachine.playerNameNotEmpty())
+        if(globalStateMachine.playerNameValid())
             globalStateMachine.setUpAsHost(new SocketHostConnector(4444), maxTimeSpinner.getValue());
         else
-            showError("input a name");
+            showError("Представьтесь. Введите имя от 0 до 15 символов");
     }
     
     @FXML
@@ -211,10 +222,10 @@ public class PCFXMLController implements Initializable,View {
 //        globalDisplayConstants = placementController.getDisplayConstants();
 //        drawPlacementBoard();
 //        tabPane.getSelectionModel().select(placementTab);
-        if(globalStateMachine.playerNameNotEmpty())
+        if(globalStateMachine.playerNameValid())
             globalStateMachine.connectAsGuest(new SocketConnector(inputIP.getText(), 4444));
         else
-            showError("input a name");
+            showError("Представьтесь. Введите имя от 0 до 15 символов");
     }
     
     @FXML
@@ -318,7 +329,6 @@ public class PCFXMLController implements Initializable,View {
         quantity4.setLayoutY(labelBounds.get(3).getTopBound() + placementImage.layoutYProperty().get());
         if (selectedShip != null)
         {
-            stateLabel.setText("drawing selected ship");
             transferImage2(selectedShip.getShipImage(), placementField, selectedShip.getX(), selectedShip.getY());
         }
         placementImage.setImage(placementField);
@@ -485,9 +495,9 @@ public class PCFXMLController implements Initializable,View {
                     @Override
                     public void run(){
                         if (result) 
-                            new Alert(Alert.AlertType.NONE, "victory!", ButtonType.OK).showAndWait();
+                            new Alert(Alert.AlertType.NONE, "Вы победили", ButtonType.OK).showAndWait();
                         else
-                            new Alert(Alert.AlertType.NONE, "defeat!", ButtonType.OK).showAndWait();
+                            new Alert(Alert.AlertType.NONE, "Вы проиграли", ButtonType.OK).showAndWait();
                          GlobalStateMachine.getInstance().reset();
                     }
                 }
@@ -581,6 +591,7 @@ public class PCFXMLController implements Initializable,View {
                    transferImage2(nearshiparea, placementField, baseOffsetX + j * cellSize, baseOffsetY + i * cellSize);
             }
         gameImage.setImage(placementField);
+        
     }
 
     @FXML
@@ -702,8 +713,8 @@ public class PCFXMLController implements Initializable,View {
     @FXML
     private void loadFromFile(MouseEvent e){
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("load Game");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Game files", "*.game"));
+        fileChooser.setTitle("Загрузить игру");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Файлы игрового сеанса", "*.game"));
         File file = fileChooser.showOpenDialog(tabPane.getScene().getWindow());
         if (file != null){
             globalStateMachine.loadGame(file.getAbsolutePath());
