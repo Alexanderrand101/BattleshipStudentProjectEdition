@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="433.0" prefWidth="477.0" style="-fx-background-color: #61a2b1; -fx-border-color: #2A5058; -fx-border-width: 6;" styleClass="placements.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="matmik.pcvisualinterface.PlacementLoaderController">
+<AnchorPane fx:id="anchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="433.0" prefWidth="477.0" style="-fx-background-color: #61a2b1; -fx-border-color: #2A5058; -fx-border-width: 6;" styleClass="placements.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="matmik.view.pc.PlacementLoaderController">
    <children>
       <GridPane prefHeight="433.0" prefWidth="477.0">
         <columnConstraints>
