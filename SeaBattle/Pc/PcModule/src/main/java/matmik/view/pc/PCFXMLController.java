@@ -678,6 +678,7 @@ public class PCFXMLController implements Initializable,View {
                 battleController = globalStateMachine.getBattleController();
                 drawGameBoard();
                 setNames();
+                timerLabel.setText("");
                 if(globalStateMachine.getOpponentType() == OpponentType.HUMAN){
                     saveGameBtn.setVisible(false);
                 }

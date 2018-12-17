@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.web.*?>
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="305.0" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="matmik.view.pc.OptionsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="443.0" prefWidth="305.0" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="matmik.view.pc.OptionsController">
    <children>
       <TitledPane animated="false" prefHeight="62.0" prefWidth="305.0" style="-fx-border-color: blue;" text="Стратегия авторасстановки">
         <content>
@@ -23,16 +19,26 @@
             </AnchorPane>
         </content>
       </TitledPane>
-      <TitledPane animated="false" layoutY="62.0" prefHeight="206.0" prefWidth="305.0" text="untitled">
+      <TitledPane animated="false" layoutY="62.0" prefHeight="206.0" prefWidth="305.0" text="О разаработчиках">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="197.0" prefWidth="303.0" style="-fx-background-color: lightblue; -fx-border-width: 2; -fx-border-color: blue;">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="14.0" prefWidth="303.0" style="-fx-background-color: lightblue; -fx-border-width: 2; -fx-border-color: blue;">
                <children>
-                  <WebView fx:id="help" prefHeight="182.0" prefWidth="305.0" />
+                  <TextFlow fx:id="textFlow" layoutX="-2.0" layoutY="1.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="178.0" prefWidth="305.0" />
                </children></AnchorPane>
         </content>
       </TitledPane>
-      <Button id="confirm" layoutX="55.0" layoutY="334.0" mnemonicParsing="false" onAction="#saveProps" prefHeight="53.0" prefWidth="70.0" style="-fx-background-position: center;" />
-      <Button id="close" layoutX="198.0" layoutY="334.0" mnemonicParsing="false" onAction="#close" prefHeight="53.0" prefWidth="70.0" style="-fx-background-position: center;" stylesheets="@placements.css" />
+      <Button id="confirm" layoutX="54.0" layoutY="376.0" mnemonicParsing="false" onAction="#saveProps" prefHeight="53.0" prefWidth="70.0" style="-fx-background-position: center;" />
+      <Button id="close" layoutX="202.0" layoutY="376.0" mnemonicParsing="false" onAction="#close" prefHeight="53.0" prefWidth="70.0" style="-fx-background-position: center;" stylesheets="@placements.css" />
+      <TitledPane animated="false" layoutY="268.0" prefHeight="104.0" prefWidth="305.0" text="Справочные матриалы">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="0.0" prefWidth="200.0">
+               <children>
+                  <Button layoutX="36.0" layoutY="27.0" mnemonicParsing="false" onAction="#loadGuide" text="Руководство" />
+                  <Button layoutX="188.0" layoutY="27.0" mnemonicParsing="false" onAction="#loadRules" text="Правила игры" />
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
    </children>
    <stylesheets>
       <URL value="@buttons.css" />

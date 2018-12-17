@@ -17,6 +17,12 @@ import matmik.controller.global.GlobalSettings;
 import matmik.controller.placement.PlacementStrategy;
 import javafx.scene.web.WebView;
 import  java.io.File;
+import java.io.IOException;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 /**
  *
@@ -29,7 +35,7 @@ public class OptionsController implements Initializable {
     @FXML
     RadioButton shoreRB;
     @FXML
-	WebView help;
+    TextFlow textFlow;
     private final ToggleGroup placerGroup = new ToggleGroup();
     
     @FXML
@@ -43,8 +49,8 @@ public class OptionsController implements Initializable {
     public void initialize() {
         randomRB.setToggleGroup(placerGroup);
         shoreRB.setToggleGroup(placerGroup);
-        File f = new File("/../help.html");
-        help.getEngine().load(getClass().getResource("/help.html").toExternalForm());
+        Text text = new Text("ищи ключевое слово ПУПОК и выграешь точку входа");
+        textFlow.getChildren().add(text);
         switch(GlobalSettings.getInstance().getPlacementStrategy()){
             case RANDOM: randomRB.setSelected(true);break;
             case SHORE: shoreRB.setSelected(true);break;
@@ -55,6 +61,30 @@ public class OptionsController implements Initializable {
     @FXML
     private void close(ActionEvent e){
         ((Stage)randomRB.getScene().getWindow()).close();        
+    }
+    
+    @FXML
+    private void loadGuide(ActionEvent e) throws IOException{
+        WebViewController controller = new WebViewController(getClass().getResource("/help.html").toExternalForm());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/WebPage.fxml"));
+        loader.setController(controller);
+        Parent root = loader.load();
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    @FXML
+    private void loadRules(ActionEvent e) throws IOException{
+        WebViewController controller = new WebViewController(getClass().getResource("/rules.html").toExternalForm());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/WebPage.fxml"));
+        loader.setController(controller);
+        Parent root = loader.load();
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
     
     @FXML
