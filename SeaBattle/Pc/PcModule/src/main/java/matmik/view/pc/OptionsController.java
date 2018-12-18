@@ -49,7 +49,7 @@ public class OptionsController implements Initializable {
     public void initialize() {
         randomRB.setToggleGroup(placerGroup);
         shoreRB.setToggleGroup(placerGroup);
-        Text text = new Text("ищи ключевое слово ПУПОК и выграешь точку входа");
+        Text text = new Text("Программу сию ваяли 2 студента, что в бывшем СГАУ учатся. А звали их Матвеев Владислав и Михеев Александр. А проверена эта программа Зеленко Ларисой Сергеевной в рамках лабораторного практикума по дисциплине Технологии программирования. Если вы не один из этих 3 людей, значит прогу кто-то слил(");
         textFlow.getChildren().add(text);
         switch(GlobalSettings.getInstance().getPlacementStrategy()){
             case RANDOM: randomRB.setSelected(true);break;

@@ -162,13 +162,13 @@ public class PlacementLoaderController implements Initializable {
     }
     
     private void drawEmpty(ImageView image){
-        Image border = new Image("shipCell.png", (int)image.fitWidthProperty().get(),
+        Image border = new Image("shipCellempty.png", (int)image.fitWidthProperty().get(),
                 (int)image.fitHeightProperty().get(), true, true);
         image.setImage(border);
     }
     
     private void drawError(ImageView image){
-        Image border = new Image("intersect.png", (int)image.fitWidthProperty().get(),
+        Image border = new Image("error.png", (int)image.fitWidthProperty().get(),
                 (int)image.fitHeightProperty().get(), true, true);
         image.setImage(border);
     }

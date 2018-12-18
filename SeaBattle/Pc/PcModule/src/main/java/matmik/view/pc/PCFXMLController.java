@@ -316,7 +316,7 @@ public class PCFXMLController implements Initializable,View {
         }
         int bankHeight = bankBounds.getBottomBound() - bankBounds.getTopBound();
         int bankWidth = bankBounds.getRightBound() - bankBounds.getLeftBound();
-        Image bank = new Image("clean1.png", bankWidth, bankHeight, false, true);
+        Image bank = new Image("shipBank.png", bankWidth, bankHeight, false, true);
         transferImage(bank, placementField, bankBounds.getLeftBound(),
                 bankBounds.getTopBound());
         for(int i = 0; i < 4; i++){
