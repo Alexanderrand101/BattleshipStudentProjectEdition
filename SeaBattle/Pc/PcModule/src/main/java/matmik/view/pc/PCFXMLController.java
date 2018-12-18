@@ -741,6 +741,9 @@ public class PCFXMLController implements Initializable,View {
     @FXML
     private void loadFromFile(MouseEvent e){
         FileChooser fileChooser = new FileChooser();
+        File initialDirect = new File("gamesaves/");
+        if(!initialDirect.exists())initialDirect.mkdir();
+        fileChooser.setInitialDirectory(initialDirect);
         fileChooser.setTitle("Загрузить игру");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Файлы игрового сеанса", "*.game"));
         File file = fileChooser.showOpenDialog(tabPane.getScene().getWindow());
@@ -752,6 +755,9 @@ public class PCFXMLController implements Initializable,View {
     @FXML 
     private void saveGame(ActionEvent e){
         FileChooser fileChooser = new FileChooser();
+        File initialDirect = new File("gamesaves/");
+        if(!initialDirect.exists())initialDirect.mkdir();
+        fileChooser.setInitialDirectory(initialDirect);
         fileChooser.setTitle("save Game");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Game files", "*.game"));
         File file = fileChooser.showSaveDialog(tabPane.getScene().getWindow());

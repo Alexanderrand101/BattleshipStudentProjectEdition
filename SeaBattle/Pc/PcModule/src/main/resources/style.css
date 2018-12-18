@@ -93,12 +93,8 @@ pre a:hover {
     color: #2A5801;
     text-decoration:none;
 }
-.carttable
-{
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-    font-size: 11px;
-    color:#FFFFFF;
-    text-align:justify;
+img{
+	float: left;
 }
 .carttable td{
     color:#000000;
